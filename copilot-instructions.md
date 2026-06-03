@@ -1,1 +1,1 @@
-/Users/richardmedina/Plugins/Shopify/salaam-pizza/AGENTS.md
+/Users/richardmedina/Plugins/Shopify/salaam-pizza/CLAUDE.md

@@ -1,0 +1,232 @@
+{%- assign image = section.settings.image -%}
+
+<section
+	id="{{ section.id }}"
+	data-section-id="{{ section.id }}"
+	data-section-type="location-hero-section"
+	class="section location-hero-section"
+	{% if section.settings.background_color != blank %}
+		style="background-color: {{ section.settings.background_color }};"
+	{% endif %}
+>
+	<div class="section--container">
+		<div class="section--content-left">
+			<div class="section--content-left-header">
+				{% if section.settings.sub_title != blank %}
+					<h6>{{ section.settings.sub_title }}</h6>
+				{% endif %}
+
+				{% if section.settings.title != blank %}
+					<h1>{{ section.settings.title }}</h1>
+				{% endif %}
+			</div>
+
+			{% if section.settings.short_description != blank %}
+				<div class="section--content-left-short-description">{{ section.settings.short_description }}</div>
+			{% endif %}
+
+			{% if section.settings.button_text != blank and section.settings.button_url != blank %}
+				<a href="{{ section.settings.button_url }}" class="btn btn--black location-hero-section--btn">{{ section.settings.button_text }}</a>
+			{% endif %}
+		</div>
+
+		<div class="section--content-right">
+			<div class="location-hero-card">
+				<div class="location-hero-card--media">
+					<span class="location-hero-card--circle" aria-hidden="true"></span>
+					{% if image != blank %}
+						{{ image | image_url: width: 800 | image_tag: alt: section.settings.title, loading: 'lazy', class: 'location-hero-card--image' }}
+					{% else %}
+						<div class="location-hero-card--image location-hero-card--placeholder">
+							{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% style %}
+	#{{ section.id }} .section--container {
+		display: flex;
+		flex-flow: row nowrap;
+		gap: 80px;
+		align-items: center;
+	}
+	#{{ section.id }} .section--content-left {
+		flex: 1 1 0;
+		min-width: 0;
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 24px;
+	}
+	#{{ section.id }} .section--content-left .section--content-left-header {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 16px;
+	}
+	#{{ section.id }} .section--content-left .section--content-left-header h6,
+	#{{ section.id }} .section--content-left .section--content-left-header h1,
+	#{{ section.id }} .section--content-left .section--content-left-short-description * {
+		color: {{ section.settings.text_color | default: '#FFFFFF' }};
+	}
+	#{{ section.id }} .section--content-left .section--content-left-header h6 {
+		font-weight: var(--font-primary-weight-medium);
+	}
+	#{{ section.id }} .section--content-left .section--content-left-header h1 {
+		margin-top: 0;
+	}
+	#{{ section.id }} .section--content-left .location-hero-section--btn {
+		max-width: fit-content;
+	}
+
+	#{{ section.id }} .section--content-right {
+		flex: 0 0 auto;
+	}
+	#{{ section.id }} .location-hero-card {
+		box-sizing: border-box;
+		width: 580px;
+		max-width: 100%;
+		aspect-ratio: 580 / 480;
+		padding: 32px;
+		border-radius: 40px;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: {{ section.settings.card_background_color | default: '#C20000' }};
+	}
+	#{{ section.id }} .location-hero-card .location-hero-card--media {
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+	#{{ section.id }} .location-hero-card .location-hero-card--circle {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		height: 100%;
+		aspect-ratio: 1 / 1;
+		max-width: 100%;
+		border-radius: 50%;
+		background-color: {{ section.settings.circle_color | default: '#E5231E' }};
+	}
+	#{{ section.id }} .location-hero-card .location-hero-card--image {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		height: 86%;
+		width: auto;
+		max-width: 92%;
+		object-fit: contain;
+	}
+	#{{ section.id }} .location-hero-card .location-hero-card--placeholder svg {
+		width: 100%;
+		height: 100%;
+		opacity: 0.5;
+	}
+
+	@media only screen and (max-width: 1279px) {
+		#{{ section.id }} .section--container {
+			gap: 40px;
+		}
+	}
+
+	@media only screen and (max-width: 767px) {
+		#{{ section.id }} .section--container {
+			flex-flow: column nowrap;
+			align-items: stretch;
+			gap: 32px;
+		}
+		#{{ section.id }} .section--content-left {
+			align-items: flex-start;
+		}
+		#{{ section.id }} .section--content-left .location-hero-section--btn {
+			max-width: 100%;
+		}
+		#{{ section.id }} .section--content-right {
+			width: 100%;
+		}
+		#{{ section.id }} .location-hero-card {
+			width: 100%;
+		}
+	}
+{% endstyle %}
+
+{% schema %}
+{
+	"name": "Location Hero",
+	"settings": [
+		{
+			"type": "text",
+			"id": "sub_title",
+			"label": "Location label",
+			"default": "KATIPUNAN, QUEZON CITY"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "Visit our Katipunan kitchen."
+		},
+		{
+			"type": "richtext",
+			"id": "short_description",
+			"label": "Description",
+			"default": "<p>Our main branch sits in the heart of Loyola Heights, walking distance from Ateneo, UP Diliman, and Miriam College. Oven-baked halal pizzas, dough rested overnight, premium toppings at student-friendly prices.</p>"
+		},
+		{
+			"type": "text",
+			"id": "button_text",
+			"label": "Button text",
+			"default": "Get Directions"
+		},
+		{
+			"type": "url",
+			"id": "button_url",
+			"label": "Button link"
+		},
+		{
+			"type": "image_picker",
+			"id": "image",
+			"label": "Image"
+		},
+		{
+			"type": "header",
+			"content": "Colors"
+		},
+		{
+			"type": "color",
+			"id": "background_color",
+			"label": "Background",
+			"default": "#D90000"
+		},
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text",
+			"default": "#FFFFFF"
+		},
+		{
+			"type": "color",
+			"id": "card_background_color",
+			"label": "Card background",
+			"default": "#C20000"
+		},
+		{
+			"type": "color",
+			"id": "circle_color",
+			"label": "Circle backdrop",
+			"default": "#E5231E"
+		}
+	],
+	"presets": [
+		{
+			"name": "Location Hero"
+		}
+	]
+}
+{% endschema %}

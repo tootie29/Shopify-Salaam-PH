@@ -1,0 +1,177 @@
+<section
+	id="{{ section.id }}"
+	data-section-id="{{ section.id }}"
+	data-section-type="address-section"
+	class="section address-section"
+	{% if section.settings.background_color != blank %}
+		style="background-color: {{ section.settings.background_color }};"
+	{% endif %}
+>
+	<div class="section--container">
+		{% if section.settings.title != blank %}
+			<h2 class="address-section--title">{{ section.settings.title }}</h2>
+		{% endif %}
+
+		<div class="address-section--row">
+			{% for block in section.blocks %}
+				<div class="address-section--card" {{ block.shopify_attributes }}>
+					{% if block.settings.heading != blank %}
+						<h3 class="address-section--card-heading">{{ block.settings.heading }}</h3>
+					{% endif %}
+					{% if block.settings.body != blank %}
+						<div class="address-section--card-body">{{ block.settings.body }}</div>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+{% style %}
+	#{{ section.id }} .section--container {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-start;
+		gap: 40px;
+	}
+	#{{ section.id }} .section--container .address-section--title {
+		margin: 0;
+		color: {{ section.settings.text_color | default: '#000000' }};
+	}
+	#{{ section.id }} .section--container .address-section--row {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: stretch;
+		gap: 40px;
+		width: 100%;
+	}
+	#{{ section.id }} .section--container .address-section--card {
+		flex: 1 1 0;
+		min-width: 0;
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-start;
+		gap: 16px;
+		padding: 36px;
+		border-radius: 24px;
+		border: 1px solid {{ section.settings.card_border_color | default: '#D5D5D5' }};
+		background-color: {{ section.settings.card_background_color | default: '#FFFFFF' }};
+	}
+	#{{ section.id }} .section--container .address-section--card .address-section--card-heading {
+		margin: 0;
+		font-size: var(--text-1);
+		font-weight: var(--font-primary-weight-bold);
+		color: {{ section.settings.text_color | default: '#000000' }};
+	}
+	#{{ section.id }} .section--container .address-section--card .address-section--card-body,
+	#{{ section.id }} .section--container .address-section--card .address-section--card-body * {
+		font-size: var(--text-0);
+		font-weight: var(--font-primary-weight-medium);
+		line-height: 1.4;
+		color: {{ section.settings.text_color | default: '#000000' }};
+	}
+	#{{ section.id }} .section--container .address-section--card .address-section--card-body > * {
+		margin: 0 0 8px;
+	}
+	#{{ section.id }} .section--container .address-section--card .address-section--card-body > *:last-child {
+		margin-bottom: 0;
+	}
+
+	@media only screen and (max-width: 767px) {
+		#{{ section.id }} .section--container {
+			gap: 24px;
+		}
+		#{{ section.id }} .section--container .address-section--row {
+			flex-flow: column nowrap;
+			gap: 16px;
+		}
+		#{{ section.id }} .section--container .address-section--card {
+			width: 100%;
+			padding: 24px;
+		}
+	}
+{% endstyle %}
+
+{% schema %}
+{
+	"name": "Address",
+	"max_blocks": 6,
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "Visit the Katipunan branch"
+		},
+		{
+			"type": "header",
+			"content": "Colors"
+		},
+		{
+			"type": "color",
+			"id": "background_color",
+			"label": "Background",
+			"default": "#F6F6F6"
+		},
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text",
+			"default": "#000000"
+		},
+		{
+			"type": "color",
+			"id": "card_background_color",
+			"label": "Card background",
+			"default": "#FFFFFF"
+		},
+		{
+			"type": "color",
+			"id": "card_border_color",
+			"label": "Card border",
+			"default": "#D5D5D5"
+		}
+	],
+	"blocks": [
+		{
+			"type": "card",
+			"name": "Info card",
+			"settings": [
+				{
+					"type": "text",
+					"id": "heading",
+					"label": "Heading",
+					"default": "Address"
+				},
+				{
+					"type": "richtext",
+					"id": "body",
+					"label": "Body",
+					"default": "<p>123 Katipunan Avenue</p><p>Loyola Heights, Quezon City</p><p>Metro Manila, Philippines 1108</p>"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Address",
+			"blocks": [
+				{
+					"type": "card",
+					"settings": {
+						"heading": "Address",
+						"body": "<p>123 Katipunan Avenue</p><p>Loyola Heights, Quezon City</p><p>Metro Manila, Philippines 1108</p>"
+					}
+				},
+				{
+					"type": "card",
+					"settings": {
+						"heading": "Parking & Transit",
+						"body": "<p>Free parking for 12 cars on-site.</p><p>Two minutes from Katipunan LRT-2 walkway.</p><p>Jeepney and UV Express drop-off at the corner of Esteban Abada.</p>"
+					}
+				}
+			]
+		}
+	]
+}
+{% endschema %}

@@ -1,0 +1,148 @@
+<section
+	id="{{ section.id }}"
+	data-section-id="{{ section.id }}"
+	data-section-type="coverage-section"
+	class="section coverage-section"
+	{% if section.settings.background_color != blank %}
+		style="background-color: {{ section.settings.background_color }};"
+	{% endif %}
+>
+	<div class="section--container">
+		{% if section.settings.title != blank %}
+			<h2 class="coverage-section--title">{{ section.settings.title }}</h2>
+		{% endif %}
+
+		{% if section.settings.description != blank %}
+			<div class="coverage-section--description">{{ section.settings.description }}</div>
+		{% endif %}
+
+		{%- assign areas = section.settings.areas | strip | newline_to_br | split: '<br />' -%}
+		{% if areas.size > 0 %}
+			<div class="coverage-section--chips">
+				{% for area in areas %}
+					{%- assign label = area | strip_newlines | strip -%}
+					{% if label != blank %}
+						<span class="coverage-section--chip">{{ label }}</span>
+					{% endif %}
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+</section>
+
+{% style %}
+	#{{ section.id }} .section--container {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-start;
+		gap: 24px;
+	}
+	#{{ section.id }} .section--container .coverage-section--title {
+		margin: 0;
+		color: {{ section.settings.text_color | default: '#000000' }};
+	}
+	#{{ section.id }} .section--container .coverage-section--description,
+	#{{ section.id }} .section--container .coverage-section--description * {
+		font-size: var(--text-1);
+		font-weight: var(--font-primary-weight-medium);
+		color: {{ section.settings.text_color | default: '#000000' }};
+		max-width: 900px;
+	}
+	#{{ section.id }} .section--container .coverage-section--chips {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: flex-start;
+		gap: 12px;
+		width: 100%;
+	}
+	#{{ section.id }} .section--container .coverage-section--chips .coverage-section--chip {
+		display: inline-flex;
+		align-items: center;
+		padding: 12px 20px;
+		border-radius: 53px;
+		font-size: var(--text-0);
+		font-weight: var(--font-primary-weight-medium);
+		line-height: 1;
+		border: 1px solid {{ section.settings.chip_border_color | default: '#D5D5D5' }};
+		background-color: {{ section.settings.chip_background_color | default: '#FFFFFF' }};
+		color: {{ section.settings.chip_text_color | default: '#000000' }};
+	}
+
+	@media only screen and (max-width: 767px) {
+		#{{ section.id }} .section--container {
+			gap: 16px;
+		}
+		#{{ section.id }} .section--container .coverage-section--chips {
+			gap: 10px;
+		}
+		#{{ section.id }} .section--container .coverage-section--chips .coverage-section--chip {
+			padding: 10px 16px;
+		}
+	}
+{% endstyle %}
+
+{% schema %}
+{
+	"name": "Coverage",
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "Delivery coverage from Katipunan"
+		},
+		{
+			"type": "richtext",
+			"id": "description",
+			"label": "Description",
+			"default": "<p>We deliver hot Salaam pizzas to these neighbourhoods within 30 to 45 minutes.</p>"
+		},
+		{
+			"type": "textarea",
+			"id": "areas",
+			"label": "Coverage areas",
+			"info": "One neighbourhood per line. Each line becomes a chip.",
+			"default": "Loyola Heights\nKrus na Ligas\nPansol\nSikatuna Village\nTeachers Village\nVarsity Hills\nBlue Ridge\nWhite Plains\nUP Diliman Campus\nProject 4\nCubao (Araneta)\nNew Manila"
+		},
+		{
+			"type": "header",
+			"content": "Colors"
+		},
+		{
+			"type": "color",
+			"id": "background_color",
+			"label": "Background",
+			"default": "#F6F6F6"
+		},
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text",
+			"default": "#000000"
+		},
+		{
+			"type": "color",
+			"id": "chip_background_color",
+			"label": "Chip background",
+			"default": "#FFFFFF"
+		},
+		{
+			"type": "color",
+			"id": "chip_border_color",
+			"label": "Chip border",
+			"default": "#D5D5D5"
+		},
+		{
+			"type": "color",
+			"id": "chip_text_color",
+			"label": "Chip text",
+			"default": "#000000"
+		}
+	],
+	"presets": [
+		{
+			"name": "Coverage"
+		}
+	]
+}
+{% endschema %}

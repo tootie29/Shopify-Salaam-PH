@@ -1,0 +1,232 @@
+<section
+	id="{{ section.id }}"
+	data-section-id="{{ section.id }}"
+	data-section-type="landmarks-section"
+	class="section landmarks-section"
+	{% if section.settings.background_color != blank %}
+		style="background-color: {{ section.settings.background_color }};"
+	{% endif %}
+>
+	<div class="section--container">
+		{% if section.settings.title != blank %}
+			<h2 class="landmarks-section--title">{{ section.settings.title }}</h2>
+		{% endif %}
+
+		{% if section.settings.description != blank %}
+			<div class="landmarks-section--description">{{ section.settings.description }}</div>
+		{% endif %}
+
+		<div class="landmarks-section--row">
+			{% for block in section.blocks %}
+				<div class="landmarks-section--card" {{ block.shopify_attributes }}>
+					{% if block.settings.distance != blank %}
+						<div class="landmarks-section--tag-row">
+							<span class="landmarks-section--pill">{{ block.settings.distance }}</span>
+						</div>
+					{% endif %}
+					{% if block.settings.heading != blank %}
+						<h3 class="landmarks-section--card-heading">{{ block.settings.heading }}</h3>
+					{% endif %}
+					{% if block.settings.body != blank %}
+						<div class="landmarks-section--card-body">{{ block.settings.body }}</div>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+{% style %}
+	#{{ section.id }} .section--container {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-start;
+		gap: 16px;
+	}
+	#{{ section.id }} .section--container .landmarks-section--title {
+		margin: 0;
+		color: {{ section.settings.text_color | default: '#000000' }};
+	}
+	#{{ section.id }} .section--container .landmarks-section--description,
+	#{{ section.id }} .section--container .landmarks-section--description * {
+		font-size: var(--text-1);
+		font-weight: var(--font-primary-weight-medium);
+		color: {{ section.settings.text_color | default: '#000000' }};
+		max-width: 900px;
+	}
+	#{{ section.id }} .section--container .landmarks-section--row {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: stretch;
+		gap: 32px;
+		width: 100%;
+		margin-top: 16px;
+	}
+	#{{ section.id }} .section--container .landmarks-section--card {
+		flex: 1 1 280px;
+		min-width: 0;
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-start;
+		gap: 12px;
+		padding: 36px;
+		border-radius: 24px;
+		border: 1px solid {{ section.settings.card_border_color | default: '#D5D5D5' }};
+		background-color: {{ section.settings.card_background_color | default: '#FFFFFF' }};
+	}
+	#{{ section.id }} .section--container .landmarks-section--card .landmarks-section--pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 6px 14px;
+		border-radius: 53px;
+		font-size: var(--text--1);
+		font-weight: var(--font-primary-weight-medium);
+		background-color: {{ section.settings.pill_background_color | default: '#D90000' }};
+		color: {{ section.settings.pill_text_color | default: '#FFFFFF' }};
+	}
+	#{{ section.id }} .section--container .landmarks-section--card .landmarks-section--card-heading {
+		margin: 0;
+		font-size: var(--text-1);
+		font-weight: var(--font-primary-weight-bold);
+		color: {{ section.settings.text_color | default: '#000000' }};
+	}
+	#{{ section.id }} .section--container .landmarks-section--card .landmarks-section--card-body,
+	#{{ section.id }} .section--container .landmarks-section--card .landmarks-section--card-body * {
+		font-size: var(--text-0);
+		font-weight: var(--font-primary-weight-medium);
+		line-height: 1.4;
+		color: {{ section.settings.text_color | default: '#000000' }};
+	}
+	#{{ section.id }} .section--container .landmarks-section--card .landmarks-section--card-body > * {
+		margin: 0;
+	}
+
+	@media only screen and (max-width: 767px) {
+		#{{ section.id }} .section--container .landmarks-section--row {
+			flex-flow: column nowrap;
+			gap: 16px;
+		}
+		#{{ section.id }} .section--container .landmarks-section--card {
+			width: 100%;
+			padding: 24px;
+		}
+	}
+{% endstyle %}
+
+{% schema %}
+{
+	"name": "Landmarks",
+	"max_blocks": 9,
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "What's nearby"
+		},
+		{
+			"type": "richtext",
+			"id": "description",
+			"label": "Description",
+			"default": "<p>We sit at the centre of Loyola Heights, surrounded by three of Metro Manila's most active university campuses.</p>"
+		},
+		{
+			"type": "header",
+			"content": "Colors"
+		},
+		{
+			"type": "color",
+			"id": "background_color",
+			"label": "Background",
+			"default": "#FFFFFF"
+		},
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text",
+			"default": "#000000"
+		},
+		{
+			"type": "color",
+			"id": "card_background_color",
+			"label": "Card background",
+			"default": "#FFFFFF"
+		},
+		{
+			"type": "color",
+			"id": "card_border_color",
+			"label": "Card border",
+			"default": "#D5D5D5"
+		},
+		{
+			"type": "color",
+			"id": "pill_background_color",
+			"label": "Distance pill background",
+			"default": "#D90000"
+		},
+		{
+			"type": "color",
+			"id": "pill_text_color",
+			"label": "Distance pill text",
+			"default": "#FFFFFF"
+		}
+	],
+	"blocks": [
+		{
+			"type": "landmark",
+			"name": "Landmark",
+			"settings": [
+				{
+					"type": "text",
+					"id": "distance",
+					"label": "Distance pill",
+					"default": "5 min walk"
+				},
+				{
+					"type": "text",
+					"id": "heading",
+					"label": "Heading",
+					"default": "Landmark name"
+				},
+				{
+					"type": "richtext",
+					"id": "body",
+					"label": "Body",
+					"default": "<p>Short description of the delivery area or landmark.</p>"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Landmarks",
+			"blocks": [
+				{
+					"type": "landmark",
+					"settings": {
+						"distance": "5 min walk",
+						"heading": "Ateneo de Manila University",
+						"body": "<p>Direct delivery to the Gate 2.5 student lounge and faculty pavilions.</p>"
+					}
+				},
+				{
+					"type": "landmark",
+					"settings": {
+						"distance": "8 min drive",
+						"heading": "UP Diliman",
+						"body": "<p>Same-day delivery to AS, Engineering, and the Sunken Garden area.</p>"
+					}
+				},
+				{
+					"type": "landmark",
+					"settings": {
+						"distance": "3 min walk",
+						"heading": "Miriam College",
+						"body": "<p>Hot orders to the Caritas Hall and the Loyola Heights gate.</p>"
+					}
+				}
+			]
+		}
+	]
+}
+{% endschema %}

@@ -1,0 +1,153 @@
+<section
+	id="{{ section.id }}"
+	data-section-id="{{ section.id }}"
+	data-section-type="quick-facts-section"
+	class="section quick-facts-section"
+	style="
+		{% if section.settings.background_color != blank %}background-color: {{ section.settings.background_color }};{% endif %}
+		padding-top: {{ section.settings.padding_top }}px;
+		padding-bottom: {{ section.settings.padding_bottom }}px;
+	"
+>
+	<div class="section--container">
+		<div class="quick-facts">
+			{% for block in section.blocks %}
+				<div class="quick-facts--item" {{ block.shopify_attributes }}>
+					{% if block.settings.label != blank %}
+						<p class="quick-facts--label">{{ block.settings.label }}</p>
+					{% endif %}
+					{% if block.settings.value != blank %}
+						<p class="quick-facts--value">{{ block.settings.value }}</p>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+{% style %}
+	#{{ section.id }} .section--container .quick-facts {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 24px 40px;
+	}
+	#{{ section.id }} .section--container .quick-facts .quick-facts--item {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-start;
+		gap: 8px;
+	}
+	#{{ section.id }} .section--container .quick-facts .quick-facts--item .quick-facts--label {
+		margin: 0;
+		font-size: var(--text--1);
+		font-weight: var(--font-primary-weight-medium);
+		text-transform: uppercase;
+		color: {{ section.settings.text_color | default: '#000000' }};
+	}
+	#{{ section.id }} .section--container .quick-facts .quick-facts--item .quick-facts--value {
+		margin: 0;
+		font-size: var(--text-1);
+		font-weight: var(--font-primary-weight-bold);
+		color: {{ section.settings.text_color | default: '#000000' }};
+	}
+
+	@media only screen and (max-width: 1023px) {
+		#{{ section.id }} .section--container .quick-facts {
+			gap: 24px 32px;
+		}
+	}
+
+	@media only screen and (max-width: 767px) {
+		#{{ section.id }} .section--container .quick-facts {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 24px;
+		}
+	}
+{% endstyle %}
+
+{% schema %}
+{
+	"name": "Quick Facts",
+	"max_blocks": 8,
+	"settings": [
+		{
+			"type": "color",
+			"id": "background_color",
+			"label": "Background",
+			"default": "#F6F6F6"
+		},
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text",
+			"default": "#000000"
+		},
+		{
+			"type": "range",
+			"id": "padding_top",
+			"label": "Top padding",
+			"min": 0,
+			"max": 120,
+			"step": 4,
+			"unit": "px",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "padding_bottom",
+			"label": "Bottom padding",
+			"min": 0,
+			"max": 120,
+			"step": 4,
+			"unit": "px",
+			"default": 40
+		}
+	],
+	"blocks": [
+		{
+			"type": "fact",
+			"name": "Fact",
+			"settings": [
+				{
+					"type": "text",
+					"id": "label",
+					"label": "Label",
+					"default": "Status"
+				},
+				{
+					"type": "text",
+					"id": "value",
+					"label": "Value",
+					"default": "Physical Branch"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Quick Facts",
+			"blocks": [
+				{
+					"type": "fact",
+					"settings": { "label": "Status", "value": "Physical Branch" }
+				},
+				{
+					"type": "fact",
+					"settings": { "label": "Hours", "value": "11am - 10pm Daily" }
+				},
+				{
+					"type": "fact",
+					"settings": { "label": "Phone", "value": "+63 2 0000 0000" }
+				},
+				{
+					"type": "fact",
+					"settings": { "label": "Delivery Time", "value": "30-45 minutes" }
+				}
+			]
+		}
+	]
+}
+{% endschema %}
