@@ -1,0 +1,206 @@
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <a class="site-footer__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      {% if section.settings.footer_logo != blank %}
+        {{
+          section.settings.footer_logo
+          | image_url: width: 400
+          | image_tag:
+            widths: '120, 180, 240, 320, 400',
+            sizes: '(max-width: 767px) 45vw, 220px',
+            alt: shop.name
+        }}
+      {% else %}
+        <span class="site-footer__logo-text">{{ shop.name }}</span>
+      {% endif %}
+    </a>
+
+    {% if section.settings.menu != blank %}
+      <nav class="site-footer__menu" aria-label="Footer menu">
+        {% for link in section.settings.menu.links %}
+          {{ link.title | link_to: link.url }}
+        {% endfor %}
+      </nav>
+    {% endif %}
+
+    <div class="site-footer__social">
+      {% if section.settings.facebook_url != blank %}
+        <a href="{{ section.settings.facebook_url }}" target="_blank" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M13 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h2v6h3v-6h3l1-3h-4v-2c0-.6.4-1 1-1Z"></path>
+          </svg>
+        </a>
+      {% endif %}
+      {% if section.settings.linkedin_url != blank %}
+        <a href="{{ section.settings.linkedin_url }}" target="_blank" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6.5 9H3v12h3.5V9Zm-1.7-6A2 2 0 1 0 6.8 5 2 2 0 0 0 4.8 3ZM21 14.5c0-3.2-1.7-4.7-4-4.7a3.4 3.4 0 0 0-3 1.6V9H10v12h4v-6c0-1.6.3-3.1 2.2-3.1s1.8 1.7 1.8 3.2V21h3Z"></path>
+          </svg>
+        </a>
+      {% endif %}
+      {% if section.settings.youtube_url != blank %}
+        <a href="{{ section.settings.youtube_url }}" target="_blank" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.8 4.7 12 4.7 12 4.7s-5.8 0-7.6.5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12a29 29 0 0 0 .4 4.8 2.8 2.8 0 0 0 2 2c1.8.5 7.6.5 7.6.5s5.8 0 7.6-.5a2.8 2.8 0 0 0 2-2A29 29 0 0 0 22 12a29 29 0 0 0-.4-4.8ZM10 15.2V8.8L15.5 12 10 15.2Z"></path>
+          </svg>
+        </a>
+      {% endif %}
+      {% if section.settings.instagram_url != blank %}
+        <a href="{{ section.settings.instagram_url }}" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 8.5a3.5 3.5 0 1 0 3.5 3.5A3.5 3.5 0 0 0 12 8.5Zm0 5.7A2.2 2.2 0 1 1 14.2 12 2.2 2.2 0 0 1 12 14.2Zm4.5-8H7.5A3.5 3.5 0 0 0 4 9.7v6.6a3.5 3.5 0 0 0 3.5 3.5h9a3.5 3.5 0 0 0 3.5-3.5V9.7a3.5 3.5 0 0 0-3.5-3.5Zm2.2 10.1a2.2 2.2 0 0 1-2.2 2.2h-9a2.2 2.2 0 0 1-2.2-2.2V9.7a2.2 2.2 0 0 1 2.2-2.2h9a2.2 2.2 0 0 1 2.2 2.2Zm-2.1-7.7a.8.8 0 1 1-.8-.8.8.8 0 0 1 .8.8Z"></path>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% stylesheet %}
+  .site-footer {
+    width: 100%;
+    background-color: var(--color-white);
+  }
+
+  .site-footer__inner {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 26px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2%;
+  }
+
+  .site-footer__logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: inherit;
+    color: inherit;
+    flex: 0 1 18%;
+    max-width: 150px;
+  }
+
+  .site-footer__logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .site-footer__logo-text {
+    font-size: 20px;
+    font-weight: var(--font-primary-weight-extra-bold);
+    letter-spacing: 1px;
+  }
+
+  .site-footer__menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex: 1 1 auto;
+  }
+
+  .site-footer__menu a {
+    text-decoration: inherit;
+    color: inherit;
+    font-size: 14px;
+    font-weight: var(--font-primary-weight-medium);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .site-footer__social {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 0 1 auto;
+  }
+
+  .site-footer__social a {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #2a2a2a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    text-decoration: inherit;
+  }
+
+  .site-footer__social svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  @media (max-width: 1023px) {
+    .site-footer__inner {
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .site-footer__logo {
+      flex: 0 1 auto;
+    }
+
+    .site-footer__menu {
+      flex: 1 1 100%;
+      gap: 20px;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .site-footer__inner {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .site-footer__menu {
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "linkedin_url",
+      "label": "LinkedIn URL"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,161 @@
+{%- assign image = section.settings.image -%}
+
+<section
+	id="{{ section.id }}"
+	class="section hero-banner-section"
+	{% if section.settings.background_color != blank %}
+		style="background-color: {{ section.settings.background_color }};"
+	{% endif %}
+>
+	<div class="section--container">
+		<div class="section--content-left">
+			<div class="section--content-left-header">
+				{% if section.settings.sub_title != blank %}
+					<h6>{{ section.settings.sub_title }}</h6>
+				{% endif %}
+
+				{% if section.settings.title != blank %}
+					<h1>{{ section.settings.title }}</h1>
+				{% endif %}
+			</div>
+			{% if section.settings.short_description != blank %}
+				<div class="section--content-left-short-description">{{ section.settings.short_description }}</div>
+			{% endif %}
+
+			{% if section.settings.button_text != blank and section.settings.button_url != blank %}
+				<a href="{{ section.settings.button_url }}" class="btn btn--black">{{ section.settings.button_text }}</a>
+			{% endif %}
+		</div>
+
+		{% if section.settings.image != blank %}
+			<div class="section--content-right">
+				<div class="section--content-right-image-wrapper">
+					{{ section.settings.image | image_url: width: 1000 | image_tag: alt: section.settings.title, loading: 'lazy', class: 'section--content-right-image' }}
+				</div>
+			</div>
+		{% endif %}
+	</div>
+</section>
+
+
+{% schema %}
+  {
+  "name": "Hero Banner Section",
+  "settings": [
+	{
+	  "type": "text",
+	  "id": "sub_title",
+	  "label": "Sub Title"
+	},
+	{
+	  "type": "text",
+	  "id": "title",
+	  "label": "Title"
+	},
+	{
+	  "type": "richtext",
+	  "id": "short_description",
+	  "label": "Short Description"
+	},
+	{
+	  "type": "image_picker",
+	  "id": "image",
+	  "label": "Image"
+	},
+	{
+	  "type": "color",
+	  "id": "background_color",
+	  "label": "Background Color"
+	},
+	{
+	  "type": "text",
+	  "id": "button_text",
+	  "label": "Button Text"
+	},
+	{
+	  "type": "url",
+	  "id": "button_url",
+	  "label": "Button URL"
+	}
+  ],
+  "presets": [
+	{
+	  "name": "Hero Banner Section"
+	}
+  ]
+}  
+{% endschema %}
+
+{% style %}
+	#{{ section.id }} {
+		position: relative;
+		padding-right: 0;
+		overflow: hidden;
+		
+	}
+	#{{ section.id }} .section--container {
+		display: flex;
+		flex-flow: flex-flow: row nowrap;
+		gap: 60px;
+		align-items: center;
+	}
+	#{{ section.id }} .section--container .section--content-left,
+	#{{ section.id }} .section--container .section--content-right {
+		width: 100%;
+		max-width: 50%;
+	}
+	#{{ section.id }} .section--container .section--content-left {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 24px;
+	}
+	#{{ section.id }} .section--container .section--content-left .section--content-left-header {
+		display: flex;
+		flex-flow: column nowrap;
+		gap: 16px;
+	}
+	#{{ section.id }} .section--container .section--content-left .section--content-left-header h6 {
+		font-weight: var(--font-primary-weight-medium);
+		color: var(--color-white);
+	}
+	#{{ section.id }} .section--container .section--content-left .section--content-left-header h1 {
+		margin-top: 0;
+		color: var(--color-white);
+	}
+	#{{ section.id }} .section--container .section--content-left .section--content-left-short-description * {
+		font-weight: var(--font-primary-weight);
+		color: var(--color-white);
+	}
+	#{{ section.id }} .section--container .section--content-left .btn {
+		max-width: fit-content;
+	}
+	#{{ section.id }} .section--container .section--content-right .section--content-right-image-wrapper {
+		margin-right: -200px;
+	}
+	@media only screen and (max-width: 1279px) {
+		#{{ section.id }} .section--container {
+			gap: 40px;
+		}
+	}
+	@media only screen and (max-width: 767px) {
+		#{{ section.id }} {
+			padding-right: 20px;
+		}
+		#{{ section.id }} .section--container {
+			flex-flow: column nowrap;
+		}
+		#{{ section.id }} .section--container .section--content-left,
+		#{{ section.id }} .section--container .section--content-right {
+			max-width: 100%;
+		}
+		#{{ section.id }} .section--container .section--content-right .section--content-right-image-wrapper {
+			margin-right: -20px;
+		}
+		#{{ section.id }} .section--container .section--content-left .btn {
+			max-width: 100%;
+		}
+	}
+{% endstyle %}
+
+{% javascript %}
+{% endjavascript %}

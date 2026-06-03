@@ -1,0 +1,520 @@
+{% assign featured_collection = section.settings.collection %}
+{% if featured_collection == blank and section.settings.collection != blank %}
+  {%- comment -%}
+    If the setting returns a handle instead of an object, resolve it to a collection.
+  {%- endcomment -%}
+  {% assign featured_collection = collections[section.settings.collection] %}
+{% endif %}
+{% assign products_limit = section.settings.products_to_show | default: 8 %}
+{% assign see_more_url = section.settings.see_more_link %}
+{% if see_more_url == blank and featured_collection %}
+  {% assign see_more_url = featured_collection.url %}
+{% endif %}
+
+<section
+  id="{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="best-seller-section"
+  class="section best-seller-section"
+>
+	<div class="section--container">
+		{% if section.settings.title != blank or see_more_url != blank %}
+			<div class="section--header">
+				{% if section.settings.title != blank %}
+					<h2>{{ section.settings.title }}</h2>
+				{% endif %}
+
+				{% if see_more_url != blank %}
+					<a href="{{ see_more_url }}" class="btn btn--black">{{ 'sections.best_seller.see_more' | t }}
+            <span class="btn--black-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8" cy="8" r="8" fill="#D90000"/>
+                    <path d="M10.5 7.13397C11.1667 7.51888 11.1667 8.48113 10.5 8.86603L7.5 10.5981C6.83333 10.983 6 10.5019 6 9.73205L6 6.26795C6 5.49815 6.83333 5.01702 7.5 5.40192L10.5 7.13397Z" fill="white"/>
+                </svg>
+
+              </span>
+          </a>
+				{% endif %}
+			</div>
+		{% endif %}
+
+		<div class="section--body">
+			{% if featured_collection and featured_collection.products_count > 0 %}
+				<div class="best-seller-items">
+					{% for product in featured_collection.products limit: products_limit %}
+            {% assign featured_image = product.featured_image %}
+            {% assign product_variant = product.first_available_variant | default: product.variants.first %}
+						<div
+              class="best-seller-item"
+              data-product-title="{{ product.title | escape }}"
+              data-product-description="{{ product.description | strip_html | escape }}" 
+              data-product-image="{% if featured_image %}{{ featured_image | image_url: width: 1200 }}{% endif %}"
+              data-variant-id="{{ product_variant.id }}"
+              data-product-variants='{{ product.variants | json | escape }}'
+              data-product-url="{{ product.url }}"
+            >
+              <div class="best-seller-item-inner">
+                {% if featured_image %}
+                    <div class="best-seller-item--image-wrapper">
+                        {{ featured_image | image_url: width: 1000 | image_tag: class: 'best-seller-item--image-image', loading: 'lazy', alt: product.title }}
+                    </div>
+                {% else %}
+                    <div class="best-seller-item--image-wrapper best-seller-item--image-wrapper-placeholder">
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                {% endif %}
+
+                <div class="best-seller-item--content">
+                    <div class="star-rating">
+                        <svg width="100" height="20" viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M49.0489 2.92705C49.3483 2.00574 50.6517 2.00574 50.9511 2.92705L52.0206 6.21885C52.1545 6.63087 52.5385 6.90983 52.9717 6.90983H56.4329C57.4016 6.90983 57.8044 8.14945 57.0207 8.71885L54.2205 10.7533C53.87 11.0079 53.7234 11.4593 53.8572 11.8713L54.9268 15.1631C55.2261 16.0844 54.1717 16.8506 53.388 16.2812L50.5878 14.2467C50.2373 13.9921 49.7627 13.9921 49.4122 14.2467L46.612 16.2812C45.8283 16.8506 44.7739 16.0844 45.0732 15.1631L46.1428 11.8713C46.2766 11.4593 46.13 11.0079 45.7795 10.7533L42.9793 8.71885C42.1956 8.14945 42.5984 6.90983 43.5671 6.90983H47.0283C47.4615 6.90983 47.8455 6.63087 47.9794 6.21885L49.0489 2.92705Z" fill="#F5DA40"/>
+                            <path d="M29.0489 2.92705C29.3483 2.00574 30.6517 2.00574 30.9511 2.92705L32.0206 6.21885C32.1545 6.63087 32.5385 6.90983 32.9717 6.90983H36.4329C37.4016 6.90983 37.8044 8.14945 37.0207 8.71885L34.2205 10.7533C33.87 11.0079 33.7234 11.4593 33.8572 11.8713L34.9268 15.1631C35.2261 16.0844 34.1717 16.8506 33.388 16.2812L30.5878 14.2467C30.2373 13.9921 29.7627 13.9921 29.4122 14.2467L26.612 16.2812C25.8283 16.8506 24.7739 16.0844 25.0732 15.1631L26.1428 11.8713C26.2766 11.4593 26.13 11.0079 25.7795 10.7533L22.9793 8.71885C22.1956 8.14945 22.5984 6.90983 23.5671 6.90983H27.0283C27.4615 6.90983 27.8455 6.63087 27.9794 6.21885L29.0489 2.92705Z" fill="#F5DA40"/>
+                            <path d="M9.04894 2.92705C9.3483 2.00574 10.6517 2.00574 10.9511 2.92705L12.0206 6.21885C12.1545 6.63087 12.5385 6.90983 12.9717 6.90983H16.4329C17.4016 6.90983 17.8044 8.14945 17.0207 8.71885L14.2205 10.7533C13.87 11.0079 13.7234 11.4593 13.8572 11.8713L14.9268 15.1631C15.2261 16.0844 14.1717 16.8506 13.388 16.2812L10.5878 14.2467C10.2373 13.9921 9.7627 13.9921 9.41221 14.2467L6.61204 16.2812C5.82833 16.8506 4.77385 16.0844 5.0732 15.1631L6.14277 11.8713C6.27665 11.4593 6.12999 11.0079 5.7795 10.7533L2.97933 8.71885C2.19562 8.14945 2.59839 6.90983 3.56712 6.90983H7.02832C7.46154 6.90983 7.8455 6.63087 7.97937 6.21885L9.04894 2.92705Z" fill="#F5DA40"/>
+                            <path d="M69.0489 2.92705C69.3483 2.00574 70.6517 2.00574 70.9511 2.92705L72.0206 6.21885C72.1545 6.63087 72.5385 6.90983 72.9717 6.90983H76.4329C77.4016 6.90983 77.8044 8.14945 77.0207 8.71885L74.2205 10.7533C73.87 11.0079 73.7234 11.4593 73.8572 11.8713L74.9268 15.1631C75.2261 16.0844 74.1717 16.8506 73.388 16.2812L70.5878 14.2467C70.2373 13.9921 69.7627 13.9921 69.4122 14.2467L66.612 16.2812C65.8283 16.8506 64.7739 16.0844 65.0732 15.1631L66.1428 11.8713C66.2766 11.4593 66.13 11.0079 65.7795 10.7533L62.9793 8.71885C62.1956 8.14945 62.5984 6.90983 63.5671 6.90983H67.0283C67.4615 6.90983 67.8455 6.63087 67.9794 6.21885L69.0489 2.92705Z" fill="#F5DA40"/>
+                            <path d="M89.0489 2.92705C89.3483 2.00574 90.6517 2.00574 90.9511 2.92705L92.0206 6.21885C92.1545 6.63087 92.5385 6.90983 92.9717 6.90983H96.4329C97.4016 6.90983 97.8044 8.14945 97.0207 8.71885L94.2205 10.7533C93.87 11.0079 93.7234 11.4593 93.8572 11.8713L94.9268 15.1631C95.2261 16.0844 94.1717 16.8506 93.388 16.2812L90.5878 14.2467C90.2373 13.9921 89.7627 13.9921 89.4122 14.2467L86.612 16.2812C85.8283 16.8506 84.7739 16.0844 85.0732 15.1631L86.1428 11.8713C86.2766 11.4593 86.13 11.0079 85.7795 10.7533L82.9793 8.71885C82.1956 8.14945 82.5984 6.90983 83.5671 6.90983H87.0283C87.4615 6.90983 87.8455 6.63087 87.9794 6.21885L89.0489 2.92705Z" fill="#F5DA40"/>
+                        </svg>
+                    </div>
+                    
+                    <h3>
+                        <a href="{{ product.url }}">{{ product.title }}</a>
+                    </h3>
+
+                    {% if product.description != blank %}
+                        <div class="best-seller-item--description">{{ product.description | strip_html | truncatewords: 18 }}</div>
+                    {% endif %}
+
+                    <div class="best-seller-item-price">
+                        <span class="best-seller-item-price-value">{{ product.price | money }}</span>
+                        {% if product.compare_at_price > product.price %}
+                            <span class="best-seller-item-price-compare">{{ product.compare_at_price | money }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+
+  <div class="product-modal" aria-hidden="true">
+    <div class="product-modal__backdrop"></div>
+    <div class="product-modal__dialog" role="dialog" aria-modal="true">
+      <button type="button" class="product-modal__close" aria-label="Close">&times;</button>
+      <div class="product-modal__content">
+        <div class="product-modal__image"></div>
+        <div class="product-modal__details">
+          <div class="product-modal__rating">
+            <svg width="100" height="20" viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M49.0489 2.92705C49.3483 2.00574 50.6517 2.00574 50.9511 2.92705L52.0206 6.21885C52.1545 6.63087 52.5385 6.90983 52.9717 6.90983H56.4329C57.4016 6.90983 57.8044 8.14945 57.0207 8.71885L54.2205 10.7533C53.87 11.0079 53.7234 11.4593 53.8572 11.8713L54.9268 15.1631C55.2261 16.0844 54.1717 16.8506 53.388 16.2812L50.5878 14.2467C50.2373 13.9921 49.7627 13.9921 49.4122 14.2467L46.612 16.2812C45.8283 16.8506 44.7739 16.0844 45.0732 15.1631L46.1428 11.8713C46.2766 11.4593 46.13 11.0079 45.7795 10.7533L42.9793 8.71885C42.1956 8.14945 42.5984 6.90983 43.5671 6.90983H47.0283C47.4615 6.90983 47.8455 6.63087 47.9794 6.21885L49.0489 2.92705Z" fill="#F5DA40"/>
+              <path d="M29.0489 2.92705C29.3483 2.00574 30.6517 2.00574 30.9511 2.92705L32.0206 6.21885C32.1545 6.63087 32.5385 6.90983 32.9717 6.90983H36.4329C37.4016 6.90983 37.8044 8.14945 37.0207 8.71885L34.2205 10.7533C33.87 11.0079 33.7234 11.4593 33.8572 11.8713L34.9268 15.1631C35.2261 16.0844 34.1717 16.8506 33.388 16.2812L30.5878 14.2467C30.2373 13.9921 29.7627 13.9921 29.4122 14.2467L26.612 16.2812C25.8283 16.8506 24.7739 16.0844 25.0732 15.1631L26.1428 11.8713C26.2766 11.4593 26.13 11.0079 25.7795 10.7533L22.9793 8.71885C22.1956 8.14945 22.5984 6.90983 23.5671 6.90983H27.0283C27.4615 6.90983 27.8455 6.63087 27.9794 6.21885L29.0489 2.92705Z" fill="#F5DA40"/>
+              <path d="M9.04894 2.92705C9.3483 2.00574 10.6517 2.00574 10.9511 2.92705L12.0206 6.21885C12.1545 6.63087 12.5385 6.90983 12.9717 6.90983H16.4329C17.4016 6.90983 17.8044 8.14945 17.0207 8.71885L14.2205 10.7533C13.87 11.0079 13.7234 11.4593 13.8572 11.8713L14.9268 15.1631C15.2261 16.0844 14.1717 16.8506 13.388 16.2812L10.5878 14.2467C10.2373 13.9921 9.7627 13.9921 9.41221 14.2467L6.61204 16.2812C5.82833 16.8506 4.77385 16.0844 5.0732 15.1631L6.14277 11.8713C6.27665 11.4593 6.12999 11.0079 5.7795 10.7533L2.97933 8.71885C2.19562 8.14945 2.59839 6.90983 3.56712 6.90983H7.02832C7.46154 6.90983 7.8455 6.63087 7.97937 6.21885L9.04894 2.92705Z" fill="#F5DA40"/>
+              <path d="M69.0489 2.92705C69.3483 2.00574 70.6517 2.00574 70.9511 2.92705L72.0206 6.21885C72.1545 6.63087 72.5385 6.90983 72.9717 6.90983H76.4329C77.4016 6.90983 77.8044 8.14945 77.0207 8.71885L74.2205 10.7533C73.87 11.0079 73.7234 11.4593 73.8572 11.8713L74.9268 15.1631C75.2261 16.0844 74.1717 16.8506 73.388 16.2812L70.5878 14.2467C70.2373 13.9921 69.7627 13.9921 69.4122 14.2467L66.612 16.2812C65.8283 16.8506 64.7739 16.0844 65.0732 15.1631L66.1428 11.8713C66.2766 11.4593 66.13 11.0079 65.7795 10.7533L62.9793 8.71885C62.1956 8.14945 62.5984 6.90983 63.5671 6.90983H67.0283C67.4615 6.90983 67.8455 6.63087 67.9794 6.21885L69.0489 2.92705Z" fill="#F5DA40"/>
+              <path d="M89.0489 2.92705C89.3483 2.00574 90.6517 2.00574 90.9511 2.92705L92.0206 6.21885C92.1545 6.63087 92.5385 6.90983 92.9717 6.90983H96.4329C97.4016 6.90983 97.8044 8.14945 97.0207 8.71885L94.2205 10.7533C93.87 11.0079 93.7234 11.4593 93.8572 11.8713L94.9268 15.1631C95.2261 16.0844 94.1717 16.8506 93.388 16.2812L90.5878 14.2467C90.2373 13.9921 89.7627 13.9921 89.4122 14.2467L86.612 16.2812C85.8283 16.8506 84.7739 16.0844 85.0732 15.1631L86.1428 11.8713C86.2766 11.4593 86.13 11.0079 85.7795 10.7533L82.9793 8.71885C82.1956 8.14945 82.5984 6.90983 83.5671 6.90983H87.0283C87.4615 6.90983 87.8455 6.63087 87.9794 6.21885L89.0489 2.92705Z" fill="#F5DA40"/>
+            </svg>
+          </div>
+          <h3 class="product-modal__title"></h3>
+          <div class="product-modal__description"></div>
+          <div class="product-modal__price"></div>
+
+          <div class="product-modal__variant">
+            <span class="product-modal__variant-label">Variant</span>
+            <div class="product-modal__variant-options" role="radiogroup" aria-label="Select variant"></div>
+          </div>
+
+          <div class="product-modal__quantity">
+            <button type="button" class="product-modal__qty-btn" data-action="decrement">-</button>
+            <input type="number" min="1" value="1" class="product-modal__qty-input" aria-label="Quantity">
+            <button type="button" class="product-modal__qty-btn" data-action="increment">+</button>
+          </div>
+
+          <button type="button" class="product-modal__add btn btn--black">Add to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+  "name": "Best Seller Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "url",
+      "id": "see_more_link",
+      "label": "See More Link"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Best Seller Section"
+    }
+  ]
+}  
+{% endschema %}
+
+{% style %}
+#{{ section.id }} {
+    background-color: #F3F0F0;
+}
+#{{ section.id }} .section--container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 60px;
+}
+#{{ section.id }} .section--container .section--header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+#{{ section.id }} .section--container .section--header h2 {
+  margin: 0;
+}
+#{{ section.id }} .section--container .section--header .btn {
+  padding: 0!important;
+  color: var(--color-red);
+  background: transparent;
+  max-width: fit-content;
+}
+#{{ section.id }} .section--container .section--body {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 40px;
+  width: 100%;
+}
+#{{ section.id }} .section--container .section--body .best-seller-items {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 40px;
+  justify-content: center;
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item {
+  width: 100%;
+  max-width: calc(25% - (40px * 3 / 4));
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding-top: 65px;
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner {
+  padding: 0 32px 48px;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 24px;
+  align-items: center;
+  border: 1px solid #D5D5D5;
+  border-radius: 60px!important;
+  background: #EDEDED82;
+  transition: all 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner .best-seller-item--image-wrapper {
+  border-radius: 50%;
+  padding: 10px;
+  width: 100%;
+  max-width: 175px;
+  height: 130px;
+  margin-top: -65px;
+  transition: all 0.3s ease;
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner .best-seller-item--content {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 24px;
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner .best-seller-item--content h3 {
+  font-weight: var(--font-primary-weight-medium);
+  font-size: var(--text-2);
+  color: var(--color-black);
+  margin: 0;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner .best-seller-item--content h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner .best-seller-item--content .best-seller-item--description {
+  text-align: center;
+  font-weight: var(--font-primary-weight);
+  font-size: var(--text-0);
+  color: var(--color-black);
+  margin: 0;
+  transition: all 0.3s ease;
+}
+
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner .best-seller-item--content .best-seller-item-price {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 12px;
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner .best-seller-item--content .best-seller-item-price .best-seller-item-price-value {
+  color: var(--color-red);
+  font-weight: var(--font-primary-weight-medium);
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner .best-seller-item--content .best-seller-item-price .best-seller-item-price-compare {
+  color: var(--color-gray, #777);
+  text-decoration: line-through;
+}
+
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item:hover .best-seller-item--image-wrapper {
+  background: var(--color-white);
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item:hover .best-seller-item-inner {
+  border-color: var(--color-red);
+  background: var(--color-red);
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item:hover .best-seller-item-inner .best-seller-item--content h3 {
+  color: var(--color-white);
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item:hover .best-seller-item-inner .best-seller-item--content h3 a {
+  color: var(--color-white);
+}
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item:hover .best-seller-item-inner .best-seller-item--content .best-seller-item--description {
+  color: var(--color-white);
+}
+
+#{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item:hover .best-seller-item-inner .best-seller-item--content .best-seller-item-price .best-seller-item-price-value {
+  color: var(--color-white);
+}
+/* Modal */
+#{{ section.id }} .product-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+#{{ section.id }} .product-modal.is-visible {
+  display: flex;
+}
+#{{ section.id }} .product-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  overflow-y: auto;
+  height: 100vh;
+}
+#{{ section.id }} .product-modal__dialog {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 960px;
+  width: min(90vw, 960px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.2);
+  z-index: 1;
+  overflow-y: auto;
+}
+#{{ section.id }} .product-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+#{{ section.id }} .product-modal__dialog {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+#{{ section.id }} .product-modal__dialog .product-modal__content {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 100px;
+}
+#{{ section.id }} .product-modal__image img,
+#{{ section.id }} .product-modal__image svg {
+  width: 100%;
+  height: auto;
+}
+#{{ section.id }} .product-modal__image {
+  width: 100%;
+  max-width: 50%;
+}
+#{{ section.id }} .product-modal__details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#{{ section.id }} .product-modal__title {
+  margin: 0;
+  font-size: var(--text-3, 28px);
+}
+#{{ section.id }} .product-modal__price {
+  font-size: var(--text-1);
+  font-weight: var(--font-primary-weight-medium);
+  color: var(--color-red);
+}
+#{{ section.id }} .product-modal__variant {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 320px;
+}
+#{{ section.id }} .product-modal__variant-label {
+  font-size: 14px;
+  font-weight: var(--font-primary-weight-medium);
+}
+#{{ section.id }} .product-modal__variant-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#{{ section.id }} .product-modal__variant-option {
+  position: relative;
+}
+#{{ section.id }} .product-modal__variant-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+#{{ section.id }} .product-modal__variant-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background-color: #fff;
+  font-size: 14px;
+  font-weight: var(--font-primary-weight-medium);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+#{{ section.id }} .product-modal__variant-pill::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  display: inline-block;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+#{{ section.id }} .product-modal__variant-input:checked + .product-modal__variant-pill {
+  border-color: var(--color-red);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+}
+#{{ section.id }} .product-modal__variant-input:checked + .product-modal__variant-pill::before {
+  border-color: var(--color-red);
+  background: var(--color-red);
+}
+#{{ section.id }} .product-modal__variant-input:disabled + .product-modal__variant-pill {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#{{ section.id }} .product-modal__description {
+  font-size: var(--text-0);
+  line-height: 1.6;
+}
+#{{ section.id }} .product-modal__quantity {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #f4f4f4;
+  padding: 8px 16px;
+  border-radius: 999px;
+  max-width: fit-content;
+}
+#{{ section.id }} .product-modal__qty-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #e0e0e0;
+  cursor: pointer;
+  font-size: 18px;
+}
+#{{ section.id }} .product-modal__qty-input {
+  width: 60px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+}
+#{{ section.id }} .product-modal__add {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+#{{ section.id }} .product-modal__rating {
+  display: inline-block;
+}
+@media only screen and (max-width: 1279px) {
+  #{{ section.id }} .section--container {
+    gap: 40px;
+  }
+  #{{ section.id }} .section--container .section--body .best-seller-items {
+    gap: 32px;
+  }
+  #{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item {
+    max-width: calc(33.33% - (32px * 2 / 3));
+  }
+}
+@media only screen and (max-width: 991px) {
+  #{{ section.id }} .section--container .section--body .best-seller-items {
+    gap: 24px;
+  }
+  #{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item {
+    max-width: calc(50% - (24px * 1 / 2));
+  }
+}
+@media only screen and (max-width: 767px) {
+  #{{ section.id }} .section--container {
+    gap: 24px;
+  }
+  #{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item {
+    padding-top: 50px;
+  }
+  #{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner {
+    padding: 0 20px 24px;
+    border-radius: 16px!important;
+  }
+  #{{ section.id }} .section--container .section--body .best-seller-items .best-seller-item .best-seller-item-inner .best-seller-item--image-wrapper {
+    max-width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    padding: 6px;
+  }
+  #{{ section.id }} .product-modal__dialog .product-modal__content {
+    gap: 32px;
+  }
+}
+{% endstyle %}
+
+  {{ 'product-modal.js' | asset_url | script_tag }}

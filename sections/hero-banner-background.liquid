@@ -1,0 +1,229 @@
+<section
+  id="{{ section.id }}"
+  class="hero-banner-background"
+  data-section-id="{{ section.id }}"
+>
+  {% if section.settings.background_image != blank %}
+    <div class="hero-banner-background__image" aria-hidden="true">
+      {{
+        section.settings.background_image
+        | image_url: width: 2400
+        | image_tag:
+          loading: 'eager',
+          widths: '800, 1200, 1600, 2000, 2400',
+          sizes: '100vw',
+          class: 'hero-banner-background__img'
+      }}
+    </div>
+  {% endif %}
+
+  <div class="hero-banner-background__overlay"></div>
+
+  <div class="hero-banner-background__container">
+    <div class="hero-banner-background__content">
+      {% if section.settings.title != blank %}
+        <h1 class="hero-banner-background__title">{{ section.settings.title }}</h1>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="hero-banner-background__description">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+      <div class="hero-banner-background__cta-container">
+        {% if section.settings.cta_text != blank %}
+          {% assign cta_url = section.settings.cta_url | strip | default: '' %}
+          {% if cta_url == blank or cta_url == '#' %}
+            <button type="button" class="hero-banner-background__cta btn" data-modal-open aria-label="{{ section.settings.cta_text }}">
+              {{ section.settings.cta_text }}
+            </button>
+          {% else %}
+            <a href="{{ section.settings.cta_url }}" class="hero-banner-background__cta btn">
+              {{ section.settings.cta_text }}
+            </a>
+          {% endif %}
+        {% endif %}
+
+        {% if section.settings.note != blank %}
+          <div class="hero-banner-background__note">
+            {{ section.settings.note }}
+          </div>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero banner background",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL"
+    },
+    {
+      "type": "richtext",
+      "id": "note",
+      "label": "Small note"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner background"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  .hero-banner-background {
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    padding: 80px 6%;
+  }
+
+  .hero-banner-background__image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-banner-background__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-banner-background__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .hero-banner-background__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .hero-banner-background__content {
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .hero-banner-background__title {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.2;
+  }
+
+  .hero-banner-background__description {
+    color: #fff;
+    line-height: 1.5;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .hero-banner-background__description * {
+    color: #fff;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .hero-banner-background__description p {
+    margin: 0 0 0.5em;
+    color: #fff;
+    text-align: center;
+  }
+
+  .hero-banner-background__description p:last-child {
+    margin-bottom: 0;
+  }
+
+  .hero-banner-background__cta {
+    align-self: flex-start;
+  }
+
+  .hero-banner-background__note {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+
+  .hero-banner-background__note p {
+    margin: 0 0 0.25em;
+  }
+
+  .hero-banner-background__note p:last-child {
+    margin-bottom: 0;
+  }
+  .hero-banner-background__cta-container {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-banner-background__note * {
+    color: #fff;
+  }
+  @media (max-width: 1279px) {
+    .hero-banner-background {
+      padding: 80px 40px;
+    }
+  }
+  @media (max-width: 1024px) {
+    .hero-banner-background {
+      padding: 60px 40px;
+    }
+  }
+  @media (max-width: 767px) {
+    .hero-banner-background {
+      padding: 40px 20px;
+      min-height: 320px;
+    }
+
+    .hero-banner-background__container {
+      padding: 0;
+    }
+
+    .hero-banner-background__content {
+      gap: 16px;
+    }
+  }
+{% endstylesheet %}

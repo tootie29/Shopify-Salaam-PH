@@ -1,0 +1,156 @@
+{%- assign background_image = section.settings.background_image -%}
+
+<section id="{{ section.id }}" class="section cta-section">
+    <div class="section--container">
+        <div class="section--content" style="background-color: {{ section.settings.background_color }};">
+            <div class="section--content-inner section--content-inner-img">
+                {% if background_image != blank %}
+                    <div class="section--content-inner-img-wrapper">
+                        <img src="{{ background_image | image_url: width: background_image.width }}" alt="{{ background_image.alt }}" class="section--content-inner-img-img" loading="lazy" width="{{ background_image.width }}" height="{{ background_image.height }}">
+                    </div>
+                {% endif %}
+            </div>
+            <div class="section--content-inner section--content-inner-content">
+                {% if section.settings.title != blank %}
+                    <h2>{{ section.settings.title }}</h2>
+                {% endif %}
+                {% if section.settings.description != blank %}
+                    <div class="section--content-inner-content-description">{{ section.settings.description }}</div>
+                {% endif %}
+                {% if section.settings.button_text != blank and section.settings.button_url != blank %}
+                    <a href="{{ section.settings.button_url }}" class="btn btn--black">{{ section.settings.button_text }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+  {
+  "name": "CTA Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#D90000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA Section"
+    }
+  ]
+}  
+{% endschema %}
+
+{% style %}
+#{{ section.id }} {
+    background-color: #F3F0F0;
+}
+#{{ section.id }} .section--container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 60px;
+}
+#{{ section.id }} .section--container .section--content {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0;
+    border-radius: 60px;
+    overflow: hidden;
+}
+#{{ section.id }} .section--container .section--content .section--content-inner {
+    width: 100%;
+    max-width: 50%;
+}
+#{{ section.id }} .section--container .section--content .section--content-inner.section--content-inner-img {
+    width: 100%;
+    position: relative;
+}
+#{{ section.id }} .section--container .section--content .section--content-inner.section--content-inner-img .section--content-inner-img-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#{{ section.id }} .section--container .section--content .section--content-inner.section--content-inner-img .section--content-inner-img-wrapper .section--content-inner-img-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+#{{ section.id }} .section--container .section--content .section--content-inner-content {
+    padding: 100px 60px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 16px;
+}
+#{{ section.id }} .section--container .section--content .section--content-inner-content h2 {
+    color: var(--color-white);
+    font-size: var(--text-3);
+    margin: 0;
+}
+#{{ section.id }} .section--container .section--content .section--content-inner-content .section--content-inner-content-description * {
+    color: var(--color-white);
+}
+#{{ section.id }} .section--container .section--content .section--content-inner-content .btn {
+    max-width: fit-content;
+}
+@media only screen and (max-width: 1279px) {
+    #{{ section.id }} .section--container .section--content .section--content-inner-content {
+        padding: 60px 40px;
+    }
+}
+@media only screen and (max-width: 991px) {
+    #{{ section.id }} .section--container .section--content .section--content-inner-content {
+        padding: 40px 20px;
+    }
+}
+@media only screen and (max-width: 767px) {
+    #{{ section.id }} .section--container .section--content {
+        flex-flow: column nowrap;
+        border-radius: 24px;
+    }
+    #{{ section.id }} .section--container .section--content .section--content-inner {
+        max-width: 100%;
+    }
+    #{{ section.id }} .section--container .section--content .section--content-inner.section--content-inner-img .section--content-inner-img-wrapper {
+        position: relative;
+        top: unset;
+        left: unset;
+    }
+    #{{ section.id }} .section--container .section--content .section--content-inner-content {
+        padding: 0 20px 40px;
+    }
+}
+{% endstyle %}
+
+{% javascript %}
+{% endjavascript %}

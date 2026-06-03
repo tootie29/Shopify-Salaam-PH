@@ -1,0 +1,68 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner_background": {
+      "type": "hero-banner-background",
+      "settings": {
+        "title": "Your Trust is Our Top Priority",
+        "description": "<ul><li>All meats sourced from certified halal suppliers</li><li>No pork, lard, or alcohol used in any ingredients</li><li>Dedicated halal kitchen — zero cross-contamination</li><li>Every ingredient batch verified before use</li><li>Annual third-party halal audit and recertification</li></ul>",
+        "cta_text": "Place an Order",
+        "cta_url": "#",
+        "note": "",
+        "background_image": "shopify://shop_images/Salaam_Pizza.webp"
+      }
+    },
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "1776432437ae634ae8": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_f1946ea_BwgDJP": {
+          "type": "ai_gen_block_f1946ea",
+          "settings": {
+            "show_icon": false,
+            "icon_style": "heart",
+            "heading": "Our mission",
+            "mission_text": "<h2>To make halal the standard, not the exception.</h2><p>Salaam Pizza was founded with a single mission: to serve exceptional pizza that every Muslim family in the Philippines can enjoy with full confidence. A rigorous halal certification backs every pizza we make.</p>",
+            "text_alignment": "center",
+            "content_max_width": 800,
+            "desktop_width_percent": 100,
+            "padding_top": 50,
+            "padding_bottom": 50,
+            "padding_horizontal": 20,
+            "icon_size": 50,
+            "icon_spacing": 20,
+            "icon_color": "#333333",
+            "heading_size": 32,
+            "heading_spacing": 20,
+            "heading_color": "#333333",
+            "text_size": 16,
+            "text_color": "#333333",
+            "background_color": "#FFFFFF"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_f1946ea_BwgDJP"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero_banner_background",
+    "main",
+    "1776432437ae634ae8"
+  ]
+}

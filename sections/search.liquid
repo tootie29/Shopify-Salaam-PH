@@ -1,0 +1,194 @@
+{% comment %}
+  This section is used in the search template to render search results for
+  products, articles, and pages.
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/search
+{% endcomment %}
+
+<section class="section search-page">
+  <div class="section--container search-page__container">
+    <h1>{{ 'search.title' | t }}</h1>
+
+    <form class="search-page__form" action="{{ routes.search_url }}" method="get" role="search">
+      <div class="search-page__field">
+        <input
+          class="search-page__input"
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'search.placeholder' | t }}"
+        >
+        <button class="search-page__button" type="submit">{{ 'search.submit' | t }}</button>
+      </div>
+    </form>
+
+    {% if search.performed %}
+      {% if search.results_count == 0 %}
+        <p class="search-page__empty">{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+      {% else %}
+        <p class="search-page__summary">{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+
+        <div class="search-results">
+          {% paginate search.results by 20 %}
+            {% # Search result items may be an article, a page, or a product. %}
+            {% for result in search.results %}
+              <a class="search-result" href="{{ result.url }}">
+                {% assign featured_image = result.featured_image | default: result.image %}
+                {% if featured_image %}
+                  {% render 'image', class: 'search-result__image', image: featured_image, width: 500 %}
+                {% endif %}
+                <div class="search-result__content">
+                  <span class="search-result__title">{{ result.title }}</span>
+                  {% if result.price %}
+                    <span class="search-result__price">{{ result.price | money_with_currency }}</span>
+                  {% endif %}
+                </div>
+              </a>
+            {% endfor %}
+
+            {{ paginate | default_pagination }}
+          {% endpaginate %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .search-page__container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .search-page__form {
+    width: 100%;
+  }
+
+  .search-page__field {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    padding: 10px 14px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .search-page__field:focus-within {
+    border-color: rgba(0, 0, 0, 0.28);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+  }
+
+  .search-page__input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    color: var(--color-black);
+    background: transparent;
+    min-height: 40px;
+  }
+
+  .search-page__input::placeholder {
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  .search-page__button {
+    border: none;
+    background-color: var(--color-red);
+    color: var(--color-white);
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .search-page__button:hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .search-page__summary,
+  .search-page__empty {
+    font-size: 16px;
+  }
+
+  .search-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .search-result {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: inherit;
+    color: inherit;
+    border-radius: 20px;
+    padding: 16px;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .search-result:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .search-result__image {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .search-result__content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .search-result__title {
+    font-size: 16px;
+    font-weight: var(--font-primary-weight-semi-bold);
+  }
+
+  .search-result__price {
+    font-size: 14px;
+    font-weight: var(--font-primary-weight-medium);
+    color: var(--color-red);
+  }
+
+  .search-results .prev,
+  .search-results .page,
+  .search-results .next {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 767px) {
+    .search-page__field {
+      max-width: 100%;
+    }
+
+    .search-results {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.search",
+  "settings": []
+}
+{% endschema %}

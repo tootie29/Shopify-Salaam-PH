@@ -1,0 +1,218 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a
+      class="site-header__logo"
+      href="{{ routes.root_url }}"
+      aria-label="{{ shop.name }}"
+      style="--logo-width: {{ settings.logo_width }}px;"
+    >
+      {% if settings.logo != blank %}
+        {{
+          settings.logo
+          | image_url: width: 600
+          | image_tag:
+            widths: '120, 180, 240, 300, 360, 480, 600',
+            sizes: '(max-width: 767px) 45vw, 240px',
+            alt: shop.name
+        }}
+      {% else %}
+        <span class="site-header__logo-text">{{ shop.name }}</span>
+      {% endif %}
+    </a>
+
+    <form class="site-header__search" action="{{ routes.search_url }}" method="get" role="search">
+      <button class="site-header__search-button" type="button" aria-label="Search">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15.5 14h-.79l-.28-.27a6 6 0 1 0-.71.71l.27.28v.79L20 20.5 21.5 19 15.5 14ZM10 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z"></path>
+        </svg>
+      </button>
+      <div class="site-header__search-form">
+        <div class="site-header__search-inner">
+          <label class="visually-hidden" for="site-header-search">Search</label>
+          <input
+            id="site-header-search"
+            class="site-header__search-input"
+            type="search"
+            name="q"
+            placeholder="Search"
+            value="{{ search.terms | escape }}"
+          >
+          <button class="site-header__search-submit" type="submit" aria-label="Submit search">Search</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="site-header__actions">
+      <div class="site-header__contact-dropdown" data-contact-dropdown>
+        <button
+          class="site-header__contact-btn"
+          type="button"
+          {% if section.settings.contact_dropdown_menu == blank %}data-modal-open{% endif %}
+          aria-expanded="false"
+          aria-haspopup="true"
+          aria-controls="site-header__menu-dropdown"
+          id="site-header-contact-dropdown-trigger"
+        >
+          <span class="site-header__btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 13.5a4.5 4.5 0 1 0-4.5-4.5A4.5 4.5 0 0 0 12 13.5Zm0 1.5c-3.3 0-9 1.7-9 5v2h18v-2c0-3.3-5.7-5-9-5Z"></path>
+            </svg>
+          </span>
+          <span class="site-header__btn-text">{{ section.settings.contact_button_label }}</span>
+        </button>
+        {% comment %} Dropdown menu: hidden by default, slides down on hover of Contact Us. Uses contact dropdown menu links if set, else main menu. {% endcomment %}
+        {% if section.settings.contact_dropdown_menu != blank %}
+          <nav class="site-header__menu site-header__menu-dropdown" id="site-header__menu-dropdown" aria-label="Main menu" aria-hidden="true">
+            {% for link in section.settings.contact_dropdown_menu.links %}
+              {{ link.title | link_to: link.url }}
+            {% endfor %}
+          </nav>
+        {% elsif section.settings.menu != blank %}
+          <nav class="site-header__menu site-header__menu-dropdown" id="site-header__menu-dropdown" aria-label="Main menu" aria-hidden="true">
+            {% for link in section.settings.menu.links %}
+              {{ link.title | link_to: link.url }}
+            {% endfor %}
+          </nav>
+        {% endif %}
+      </div>
+      <a class="site-header__call-btn" href="tel:{{ section.settings.call_phone | strip | replace: ' ', '' }}">
+        <span class="site-header__btn-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M6.6 10.8a14.8 14.8 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.2 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V21a1 1 0 0 1-1 1A18 18 0 0 1 3 5a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .6 3.6 1 1 0 0 1-.2 1Z"></path>
+          </svg>
+        </span>
+        <span class="site-header__btn-text">{{ section.settings.call_button_label }} {{ section.settings.call_phone }}</span>
+      </a>
+      <div class="site-header__icons">
+      {% if shop.customer_accounts_enabled %}
+        <a class="site-header__icon-link" href="{{ routes.account_url }}">
+          {{ 'icon-account.svg' | inline_asset_content }}
+        </a>
+      {% endif %}
+      {% comment %} <a class="site-header__icon-link" href="{{ routes.cart_url }}" data-cart-link>
+        <sup
+          class="site-header__cart-count"
+          data-cart-count
+          {% if cart.item_count == 0 %}hidden{% endif %}
+        >
+          {{ cart.item_count }}
+        </sup>
+        {{ 'icon-cart.svg' | inline_asset_content }}
+      </a> {% endcomment %}
+      </div>
+    </div>
+  </div>
+
+  <div class="site-header__modal" data-modal aria-hidden="true">
+    <div class="site-header__modal-overlay" data-modal-close></div>
+    <div class="site-header__modal-content" role="dialog" aria-modal="true" aria-labelledby="site-header-contact-title">
+      <button class="site-header__modal-close" type="button" data-modal-close aria-label="Close contact form">
+        &times;
+      </button>
+      <div class="site-header__modal-body">
+        <div class="site-header__modal-form">
+          <h2 id="site-header-contact-title">{{ section.settings.contact_modal_title | default: 'Get In Touch' }}</h2>
+          {% if section.settings.contact_modal_description != blank %}
+            <div class="site-header__modal-description">{{ section.settings.contact_modal_description }}</div>
+          {% endif %}
+          {% form 'contact', id: 'HeaderContactForm', class: 'site-header__contact-form' %}
+            <div class="site-header__form-row">
+              <div class="site-header__field">
+                <label for="HeaderContactForm-name">Name <span aria-hidden="true">*</span></label>
+                <input id="HeaderContactForm-name" type="text" name="contact[name]" required>
+              </div>
+              <div class="site-header__field">
+                <label for="HeaderContactForm-phone">Mobile <span aria-hidden="true">*</span></label>
+                <input id="HeaderContactForm-phone" type="tel" name="contact[phone]" required>
+              </div>
+            </div>
+            <div class="site-header__field">
+              <label for="HeaderContactForm-email">Email Address <span aria-hidden="true">*</span></label>
+              <input id="HeaderContactForm-email" type="email" name="contact[email]" required>
+            </div>
+            <div class="site-header__field">
+              <label for="HeaderContactForm-message">Message <span aria-hidden="true">*</span></label>
+              <textarea id="HeaderContactForm-message" name="contact[body]" rows="5" required></textarea>
+            </div>
+            <button class="site-header__submit-btn" type="submit">Send Message</button>
+          {% endform %}
+        </div>
+        <div class="site-header__modal-image">
+          {% if section.settings.contact_image != blank %}
+            {{
+              section.settings.contact_image
+              | image_url: width: 1200
+              | image_tag:
+                widths: '320, 480, 640, 800, 1000, 1200',
+                sizes: '(max-width: 767px) 90vw, 40vw',
+                alt: 'Contact pizza image'
+            }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script src="{{ 'header.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "text",
+      "id": "contact_button_label",
+      "label": "Contact button label",
+      "default": "Contact Us"
+    },
+    {
+      "type": "link_list",
+      "id": "contact_dropdown_menu",
+      "label": "Contact dropdown menu",
+      "info": "Menu links appear only when hovering the Contact Us button (e.g. Franchise, Catering). Select the same menu here as in Menu above if you want those links only in the dropdown."
+    },
+    {
+      "type": "text",
+      "id": "hide_from_main_nav_titles",
+      "label": "Hide these from main nav (comma-separated)",
+      "info": "Link titles listed here will not show in the bar under the logo; they only appear in the Contact Us dropdown. Example: Catering, Franchise",
+      "default": "Catering, Franchise"
+    },
+    {
+      "type": "text",
+      "id": "call_button_label",
+      "label": "Call button label",
+      "default": "Call Us"
+    },
+    {
+      "type": "text",
+      "id": "call_phone",
+      "label": "Phone number",
+      "default": "+0 000 0000 000"
+    },
+    {
+      "type": "image_picker",
+      "id": "contact_image",
+      "label": "Contact modal image"
+    },
+     {
+      "type": "text",
+      "id": "contact_modal_title",
+      "label": "Contact modal title",
+      "default": "Get In Touch"
+    },
+    {
+      "type": "richtext",
+      "id": "contact_modal_description",
+      "label": "Contact modal description",
+      "info": "Text shown below the title in the contact form popup. Leave blank to hide."
+    }
+  ]
+}
+{% endschema %}

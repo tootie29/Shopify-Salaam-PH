@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "t:general.header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "contact-menu",
+        "contact_button_label": "Contact Us",
+        "contact_dropdown_menu": "contact-menu",
+        "hide_from_main_nav_titles": "Catering, Franchise",
+        "call_button_label": "Call Us",
+        "call_phone": "0917 300 2540",
+        "contact_image": "shopify://shop_images/popup_image_800x800_4f33dc7f-5a28-4ca9-ac85-c1690fddfd69.webp",
+        "contact_modal_title": "Get In Touch",
+        "contact_modal_description": "<p>Let’s make your Salaam Pizza experience even better. Drop us a message for orders, catering, or any questions and we’ll respond as quickly as possible.</p>"
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

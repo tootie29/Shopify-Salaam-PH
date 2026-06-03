@@ -1,0 +1,377 @@
+{% doc %}
+  @prompt
+    create a horizontal block stating that salaam pizza are available on grabfood, foodpanda and for pickup
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-delivery-banner-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding }}px;
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-delivery-banner__container-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ block.settings.spacing }}px;
+    flex-wrap: wrap;
+  }
+
+  .ai-delivery-banner__text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.text_size }}px;
+    font-weight: {{ block.settings.text_weight }};
+    margin: 0;
+  }
+
+  .ai-delivery-banner__platforms-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.platform_spacing }}px;
+    flex-wrap: wrap;
+  }
+
+  .ai-delivery-banner__platform-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    padding: {{ block.settings.platform_padding }}px {{ block.settings.platform_padding | times: 1.5 }}px;
+    background-color: {{ block.settings.platform_bg_color }};
+    color: {{ block.settings.platform_text_color }};
+    border-radius: {{ block.settings.platform_border_radius }}px;
+    font-size: {{ block.settings.platform_text_size }}px;
+    font-weight: {{ block.settings.platform_text_weight }};
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .ai-delivery-banner__platform-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.platform_hover_bg_color }};
+    color: {{ block.settings.platform_hover_text_color }};
+    transform: translateY(-2px);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-delivery-banner__container-{{ ai_gen_id }} {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-delivery-banner-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-delivery-banner__container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <p class="ai-delivery-banner__text-{{ ai_gen_id }}">{{ block.settings.heading }}</p>
+    {% endif %}
+    
+    <div class="ai-delivery-banner__platforms-{{ ai_gen_id }}">
+      {% if block.settings.show_grabfood %}
+        <a 
+          href="{{ block.settings.grabfood_url }}" 
+          class="ai-delivery-banner__platform-{{ ai_gen_id }}"
+          {% if block.settings.grabfood_url == blank %}aria-disabled="true"{% endif %}
+        >
+          {{ block.settings.grabfood_text }}
+        </a>
+      {% endif %}
+      
+      {% if block.settings.show_foodpanda %}
+        <a 
+          href="{{ block.settings.foodpanda_url }}" 
+          class="ai-delivery-banner__platform-{{ ai_gen_id }}"
+          {% if block.settings.foodpanda_url == blank %}aria-disabled="true"{% endif %}
+        >
+          {{ block.settings.foodpanda_text }}
+        </a>
+      {% endif %}
+      
+      {% if block.settings.show_pickup %}
+        <a 
+          href="{{ block.settings.pickup_url }}" 
+          class="ai-delivery-banner__platform-{{ ai_gen_id }}"
+          {% if block.settings.pickup_url == blank %}aria-disabled="true"{% endif %}
+        >
+          {{ block.settings.pickup_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Delivery platforms",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Salaam Pizza available on"
+    },
+    {
+      "type": "header",
+      "content": "GrabFood"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_grabfood",
+      "label": "Show GrabFood",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "grabfood_text",
+      "label": "Text",
+      "default": "GrabFood"
+    },
+    {
+      "type": "url",
+      "id": "grabfood_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "FoodPanda"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_foodpanda",
+      "label": "Show FoodPanda",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "foodpanda_text",
+      "label": "Text",
+      "default": "FoodPanda"
+    },
+    {
+      "type": "url",
+      "id": "foodpanda_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Pickup"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pickup",
+      "label": "Show pickup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "pickup_text",
+      "label": "Text",
+      "default": "Pickup"
+    },
+    {
+      "type": "url",
+      "id": "pickup_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "label": "Spacing between text and platforms",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "platform_spacing",
+      "label": "Spacing between platforms",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Container padding",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Container border radius",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "platform_bg_color",
+      "label": "Platform background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "platform_text_color",
+      "label": "Platform text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "platform_hover_bg_color",
+      "label": "Platform hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "platform_hover_text_color",
+      "label": "Platform hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Heading size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Heading weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "platform_text_size",
+      "label": "Platform text size",
+      "min": 12,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "platform_text_weight",
+      "label": "Platform text weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "platform_padding",
+      "label": "Platform padding",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "platform_border_radius",
+      "label": "Platform border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "Delivery platforms"
+    }
+  ]
+}
+{% endschema %}

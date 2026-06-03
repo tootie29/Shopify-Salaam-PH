@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner_background": {
+      "type": "hero-banner-background",
+      "settings": {
+        "title": "Catering for Events",
+        "description": "<p>Make your next gathering easy. We offer halal-certified pizza catering for office lunches, school org events, and celebrations.</p><ul><li>Fresh oven-baked pizzas, made to order</li><li>Recommended bundles for groups</li><li>Simple scheduling and pickup/delivery options</li></ul>",
+        "cta_text": "Request Catering",
+        "cta_url": "#",
+        "note": "<p>Tell us your date, headcount, and location.</p>",
+        "background_image": "shopify://shop_images/group-of-people-in-pizza-house_800x800_0f920ce3-cc56-4f68-bc61-d1cec4c759f5.webp"
+      }
+    },
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero_banner_background",
+    "main"
+  ]
+}

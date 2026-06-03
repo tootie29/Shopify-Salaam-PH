@@ -1,0 +1,167 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_banner_section_iDCUdX": {
+      "type": "hero-banner-section",
+      "name": "Hero Banner Section",
+      "settings": {
+        "sub_title": "Salaam Pizza — 100% Halal, 100% Flavor",
+        "title": "Neapolitan-style Halal Pizza in Metro Manila.",
+        "short_description": "<p>The Philippines' premier certified halal pizza — crafted with the finest halal ingredients, delivered fresh to your door or ready for dine-in.</p>",
+        "image": "shopify://shop_images/salaam-hero-image.webp",
+        "background_color": "#d90000",
+        "button_text": "Check Menu",
+        "button_url": "#order-now"
+      }
+    },
+    "custom_section_84bKnQ": {
+      "type": "custom-section",
+      "name": "t:general.custom_section",
+      "settings": {}
+    },
+    "best_seller_section_3KbcpV": {
+      "type": "best-seller-section",
+      "disabled": true,
+      "name": "Best Seller Section",
+      "settings": {
+        "title": "Best Seller",
+        "see_more_link": "#",
+        "collection": "best-seller",
+        "products_to_show": 8
+      }
+    },
+    "17764317124686370a": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_f890fbd_mqf4Yx": {
+          "type": "ai_gen_block_f890fbd",
+          "settings": {
+            "heading": "Salaam Pizza is available on",
+            "show_grabfood": true,
+            "grabfood_text": "GrabFood",
+            "grabfood_url": "",
+            "show_foodpanda": true,
+            "foodpanda_text": "FoodPanda",
+            "foodpanda_url": "",
+            "show_pickup": true,
+            "pickup_text": "Pickup",
+            "pickup_url": "",
+            "desktop_width_percent": 100,
+            "spacing": 20,
+            "platform_spacing": 15,
+            "padding": 20,
+            "border_radius": 0,
+            "background_color": "#f4f4f4",
+            "text_color": "#333333",
+            "platform_bg_color": "#000000",
+            "platform_text_color": "#ffffff",
+            "platform_hover_bg_color": "#333333",
+            "platform_hover_text_color": "#ffffff",
+            "text_size": 16,
+            "text_weight": "500",
+            "platform_text_size": 14,
+            "platform_text_weight": "600",
+            "platform_padding": 10,
+            "platform_border_radius": 6
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_f890fbd_mqf4Yx"
+      ],
+      "settings": {}
+    },
+    "grid_section_prLtkX": {
+      "type": "grid-section",
+      "custom_css": [],
+      "name": "Grid Section",
+      "settings": {
+        "title": "OUR HALAL PIZZA FLAVORS",
+        "description": "<p>6 Signature Salaam Pizza Creations</p>",
+        "collection": "frontpage",
+        "products_to_show": 8
+      }
+    },
+    "info_boxes_6tFHzA": {
+      "type": "info-boxes",
+      "blocks": {
+        "info_boxes_pYFNQc": {
+          "type": "info_boxes",
+          "settings": {
+            "info_box_title": "Halal-first, always",
+            "info_box_content": "<p>From dough to toppings — we follow strict halal handling and sourcing.</p>",
+            "info_box_icon": "<svg width=\"76\" height=\"76\" viewbox=\"0 0 76 76\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<circle cx=\"38\" cy=\"38\" r=\"38\" fill=\"#D90000\" fill-opacity=\"0.89\"></circle>\n<path d=\"M53.2568 24.5C53.5525 24.5024 53.8455 24.562 54.1182 24.6758C54.391 24.7897 54.6391 24.9562 54.8477 25.165C55.0562 25.3738 55.222 25.6211 55.334 25.8936C55.446 26.1661 55.5025 26.4584 55.5 26.7529C55.4975 27.0473 55.4358 27.3379 55.3193 27.6084C55.2028 27.8791 55.0333 28.1247 54.8213 28.3301L31.5557 50.8623C31.1857 51.2202 30.7046 51.4397 30.1953 51.4893L29.9756 51.5H29.9375C29.6393 51.4949 29.3449 51.4316 29.0713 51.3135C28.7976 51.1953 28.5497 51.0243 28.3428 50.8105L28.3418 50.8096L21.0957 43.2988L21.0869 43.29C20.69 42.8582 20.4795 42.2891 20.502 41.7041C20.5245 41.1191 20.7784 40.5677 21.207 40.167C21.6354 39.7665 22.2044 39.5476 22.792 39.5557C23.3062 39.5628 23.8012 39.7433 24.1963 40.0645L24.3594 40.21L24.3672 40.2188L30.0342 46.0918L51.1562 25.6377L51.1455 25.6328L51.6553 25.1387C51.8672 24.9334 52.118 24.7715 52.3926 24.6621C52.6672 24.5527 52.9611 24.4976 53.2568 24.5Z\" fill=\"white\" stroke=\"white\"></path>\n</svg>"
+          }
+        },
+        "info_boxes_RJAjaH": {
+          "type": "info_boxes",
+          "settings": {
+            "info_box_title": "Neapolitan-style, oven-baked",
+            "info_box_content": "<p>High-heat baked for a light crust, melty cheese, and balanced flavor.</p>",
+            "info_box_icon": "<svg width=\"76\" height=\"76\" viewbox=\"0 0 76 76\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<circle cx=\"38\" cy=\"38\" r=\"38\" fill=\"#D90000\" fill-opacity=\"0.89\"></circle>\n<path d=\"M53.2568 24.5C53.5525 24.5024 53.8455 24.562 54.1182 24.6758C54.391 24.7897 54.6391 24.9562 54.8477 25.165C55.0562 25.3738 55.222 25.6211 55.334 25.8936C55.446 26.1661 55.5025 26.4584 55.5 26.7529C55.4975 27.0473 55.4358 27.3379 55.3193 27.6084C55.2028 27.8791 55.0333 28.1247 54.8213 28.3301L31.5557 50.8623C31.1857 51.2202 30.7046 51.4397 30.1953 51.4893L29.9756 51.5H29.9375C29.6393 51.4949 29.3449 51.4316 29.0713 51.3135C28.7976 51.1953 28.5497 51.0243 28.3428 50.8105L28.3418 50.8096L21.0957 43.2988L21.0869 43.29C20.69 42.8582 20.4795 42.2891 20.502 41.7041C20.5245 41.1191 20.7784 40.5677 21.207 40.167C21.6354 39.7665 22.2044 39.5476 22.792 39.5557C23.3062 39.5628 23.8012 39.7433 24.1963 40.0645L24.3594 40.21L24.3672 40.2188L30.0342 46.0918L51.1562 25.6377L51.1455 25.6328L51.6553 25.1387C51.8672 24.9334 52.118 24.7715 52.3926 24.6621C52.6672 24.5527 52.9611 24.4976 53.2568 24.5Z\" fill=\"white\" stroke=\"white\"></path>\n</svg>"
+          }
+        },
+        "info_boxes_DCnbLx": {
+          "type": "info_boxes",
+          "settings": {
+            "info_box_title": "Chef-crafted quality",
+            "info_box_content": "<p>Signature recipes developed and quality-checked by Chef Ricky.</p>",
+            "info_box_icon": "<svg width=\"76\" height=\"76\" viewbox=\"0 0 76 76\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<circle cx=\"38\" cy=\"38\" r=\"38\" fill=\"#D90000\" fill-opacity=\"0.89\"></circle>\n<path d=\"M53.2568 24.5C53.5525 24.5024 53.8455 24.562 54.1182 24.6758C54.391 24.7897 54.6391 24.9562 54.8477 25.165C55.0562 25.3738 55.222 25.6211 55.334 25.8936C55.446 26.1661 55.5025 26.4584 55.5 26.7529C55.4975 27.0473 55.4358 27.3379 55.3193 27.6084C55.2028 27.8791 55.0333 28.1247 54.8213 28.3301L31.5557 50.8623C31.1857 51.2202 30.7046 51.4397 30.1953 51.4893L29.9756 51.5H29.9375C29.6393 51.4949 29.3449 51.4316 29.0713 51.3135C28.7976 51.1953 28.5497 51.0243 28.3428 50.8105L28.3418 50.8096L21.0957 43.2988L21.0869 43.29C20.69 42.8582 20.4795 42.2891 20.502 41.7041C20.5245 41.1191 20.7784 40.5677 21.207 40.167C21.6354 39.7665 22.2044 39.5476 22.792 39.5557C23.3062 39.5628 23.8012 39.7433 24.1963 40.0645L24.3594 40.21L24.3672 40.2188L30.0342 46.0918L51.1562 25.6377L51.1455 25.6328L51.6553 25.1387C51.8672 24.9334 52.118 24.7715 52.3926 24.6621C52.6672 24.5527 52.9611 24.4976 53.2568 24.5Z\" fill=\"white\" stroke=\"white\"></path>\n</svg>"
+          }
+        },
+        "info_boxes_6fmFM9": {
+          "type": "info_boxes",
+          "settings": {
+            "info_box_title": "Premium taste, fair prices",
+            "info_box_content": "<p>High-quality ingredients and big flavor — without the high prices.</p>",
+            "info_box_icon": "<svg width=\"76\" height=\"76\" viewbox=\"0 0 76 76\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<circle cx=\"38\" cy=\"38\" r=\"38\" fill=\"#D90000\" fill-opacity=\"0.89\"></circle>\n<path d=\"M53.2568 24.5C53.5525 24.5024 53.8455 24.562 54.1182 24.6758C54.391 24.7897 54.6391 24.9562 54.8477 25.165C55.0562 25.3738 55.222 25.6211 55.334 25.8936C55.446 26.1661 55.5025 26.4584 55.5 26.7529C55.4975 27.0473 55.4358 27.3379 55.3193 27.6084C55.2028 27.8791 55.0333 28.1247 54.8213 28.3301L31.5557 50.8623C31.1857 51.2202 30.7046 51.4397 30.1953 51.4893L29.9756 51.5H29.9375C29.6393 51.4949 29.3449 51.4316 29.0713 51.3135C28.7976 51.1953 28.5497 51.0243 28.3428 50.8105L28.3418 50.8096L21.0957 43.2988L21.0869 43.29C20.69 42.8582 20.4795 42.2891 20.502 41.7041C20.5245 41.1191 20.7784 40.5677 21.207 40.167C21.6354 39.7665 22.2044 39.5476 22.792 39.5557C23.3062 39.5628 23.8012 39.7433 24.1963 40.0645L24.3594 40.21L24.3672 40.2188L30.0342 46.0918L51.1562 25.6377L51.1455 25.6328L51.6553 25.1387C51.8672 24.9334 52.118 24.7715 52.3926 24.6621C52.6672 24.5527 52.9611 24.4976 53.2568 24.5Z\" fill=\"white\" stroke=\"white\"></path>\n</svg>"
+          }
+        }
+      },
+      "block_order": [
+        "info_boxes_pYFNQc",
+        "info_boxes_RJAjaH",
+        "info_boxes_DCnbLx",
+        "info_boxes_6fmFM9"
+      ],
+      "name": "Info Boxes",
+      "settings": {
+        "title": "Why Choose Salaam Pizza",
+        "main_title": "Six signature pizzas. No guesswork.",
+        "main_content": "<p>Perfect Pepperoni, Happy Hawaiian, Habibi Meat Lovers, Very Veggie, Four Cheese Special, and Manila Margherita — made the Salaam Pizza way.</p>",
+        "main_icon": "<svg width=\"76\" height=\"76\" viewbox=\"0 0 76 76\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<circle cx=\"38\" cy=\"38\" r=\"38\" fill=\"white\" fill-opacity=\"0.89\"></circle>\n<path d=\"M53.2568 24.5C53.5525 24.5024 53.8455 24.562 54.1182 24.6758C54.391 24.7897 54.6391 24.9562 54.8477 25.165C55.0562 25.3738 55.222 25.6211 55.334 25.8936C55.446 26.1661 55.5025 26.4584 55.5 26.7529C55.4975 27.0473 55.4358 27.3379 55.3193 27.6084C55.2028 27.8791 55.0333 28.1247 54.8213 28.3301L31.5557 50.8623C31.1857 51.2202 30.7046 51.4397 30.1953 51.4893L29.9756 51.5H29.9375C29.6393 51.4949 29.3449 51.4316 29.0713 51.3135C28.7976 51.1953 28.5497 51.0243 28.3428 50.8105L28.3418 50.8096L21.0957 43.2988L21.0869 43.29C20.69 42.8582 20.4795 42.2891 20.502 41.7041C20.5245 41.1191 20.7784 40.5677 21.207 40.167C21.6354 39.7665 22.2044 39.5476 22.792 39.5557C23.3062 39.5628 23.8012 39.7433 24.1963 40.0645L24.3594 40.21L24.3672 40.2188L30.0342 46.0918L51.1562 25.6377L51.1455 25.6328L51.6553 25.1387C51.8672 24.9334 52.118 24.7715 52.3926 24.6621C52.6672 24.5527 52.9611 24.4976 53.2568 24.5Z\" fill=\"#FF0000\" stroke=\"#FF0000\"></path>\n</svg>",
+        "main_background": "shopify://shop_images/verry-veggie-banner_800x800_7e73700f-0c15-4ffb-8a81-eb85413da00f.webp"
+      }
+    },
+    "cta_section_4Tm6mf": {
+      "type": "cta-section",
+      "name": "CTA Section",
+      "settings": {
+        "title": "Order Salaam Pizza on GrabFood—or right here",
+        "description": "<p>We’re open daily 11am - 11pm (last order is at 10:30pm)  in Katipunan, Quezon City. Get delivery via GrabFood, or place your order directly on our website for quick checkout.<br/><br/></p>",
+        "button_text": "Check Menu",
+        "button_url": "#order-now",
+        "background_image": "shopify://shop_images/Group_255_1_800x800_511b553b-41de-4ac3-a222-ed3f1236c507.webp",
+        "background_color": "#d90000"
+      }
+    }
+  },
+  "order": [
+    "hero_banner_section_iDCUdX",
+    "custom_section_84bKnQ",
+    "best_seller_section_3KbcpV",
+    "17764317124686370a",
+    "grid_section_prLtkX",
+    "info_boxes_6tFHzA",
+    "cta_section_4Tm6mf"
+  ]
+}
