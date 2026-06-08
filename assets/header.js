@@ -12,6 +12,36 @@
     const contactDropdownTrigger = contactDropdown && contactDropdown.querySelector(".site-header__contact-btn");
     const contactDropdownMenu = contactDropdown && contactDropdown.querySelector(".site-header__menu-dropdown");
 
+    const drawer = document.querySelector("[data-drawer]");
+    const menuToggle = document.querySelector("[data-menu-toggle]");
+    const drawerCloseEls = document.querySelectorAll("[data-drawer-close]");
+
+    const toggleDrawer = function (shouldOpen) {
+      if (!drawer) return;
+      drawer.classList.toggle("is-active", shouldOpen);
+      drawer.setAttribute("aria-hidden", shouldOpen ? "false" : "true");
+      document.documentElement.classList.toggle("modal-open", shouldOpen);
+      if (menuToggle) {
+        menuToggle.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+      }
+    };
+
+    if (menuToggle && drawer) {
+      menuToggle.addEventListener("click", function () {
+        toggleDrawer(true);
+      });
+      drawerCloseEls.forEach(function (el) {
+        el.addEventListener("click", function () {
+          toggleDrawer(false);
+        });
+      });
+      drawer.querySelectorAll(".site-header__drawer-link").forEach(function (link) {
+        link.addEventListener("click", function () {
+          toggleDrawer(false);
+        });
+      });
+    }
+
     const openContactDropdown = function () {
       if (!contactDropdown || !contactDropdownTrigger) return;
       contactDropdown.classList.add("is-dropdown-open");
@@ -127,6 +157,9 @@
       }
       if (modal && modal.classList.contains("is-active")) {
         toggleModal(false);
+      }
+      if (drawer && drawer.classList.contains("is-active")) {
+        toggleDrawer(false);
       }
       if (header) {
         header.classList.remove("is-search-open");

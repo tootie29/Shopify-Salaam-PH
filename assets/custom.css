@@ -594,6 +594,178 @@ p {
     color: var(--color-red);
 }
 
+/* Mobile menu toggle (hamburger) — hidden on desktop, shown ≤1023px */
+.site-header__menu-toggle {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.site-header__menu-toggle-bar {
+    display: block;
+    width: 24px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--color-black);
+}
+
+/* Off-canvas mobile drawer */
+.site-header__drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.site-header__drawer.is-active {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.site-header__drawer-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.site-header__drawer.is-active .site-header__drawer-overlay {
+    opacity: 1;
+}
+
+.site-header__drawer-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 84%;
+    max-width: 360px;
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 20px 22px calc(20px + env(safe-area-inset-bottom));
+    background-color: var(--color-white);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+
+.site-header__drawer.is-active .site-header__drawer-panel {
+    transform: translateX(0);
+}
+
+.site-header__drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.site-header__drawer-title {
+    font-size: 16px;
+    font-weight: var(--font-primary-weight-bold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-black);
+}
+
+.site-header__drawer-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    font-size: 30px;
+    line-height: 1;
+    color: var(--color-black);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.site-header__drawer-close:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.site-header__drawer-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.site-header__drawer-item + .site-header__drawer-item {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.site-header__drawer-link {
+    display: block;
+    padding: 15px 6px;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: var(--font-primary-weight-medium);
+    color: var(--color-black);
+    transition: color 0.2s ease;
+}
+
+.site-header__drawer-link:hover,
+.site-header__drawer-link.is-active {
+    color: var(--color-red);
+}
+
+.site-header__drawer-actions {
+    margin-top: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+    padding-top: 22px;
+}
+
+.site-header__drawer-contact,
+.site-header__drawer-call {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 999px;
+    font-family: var(--font-primary);
+    font-size: 15px;
+    font-weight: var(--font-primary-weight-bold);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.site-header__drawer-contact {
+    background-color: var(--color-red);
+    color: var(--color-white);
+}
+
+.site-header__drawer-call {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.site-header__drawer-contact .site-header__btn-icon svg,
+.site-header__drawer-call .site-header__btn-icon svg {
+    fill: var(--color-white);
+}
+
 .site-header__modal {
     position: fixed;
     inset: 0;
@@ -727,6 +899,10 @@ p {
 
     .site-header__nav {
         display: none;
+    }
+
+    .site-header__menu-toggle {
+        display: inline-flex;
     }
 
     .site-header__logo {
