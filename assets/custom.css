@@ -141,6 +141,11 @@ p {
     overflow: hidden;
 }
 
+/* Header section must not clip the Contact Us dropdown that drops below the bar. */
+.shopify-section:has(.site-header) {
+    overflow: visible;
+}
+
 .section {
     padding: 80px 20px;
     display: flex;
