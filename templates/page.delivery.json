@@ -23,6 +23,20 @@
         "circle_color": "#E5231E"
       }
     },
+    "delivery_callout": {
+      "type": "delivery-callout-section",
+      "settings": {
+        "tag_text": "Transparent delivery",
+        "title": "Delivering to Makati from our Katipunan kitchen.",
+        "description": "<p>There is no Salaam branch inside Makati yet. Every order placed for a Makati address is baked fresh at 123 Katipunan Avenue, Loyola Heights, then dispatched. Average delivery time is 45 to 60 minutes depending on traffic and the destination barangay.</p>",
+        "corner_radius": 40,
+        "background_color": "#F6F6F6",
+        "card_background_color": "#D90000",
+        "tag_background_color": "#FFFFFF",
+        "tag_text_color": "#000000",
+        "text_color": "#FFFFFF"
+      }
+    },
     "quick_facts": {
       "type": "quick-facts-section",
       "blocks": {
@@ -213,6 +227,7 @@
   },
   "order": [
     "location_hero",
+    "delivery_callout",
     "quick_facts",
     "map",
     "address",
