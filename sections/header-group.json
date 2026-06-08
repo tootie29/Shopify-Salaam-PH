@@ -14,7 +14,7 @@
     "header": {
       "type": "header",
       "settings": {
-        "menu": "contact-menu",
+        "menu": "main-menu",
         "contact_button_label": "Contact Us",
         "contact_dropdown_menu": "contact-menu",
         "hide_from_main_nav_titles": "Catering, Franchise",
