@@ -577,9 +577,13 @@ p {
 
 .site-header__nav-item {
     display: inline-flex;
+    position: relative;
 }
 
 .site-header__nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     text-decoration: none;
     color: var(--color-black);
     font-size: 16px;
@@ -591,6 +595,82 @@ p {
 
 .site-header__nav-link:hover,
 .site-header__nav-link.is-active {
+    color: var(--color-red);
+}
+
+.site-header__nav-caret {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+    transition: transform 0.2s ease;
+}
+
+.site-header__nav-item--has-children:hover .site-header__nav-caret,
+.site-header__nav-item--has-children:focus-within .site-header__nav-caret {
+    transform: rotate(180deg);
+}
+
+/* Desktop submenu — opens on hover/focus of the parent item */
+.site-header__submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 8px);
+    min-width: 220px;
+    margin: 0;
+    padding: 10px;
+    list-style: none;
+    background-color: var(--color-white);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    z-index: 60;
+}
+
+.site-header__submenu .site-header__submenu-item + .site-header__submenu-item {
+    margin-top: 2px;
+}
+
+/* Hover bridge so the menu doesn't close in the gap between link and panel */
+.site-header__submenu::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    width: 100%;
+    height: 12px;
+}
+
+.site-header__nav-item--has-children:hover .site-header__submenu,
+.site-header__nav-item--has-children:focus-within .site-header__submenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, 12px);
+}
+
+.site-header__submenu-item {
+    display: block;
+}
+
+.site-header__submenu-link {
+    display: block;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: var(--font-primary-weight-medium);
+    color: var(--color-black);
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.site-header__submenu-link:hover,
+.site-header__submenu-link.is-active {
+    background-color: rgba(217, 0, 0, 0.08);
     color: var(--color-red);
 }
 

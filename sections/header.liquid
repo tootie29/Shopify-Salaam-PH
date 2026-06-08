@@ -49,12 +49,33 @@
               {% endif %}
             {% endfor %}
             {% unless is_hidden %}
-              <li class="site-header__nav-item">
+              <li class="site-header__nav-item{% if link.links.size > 0 %} site-header__nav-item--has-children{% endif %}">
                 <a
-                  class="site-header__nav-link{% if link.active %} is-active{% endif %}"
+                  class="site-header__nav-link{% if link.active or link.child_active %} is-active{% endif %}"
                   href="{{ link.url }}"
                   {% if link.active %}aria-current="page"{% endif %}
-                >{{ link.title }}</a>
+                  {% if link.links.size > 0 %}aria-haspopup="true" aria-expanded="false"{% endif %}
+                >
+                  {{ link.title }}
+                  {% if link.links.size > 0 %}
+                    <svg class="site-header__nav-caret" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  {% endif %}
+                </a>
+                {% if link.links.size > 0 %}
+                  <ul class="site-header__submenu" aria-label="{{ link.title }} submenu">
+                    {% for child in link.links %}
+                      <li class="site-header__submenu-item">
+                        <a
+                          class="site-header__submenu-link{% if child.active %} is-active{% endif %}"
+                          href="{{ child.url }}"
+                          {% if child.active %}aria-current="page"{% endif %}
+                        >{{ child.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
               </li>
             {% endunless %}
           {% endfor %}
