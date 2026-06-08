@@ -17,24 +17,10 @@
         "short_description": "<p>Our main branch sits in the heart of Loyola Heights, walking distance from Ateneo, UP Diliman, and Miriam College. Oven-baked halal pizzas, dough rested overnight, premium toppings at student-friendly prices.</p>",
         "button_text": "Get Directions",
         "button_url": "#",
-        "background_color": "#D90000",
-        "text_color": "#FFFFFF",
-        "card_background_color": "#C20000",
-        "circle_color": "#E5231E"
-      }
-    },
-    "delivery_callout": {
-      "type": "delivery-callout-section",
-      "settings": {
-        "tag_text": "Transparent delivery",
-        "title": "Delivering to Makati from our Katipunan kitchen.",
-        "description": "<p>There is no Salaam branch inside Makati yet. Every order placed for a Makati address is baked fresh at 123 Katipunan Avenue, Loyola Heights, then dispatched. Average delivery time is 45 to 60 minutes depending on traffic and the destination barangay.</p>",
-        "corner_radius": 40,
-        "background_color": "#F6F6F6",
-        "card_background_color": "#D90000",
-        "tag_background_color": "#FFFFFF",
-        "tag_text_color": "#000000",
-        "text_color": "#FFFFFF"
+        "background_color": "#d90000",
+        "text_color": "#ffffff",
+        "card_background_color": "#c20000",
+        "circle_color": "#e5231e"
       }
     },
     "quick_facts": {
@@ -42,19 +28,31 @@
       "blocks": {
         "fact_status": {
           "type": "fact",
-          "settings": { "label": "Status", "value": "Physical Branch" }
+          "settings": {
+            "label": "Status",
+            "value": "Physical Branch"
+          }
         },
         "fact_hours": {
           "type": "fact",
-          "settings": { "label": "Hours", "value": "11am - 10pm Daily" }
+          "settings": {
+            "label": "Hours",
+            "value": "11am - 10pm Daily"
+          }
         },
         "fact_phone": {
           "type": "fact",
-          "settings": { "label": "Phone", "value": "+63 2 0000 0000" }
+          "settings": {
+            "label": "Phone",
+            "value": "+63 2 0000 0000"
+          }
         },
         "fact_delivery": {
           "type": "fact",
-          "settings": { "label": "Delivery Time", "value": "30-45 minutes" }
+          "settings": {
+            "label": "Delivery Time",
+            "value": "30-45 minutes"
+          }
         }
       },
       "block_order": [
@@ -64,7 +62,7 @@
         "fact_delivery"
       ],
       "settings": {
-        "background_color": "#F6F6F6",
+        "background_color": "#f6f6f6",
         "text_color": "#000000",
         "padding_top": 40,
         "padding_bottom": 40
@@ -74,12 +72,27 @@
       "type": "map-section",
       "settings": {
         "title": "Find us on the map",
+        "map_embed_code": "",
         "map_query": "Katipunan, Quezon City",
         "map_height": 420,
         "map_height_mobile": 320,
         "corner_radius": 24,
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "text_color": "#000000"
+      }
+    },
+    "delivery_callout": {
+      "type": "delivery-callout-section",
+      "settings": {
+        "tag_text": "Transparent delivery",
+        "title": "Delivering to Makati from our Katipunan kitchen.",
+        "description": "<p>There is no Salaam branch inside Makati yet. Every order placed for a Makati address is baked fresh at 123 Katipunan Avenue, Loyola Heights, then dispatched. Average delivery time is 45 to 60 minutes depending on traffic and the destination barangay.</p>",
+        "corner_radius": 40,
+        "background_color": "#f6f6f6",
+        "card_background_color": "#d90000",
+        "tag_background_color": "#ffffff",
+        "tag_text_color": "#000000",
+        "text_color": "#ffffff"
       }
     },
     "address": {
@@ -104,12 +117,13 @@
         "card_address",
         "card_transit"
       ],
+      "disabled": true,
       "settings": {
         "title": "Visit the Katipunan branch",
-        "background_color": "#F6F6F6",
+        "background_color": "#f6f6f6",
         "text_color": "#000000",
-        "card_background_color": "#FFFFFF",
-        "card_border_color": "#D5D5D5"
+        "card_background_color": "#ffffff",
+        "card_border_color": "#d5d5d5"
       }
     },
     "landmarks": {
@@ -148,12 +162,12 @@
       "settings": {
         "title": "What's nearby",
         "description": "<p>We sit at the centre of Loyola Heights, surrounded by three of Metro Manila's most active university campuses.</p>",
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "text_color": "#000000",
-        "card_background_color": "#FFFFFF",
-        "card_border_color": "#D5D5D5",
-        "pill_background_color": "#D90000",
-        "pill_text_color": "#FFFFFF"
+        "card_background_color": "#ffffff",
+        "card_border_color": "#d5d5d5",
+        "pill_background_color": "#d90000",
+        "pill_text_color": "#ffffff"
       }
     },
     "coverage": {
@@ -162,10 +176,10 @@
         "title": "Delivery coverage from Katipunan",
         "description": "<p>We deliver hot Salaam pizzas to these neighbourhoods within 30 to 45 minutes.</p>",
         "areas": "Loyola Heights\nKrus na Ligas\nPansol\nSikatuna Village\nTeachers Village\nVarsity Hills\nBlue Ridge\nWhite Plains\nUP Diliman Campus\nProject 4\nCubao (Araneta)\nNew Manila",
-        "background_color": "#F6F6F6",
+        "background_color": "#f6f6f6",
         "text_color": "#000000",
-        "chip_background_color": "#FFFFFF",
-        "chip_border_color": "#D5D5D5",
+        "chip_background_color": "#ffffff",
+        "chip_border_color": "#d5d5d5",
         "chip_text_color": "#000000"
       }
     },
@@ -202,11 +216,11 @@
       "settings": {
         "title": "Why Salaam in Katipunan",
         "description": "<p>Three reasons students, faculty, and families keep ordering from our Loyola Heights kitchen.</p>",
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "text_color": "#000000",
-        "card_background_color": "#FFFFFF",
-        "icon_background_color": "#D90000",
-        "icon_color": "#FFFFFF"
+        "card_background_color": "#ffffff",
+        "icon_background_color": "#d90000",
+        "icon_color": "#ffffff"
       }
     },
     "cta": {
@@ -216,7 +230,7 @@
         "description": "<p>Order your first Salaam pizza today.</p>",
         "button_text": "Order Now",
         "button_url": "#",
-        "background_color": "#D90000"
+        "background_color": "#d90000"
       }
     },
     "main": {
@@ -227,9 +241,9 @@
   },
   "order": [
     "location_hero",
-    "delivery_callout",
     "quick_facts",
     "map",
+    "delivery_callout",
     "address",
     "landmarks",
     "coverage",
