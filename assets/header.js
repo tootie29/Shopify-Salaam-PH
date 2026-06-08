@@ -136,12 +136,6 @@
 
   if (searchButton && searchForm && searchInput && header) {
     searchButton.addEventListener("click", () => {
-      const isTabletDown = window.matchMedia("(max-width: 1023px)").matches;
-      if (!isTabletDown) {
-        searchForm.submit();
-        return;
-      }
-
       const isOpen = header.classList.contains("is-search-open");
       if (!isOpen) {
         header.classList.add("is-search-open");
