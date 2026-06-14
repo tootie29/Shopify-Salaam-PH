@@ -13,13 +13,68 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "col_order": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Order",
+            "menu": "footer"
+          }
+        },
+        "col_visit": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Visit",
+            "menu": ""
+          }
+        },
+        "col_business": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Business",
+            "menu": ""
+          }
+        },
+        "social_facebook": {
+          "type": "social_link",
+          "settings": {
+            "platform": "facebook",
+            "label": "Facebook",
+            "url": "https://www.facebook.com/salaampizzaPH/"
+          }
+        },
+        "social_instagram": {
+          "type": "social_link",
+          "settings": {
+            "platform": "instagram",
+            "label": "Instagram",
+            "url": "https://www.instagram.com/salaampizza/"
+          }
+        },
+        "social_phone": {
+          "type": "social_link",
+          "settings": {
+            "platform": "phone",
+            "label": "0917 300 2540",
+            "url": "tel:+639173002540"
+          }
+        }
+      },
+      "block_order": [
+        "col_order",
+        "col_visit",
+        "col_business",
+        "social_facebook",
+        "social_instagram",
+        "social_phone"
+      ],
       "settings": {
-        "footer_logo": "shopify://shop_images/salaam-pizza_logo.avif",
-        "menu": "footer",
-        "facebook_url": "https://www.facebook.com/salaampizzaPH/",
-        "linkedin_url": "",
-        "youtube_url": "",
-        "instagram_url": "https://www.instagram.com/salaampizza/"
+        "social_heading": "Follow Us",
+        "copyright_text": "<p>© 2026 Salaam Pizza. Katipunan, Quezon City. IDCP-Certified Halal.</p>",
+        "background_color": "#FFFFFF",
+        "heading_color": "#000000",
+        "text_color": "#000000",
+        "link_hover_color": "#D90000"
       }
     }
   },
