@@ -14,10 +14,10 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "menu_column_ri7tVY": {
+        "menu_column_dACkGM": {
           "type": "menu_column",
           "settings": {
-            "heading": "Visit",
+            "heading": "Menu",
             "menu": ""
           }
         },
@@ -27,11 +27,28 @@
             "heading": "Order",
             "menu": "order"
           }
+        },
+        "menu_column_ri7tVY": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Business",
+            "menu": ""
+          }
+        },
+        "social_link_GNc3gW": {
+          "type": "social_link",
+          "settings": {
+            "platform": "facebook",
+            "label": "Facebook",
+            "url": ""
+          }
         }
       },
       "block_order": [
+        "menu_column_dACkGM",
+        "menu_column_hWHGDm",
         "menu_column_ri7tVY",
-        "menu_column_hWHGDm"
+        "social_link_GNc3gW"
       ],
       "settings": {
         "social_heading": "Follow Us",
