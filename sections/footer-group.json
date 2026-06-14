@@ -14,6 +14,13 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "menu_column_ri7tVY": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Visit",
+            "menu": ""
+          }
+        },
         "menu_column_hWHGDm": {
           "type": "menu_column",
           "settings": {
@@ -23,6 +30,7 @@
         }
       },
       "block_order": [
+        "menu_column_ri7tVY",
         "menu_column_hWHGDm"
       ],
       "settings": {
