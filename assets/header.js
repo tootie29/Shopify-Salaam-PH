@@ -16,6 +16,32 @@
     const menuToggle = document.querySelector("[data-menu-toggle]");
     const drawerCloseEls = document.querySelectorAll("[data-drawer-close]");
 
+    // Keep the header cart count in sync with the live cart (handles updates
+    // from other tabs and back/forward bfcache restores).
+    const cartCountEls = Array.from(document.querySelectorAll("[data-cart-count]"));
+    const refreshCartCount = function () {
+      if (!cartCountEls.length) return;
+      fetch("/cart.js")
+        .then(function (res) {
+          if (!res.ok) throw new Error("Cart fetch failed");
+          return res.json();
+        })
+        .then(function (cart) {
+          const count = (cart && cart.item_count) || 0;
+          cartCountEls.forEach(function (el) {
+            el.textContent = count > 0 ? count : "";
+            el.hidden = count === 0;
+          });
+        })
+        .catch(function () {
+          /* Leave the server-rendered count in place on failure. */
+        });
+    };
+    refreshCartCount();
+    window.addEventListener("pageshow", function (event) {
+      if (event.persisted) refreshCartCount();
+    });
+
     const toggleDrawer = function (shouldOpen) {
       if (!drawer) return;
       drawer.classList.toggle("is-active", shouldOpen);
