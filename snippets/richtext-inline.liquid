@@ -1,0 +1,24 @@
+{%- comment -%}
+  Renders inline rich-text nodes (text + link) from a Shopify rich text object.
+  Params:
+    nodes - array of inline nodes (e.g. block.children)
+{%- endcomment -%}
+{%- for node in nodes -%}
+  {%- if node.type == 'text' -%}
+    {%- if node.bold and node.italic -%}<strong><em>{{ node.value }}</em></strong>
+    {%- elsif node.bold -%}<strong>{{ node.value }}</strong>
+    {%- elsif node.italic -%}<em>{{ node.value }}</em>
+    {%- else -%}{{ node.value }}
+    {%- endif -%}
+  {%- elsif node.type == 'link' -%}
+    <a href="{{ node.url }}"{% if node.title != blank %} title="{{ node.title }}"{% endif %}{% if node.target != blank %} target="{{ node.target }}" rel="noopener"{% endif %}>
+      {%- for child in node.children -%}
+        {%- if child.bold and child.italic -%}<strong><em>{{ child.value }}</em></strong>
+        {%- elsif child.bold -%}<strong>{{ child.value }}</strong>
+        {%- elsif child.italic -%}<em>{{ child.value }}</em>
+        {%- else -%}{{ child.value }}
+        {%- endif -%}
+      {%- endfor -%}
+    </a>
+  {%- endif -%}
+{%- endfor -%}
