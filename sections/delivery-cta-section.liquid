@@ -17,15 +17,11 @@
     >
       <div class="delivery-cta__content">
         {% if section.settings.heading != blank %}
-          <h2 class="delivery-cta__heading" style="color: {{ section.settings.text_color | default: '#FFFFFF' }};">
-            {{ section.settings.heading }}
-          </h2>
+          <h2 class="delivery-cta__heading">{{ section.settings.heading }}</h2>
         {% endif %}
 
         {% if section.settings.body != blank %}
-          <div class="delivery-cta__body" style="color: {{ section.settings.text_color | default: '#FFFFFF' }};">
-            {{ section.settings.body }}
-          </div>
+          <div class="delivery-cta__body">{{ section.settings.body }}</div>
         {% endif %}
 
         {% if section.blocks.size > 0 %}
@@ -48,7 +44,14 @@
                       alt: block.settings.label | default: 'Order online'
                   }}
                 {% else %}
-                  <span class="delivery-cta__btn-label">{{ block.settings.label | default: 'Order online' }}</span>
+                  {%- assign label_down = block.settings.label | default: '' | downcase -%}
+                  {% if label_down contains 'grab' %}
+                    <img class="delivery-cta__btn-logo" src="{{ 'logo-grabfood.png' | asset_url }}" alt="GrabFood" loading="lazy" width="140" height="26">
+                  {% elsif label_down contains 'panda' %}
+                    <img class="delivery-cta__btn-logo" src="{{ 'logo-foodpanda.png' | asset_url }}" alt="Foodpanda" loading="lazy" width="80" height="26">
+                  {% else %}
+                    <span class="delivery-cta__btn-label">{{ block.settings.label | default: 'Order online' }}</span>
+                  {% endif %}
                 {% endif %}
               </a>
             {% endfor %}
@@ -97,6 +100,13 @@
     position: relative;
     z-index: 2;
   }
+  #{{ section.id }} .delivery-cta__heading,
+  #{{ section.id }} .delivery-cta__body,
+  #{{ section.id }} .delivery-cta__body p,
+  #{{ section.id }} .delivery-cta__body a,
+  #{{ section.id }} .delivery-cta__body * {
+    color: {{ section.settings.text_color | default: '#FFFFFF' }};
+  }
   #{{ section.id }} .delivery-cta__heading {
     margin: 0;
     font-size: var(--text-4);
@@ -125,9 +135,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 56px;
+    height: 54px;
     min-width: 180px;
-    padding: 8px 24px;
+    padding: 8px 20px;
     border-radius: 40px;
     background: #ededed;
     border: 1px solid #d5d5d5;
@@ -139,8 +149,9 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
   }
   #{{ section.id }} .delivery-cta__btn-logo {
-    height: 38px;
+    height: 26px;
     width: auto;
+    max-width: 140px;
     object-fit: contain;
     display: block;
   }
