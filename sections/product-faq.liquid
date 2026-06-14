@@ -50,7 +50,10 @@
               data-accordion-panel
             >
               <div class="product-faq__answer rte">
-                {%- assign rt = item.answer -%}
+                {%- assign rt = item.answer.value -%}
+                {%- if rt.type != 'root' and item.answer.type == 'root' -%}
+                  {%- assign rt = item.answer -%}
+                {%- endif -%}
                 {%- if rt.type == 'root' -%}
                   {%- for block in rt.children -%}
                     {%- case block.type -%}
@@ -68,7 +71,10 @@
                     {%- endcase -%}
                   {%- endfor -%}
                 {%- else -%}
-                  {{ item.answer | newline_to_br }}
+                  {%- assign raw_answer = item.answer | strip -%}
+                  {%- unless raw_answer contains '"type":"root"' -%}
+                    {{ raw_answer | newline_to_br }}
+                  {%- endunless -%}
                 {%- endif -%}
               </div>
             </div>
