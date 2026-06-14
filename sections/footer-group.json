@@ -14,6 +14,13 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "info_column_qgKRNx": {
+          "type": "info_column",
+          "settings": {
+            "logo": "shopify://shop_images/salaam-pizza_logo.avif",
+            "text": ""
+          }
+        },
         "menu_column_dACkGM": {
           "type": "menu_column",
           "settings": {
@@ -61,6 +68,7 @@
         }
       },
       "block_order": [
+        "info_column_qgKRNx",
         "menu_column_dACkGM",
         "menu_column_hWHGDm",
         "menu_column_ri7tVY",
