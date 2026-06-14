@@ -18,7 +18,7 @@
           "type": "menu_column",
           "settings": {
             "heading": "Menu",
-            "menu": ""
+            "menu": "main-menu"
           }
         },
         "menu_column_hWHGDm": {
@@ -32,7 +32,7 @@
           "type": "menu_column",
           "settings": {
             "heading": "Business",
-            "menu": ""
+            "menu": "business"
           }
         },
         "social_link_GNc3gW": {
@@ -40,7 +40,23 @@
           "settings": {
             "platform": "facebook",
             "label": "Facebook",
-            "url": ""
+            "url": "https://www.facebook.com/salaampizzaPH/"
+          }
+        },
+        "social_link_wc33LD": {
+          "type": "social_link",
+          "settings": {
+            "platform": "instagram",
+            "label": "Instagram",
+            "url": "https://www.instagram.com/salaampizza/"
+          }
+        },
+        "social_link_kUkjCz": {
+          "type": "social_link",
+          "settings": {
+            "platform": "tiktok",
+            "label": "Tiktok",
+            "url": "https://www.instagram.com/salaampizza/"
           }
         }
       },
@@ -48,7 +64,9 @@
         "menu_column_dACkGM",
         "menu_column_hWHGDm",
         "menu_column_ri7tVY",
-        "social_link_GNc3gW"
+        "social_link_GNc3gW",
+        "social_link_wc33LD",
+        "social_link_kUkjCz"
       ],
       "settings": {
         "social_heading": "Follow Us",
