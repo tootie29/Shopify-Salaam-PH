@@ -142,6 +142,18 @@
 <script src="{{ 'product-page.js' | asset_url }}" defer></script>
 
 {% style %}
+  /* Full-bleed section; inner containers stay at page width */
+  #{{ section.id }} {
+    width: 100%;
+  }
+  #{{ section.id }} .section--container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   /* Breadcrumb */
   #{{ section.id }} .product-breadcrumb {
     background-color: var(--color-red);
