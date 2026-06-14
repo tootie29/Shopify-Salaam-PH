@@ -9,12 +9,26 @@
  */
 {
   "sections": {
+    "hero": {
+      "type": "hero-banner-background",
+      "settings": {
+        "title": "Salaam Pizza Stories",
+        "description": "<p>News, recipes, and updates from our Katipunan kitchen.</p>"
+      }
+    },
     "main": {
       "type": "blog",
-      "settings": {}
+      "settings": {
+        "heading": "Latest posts",
+        "posts_per_page": 9,
+        "load_more_text": "Load more",
+        "read_more_text": "Read more",
+        "background_color": "#ffffff"
+      }
     }
   },
   "order": [
+    "hero",
     "main"
   ]
 }

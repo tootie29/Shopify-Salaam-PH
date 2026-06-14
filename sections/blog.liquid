@@ -1,35 +1,267 @@
 {% comment %}
-  This section is used in the blog template to render the blog page listing all
-  articles within a blog.
+  Blog template main section: a paginated grid of article cards with a
+  progressively-enhanced "Load more" button (assets/blog.js).
 
   https://shopify.dev/docs/storefronts/themes/architecture/templates/blog
 {% endcomment %}
 
-<h1>{{ blog.title }}</h1>
+{%- assign per_page = section.settings.posts_per_page | default: 9 -%}
 
-{% paginate blog.articles by 5 %}
-  {% for article in blog.articles %}
-    <div>
-      {% if article.image %}
-        {{ article.image | image_url: width: 1000 | image_tag }}
+{% paginate blog.articles by per_page %}
+  <section
+    id="{{ section.id }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="blog-posts"
+    class="section blog-posts"
+    {% if section.settings.background_color != blank %}
+      style="background-color: {{ section.settings.background_color }};"
+    {% endif %}
+  >
+    <div class="section--container">
+      {% if section.settings.heading != blank %}
+        <header class="blog-posts__header">
+          <h2 class="blog-posts__heading">{{ section.settings.heading }}</h2>
+        </header>
       {% endif %}
-      <h2>
-        {{ article.title | link_to: article.url }}
-      </h2>
-      {% assign date = article.published_at | time_tag: format: 'date' %}
-      <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-      <p>{{ article.excerpt }}</p>
-    </div>
-  {% endfor %}
 
-  {%- if paginate.pages > 1 -%}
-    {{- paginate | default_pagination -}}
-  {%- endif -%}
+      <div class="blog-posts__grid" data-blog-grid>
+        {% for article in blog.articles %}
+          <article class="blog-card" data-blog-item>
+            <a class="blog-card__media" href="{{ article.url }}" tabindex="-1" aria-hidden="true">
+              {% if article.image %}
+                {{
+                  article.image
+                  | image_url: width: 800
+                  | image_tag:
+                    widths: '300, 400, 600, 800',
+                    sizes: '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw',
+                    loading: 'lazy',
+                    class: 'blog-card__img',
+                    alt: article.title
+                }}
+              {% else %}
+                <div class="blog-card__img blog-card__img--placeholder">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </a>
+
+            <div class="blog-card__body">
+              <div class="blog-card__meta">
+                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                  {{ article.published_at | date: '%b %d, %Y' }}
+                </time>
+                {% if article.author != blank %}
+                  <span class="blog-card__dot" aria-hidden="true">•</span>
+                  <span>{{ article.author }}</span>
+                {% endif %}
+              </div>
+
+              <h3 class="blog-card__title">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+              </h3>
+
+              {% if article.excerpt_or_content != blank %}
+                <div class="blog-card__excerpt">
+                  {{ article.excerpt_or_content | strip_html | truncatewords: 24 }}
+                </div>
+              {% endif %}
+
+              <a class="blog-card__link" href="{{ article.url }}">
+                {{ section.settings.read_more_text | default: 'Read more' }}
+              </a>
+            </div>
+          </article>
+        {% else %}
+          <p class="blog-posts__empty">{{ 'blog.no_articles' | t }}</p>
+        {% endfor %}
+      </div>
+
+      {% if paginate.next %}
+        <div class="blog-posts__loadmore">
+          <a
+            class="btn btn--black blog-posts__loadmore-btn"
+            href="{{ paginate.next.url }}"
+            data-blog-loadmore
+            data-label="{{ section.settings.load_more_text | default: 'Load more' }}"
+          >
+            {{ section.settings.load_more_text | default: 'Load more' }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </section>
 {% endpaginate %}
+
+<script src="{{ 'blog.js' | asset_url }}" defer></script>
+
+{% style %}
+  #{{ section.id }} .section--container {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+  #{{ section.id }} .blog-posts__header {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  #{{ section.id }} .blog-posts__heading {
+    margin: 0;
+    font-size: var(--text-4);
+    font-weight: var(--font-primary-weight-bold);
+    line-height: 1.1;
+  }
+  #{{ section.id }} .blog-posts__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+  #{{ section.id }} .blog-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  #{{ section.id }} .blog-card__media {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background-color: #f1f1f1;
+  }
+  #{{ section.id }} .blog-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  #{{ section.id }} .blog-card__media:hover .blog-card__img {
+    transform: scale(1.04);
+  }
+  #{{ section.id }} .blog-card__img--placeholder svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #{{ section.id }} .blog-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px 24px 26px;
+    flex: 1 1 auto;
+  }
+  #{{ section.id }} .blog-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--text--1);
+    font-weight: var(--font-primary-weight-medium);
+    color: rgba(0, 0, 0, 0.55);
+  }
+  #{{ section.id }} .blog-card__title {
+    margin: 0;
+    font-size: var(--text-1);
+    font-weight: var(--font-primary-weight-bold);
+    line-height: 1.25;
+  }
+  #{{ section.id }} .blog-card__title a {
+    color: var(--color-black);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  #{{ section.id }} .blog-card__title a:hover {
+    color: var(--color-red);
+  }
+  #{{ section.id }} .blog-card__excerpt {
+    font-size: var(--text--1);
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  #{{ section.id }} .blog-card__link {
+    margin-top: auto;
+    padding-top: 6px;
+    font-size: var(--text--1);
+    font-weight: var(--font-primary-weight-bold);
+    color: var(--color-red);
+    text-decoration: none;
+  }
+  #{{ section.id }} .blog-card__link:hover {
+    text-decoration: underline;
+  }
+  #{{ section.id }} .blog-posts__loadmore {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  #{{ section.id }} .blog-posts__loadmore-btn[aria-busy='true'] {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  #{{ section.id }} .blog-posts__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  @media (max-width: 1023px) {
+    #{{ section.id }} .blog-posts__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+  @media (max-width: 767px) {
+    #{{ section.id }} .blog-posts__grid {
+      grid-template-columns: 1fr;
+    }
+    #{{ section.id }} .section--container {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+  }
+{% endstyle %}
 
 {% schema %}
 {
-  "name": "t:general.blog",
-  "settings": []
+  "name": "Blog posts",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Latest posts"
+    },
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "Posts per load",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "default": 9
+    },
+    {
+      "type": "text",
+      "id": "load_more_text",
+      "label": "Load more button text",
+      "default": "Load more"
+    },
+    {
+      "type": "text",
+      "id": "read_more_text",
+      "label": "Read more link text",
+      "default": "Read more"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    }
+  ]
 }
 {% endschema %}
