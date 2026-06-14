@@ -49,7 +49,7 @@
               aria-labelledby="{{ trigger_id }}"
               data-accordion-panel
             >
-              <div class="product-faq__answer rte">{{ item.answer }}</div>
+              <div class="product-faq__answer rte">{{ item.answer | newline_to_br }}</div>
             </div>
           </div>
         {% endfor %}
