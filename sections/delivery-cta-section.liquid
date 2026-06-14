@@ -1,0 +1,281 @@
+{% comment %}
+  Dark delivery call-to-action banner: headline + body on the left, delivery
+  partner buttons (GrabFood, Foodpanda, …) added as blocks, and an optional
+  decorative product image on the right.
+{% endcomment %}
+
+<section
+  id="{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="delivery-cta-section"
+  class="section delivery-cta"
+>
+  <div class="section--container">
+    <div
+      class="delivery-cta__card"
+      style="background-color: {{ section.settings.background_color | default: '#000000' }}; border-radius: {{ section.settings.corner_radius | default: 48 }}px;"
+    >
+      <div class="delivery-cta__content">
+        {% if section.settings.heading != blank %}
+          <h2 class="delivery-cta__heading" style="color: {{ section.settings.text_color | default: '#FFFFFF' }};">
+            {{ section.settings.heading }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.body != blank %}
+          <div class="delivery-cta__body" style="color: {{ section.settings.text_color | default: '#FFFFFF' }};">
+            {{ section.settings.body }}
+          </div>
+        {% endif %}
+
+        {% if section.blocks.size > 0 %}
+          <div class="delivery-cta__buttons">
+            {% for block in section.blocks %}
+              {%- assign btn_url = block.settings.url | default: '#' -%}
+              <a
+                class="delivery-cta__btn"
+                href="{{ btn_url }}"
+                {% if btn_url != '#' %}target="_blank" rel="noopener"{% endif %}
+                {{ block.shopify_attributes }}
+              >
+                {% if block.settings.logo != blank %}
+                  {{
+                    block.settings.logo
+                    | image_url: width: 320
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'delivery-cta__btn-logo',
+                      alt: block.settings.label | default: 'Order online'
+                  }}
+                {% else %}
+                  <span class="delivery-cta__btn-label">{{ block.settings.label | default: 'Order online' }}</span>
+                {% endif %}
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if section.settings.side_image != blank %}
+        <div class="delivery-cta__media">
+          {{
+            section.settings.side_image
+            | image_url: width: 1000
+            | image_tag:
+              widths: '400, 600, 800, 1000',
+              sizes: '(max-width: 991px) 70vw, 480px',
+              loading: 'lazy',
+              class: 'delivery-cta__image',
+              alt: section.settings.heading | default: shop.name
+          }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #{{ section.id }} .section--container {
+    padding-top: 8px;
+    padding-bottom: 64px;
+  }
+  #{{ section.id }} .delivery-cta__card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 32px;
+    padding: 64px 72px;
+    overflow: hidden;
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.18);
+  }
+  #{{ section.id }} .delivery-cta__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 680px;
+    position: relative;
+    z-index: 2;
+  }
+  #{{ section.id }} .delivery-cta__heading {
+    margin: 0;
+    font-size: var(--text-4);
+    font-weight: var(--font-primary-weight-bold);
+    line-height: 1.15;
+  }
+  #{{ section.id }} .delivery-cta__body {
+    font-size: var(--text-0);
+    line-height: 1.55;
+    max-width: 600px;
+    opacity: 0.92;
+  }
+  #{{ section.id }} .delivery-cta__body p {
+    margin: 0 0 0.6em;
+  }
+  #{{ section.id }} .delivery-cta__body p:last-child {
+    margin-bottom: 0;
+  }
+  #{{ section.id }} .delivery-cta__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  #{{ section.id }} .delivery-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    min-width: 180px;
+    padding: 8px 24px;
+    border-radius: 40px;
+    background: #ededed;
+    border: 1px solid #d5d5d5;
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  #{{ section.id }} .delivery-cta__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  }
+  #{{ section.id }} .delivery-cta__btn-logo {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+  #{{ section.id }} .delivery-cta__btn-label {
+    font-size: var(--text-0);
+    font-weight: var(--font-primary-weight-bold);
+    color: var(--color-black);
+  }
+  #{{ section.id }} .delivery-cta__media {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  #{{ section.id }} .delivery-cta__image {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  @media (max-width: 991px) {
+    #{{ section.id }} .delivery-cta__card {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding: 48px 40px;
+    }
+    #{{ section.id }} .delivery-cta__media {
+      justify-content: center;
+      order: -1;
+    }
+    #{{ section.id }} .delivery-cta__image {
+      max-width: 320px;
+    }
+  }
+  @media (max-width: 767px) {
+    #{{ section.id }} .section--container {
+      padding-bottom: 48px;
+    }
+    #{{ section.id }} .delivery-cta__card {
+      padding: 36px 24px;
+      border-radius: 28px !important;
+    }
+    #{{ section.id }} .delivery-cta__btn {
+      flex: 1 1 100%;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Delivery CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Order Salaam Pizza for delivery."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text",
+      "default": "<p>Craving halal pizza? Get it delivered hot to your door through your favourite delivery app.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "side_image",
+      "label": "Side image (decorative)"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Card background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "partner_button",
+      "name": "Delivery button",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Fallback label (if no logo)",
+          "default": "Order online"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Delivery CTA",
+      "blocks": [
+        { "type": "partner_button", "settings": { "label": "GrabFood" } },
+        { "type": "partner_button", "settings": { "label": "Foodpanda" } }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

@@ -19,10 +19,32 @@
         "heading": "Frequently Asked Questions",
         "background_color": "#ffffff"
       }
+    },
+    "delivery_cta": {
+      "type": "delivery-cta-section",
+      "blocks": {
+        "grabfood": {
+          "type": "partner_button",
+          "settings": { "label": "GrabFood" }
+        },
+        "foodpanda": {
+          "type": "partner_button",
+          "settings": { "label": "Foodpanda" }
+        }
+      },
+      "block_order": ["grabfood", "foodpanda"],
+      "settings": {
+        "heading": "Order Salaam Pizza for delivery.",
+        "body": "<p>Craving halal pizza? Get it delivered hot to your door through your favourite delivery app.</p>",
+        "background_color": "#000000",
+        "text_color": "#ffffff",
+        "corner_radius": 48
+      }
     }
   },
   "order": [
     "main",
-    "faq"
+    "faq",
+    "delivery_cta"
   ]
 }
