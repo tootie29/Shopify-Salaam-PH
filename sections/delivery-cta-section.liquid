@@ -46,9 +46,9 @@
                 {% else %}
                   {%- assign label_down = block.settings.label | default: '' | downcase -%}
                   {% if label_down contains 'grab' %}
-                    <img class="delivery-cta__btn-logo" src="{{ 'logo-grabfood.png' | asset_url }}" alt="GrabFood" loading="lazy" width="140" height="26">
+                    <img class="delivery-cta__btn-logo delivery-cta__btn-logo--grab" src="{{ 'logo-grabfood.png' | asset_url }}" alt="GrabFood" loading="lazy" width="118" height="22">
                   {% elsif label_down contains 'panda' %}
-                    <img class="delivery-cta__btn-logo" src="{{ 'logo-foodpanda.png' | asset_url }}" alt="Foodpanda" loading="lazy" width="80" height="26">
+                    <img class="delivery-cta__btn-logo delivery-cta__btn-logo--panda" src="{{ 'logo-foodpanda.png' | asset_url }}" alt="Foodpanda" loading="lazy" width="91" height="32">
                   {% else %}
                     <span class="delivery-cta__btn-label">{{ block.settings.label | default: 'Order online' }}</span>
                   {% endif %}
@@ -149,11 +149,16 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
   }
   #{{ section.id }} .delivery-cta__btn-logo {
-    height: 26px;
     width: auto;
-    max-width: 140px;
     object-fit: contain;
     display: block;
+  }
+  /* Per-logo optical balancing (PNGs have different internal padding) */
+  #{{ section.id }} .delivery-cta__btn-logo--grab {
+    height: 22px;
+  }
+  #{{ section.id }} .delivery-cta__btn-logo--panda {
+    height: 32px;
   }
   #{{ section.id }} .delivery-cta__btn-label {
     font-size: var(--text-0);
