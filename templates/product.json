@@ -12,9 +12,17 @@
     "main": {
       "type": "product",
       "settings": {}
+    },
+    "faq": {
+      "type": "product-faq",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "background_color": "#ffffff"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "faq"
   ]
 }

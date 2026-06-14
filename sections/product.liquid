@@ -1,58 +1,55 @@
 {% comment %}
-  Product template main section: image in a brand red circle on the left,
-  product details (rating, title, price, description, options, quantity, and
-  add-to-cart) on the right. Matches the Salaam quick-add modal aesthetic.
+  Product template main section: a breadcrumb bar plus the product details —
+  image inside a brand red rounded panel on the left, and rating, title, price,
+  description, option dropdowns, and an "Order Now" button on the right.
 
   https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign menu_label = section.settings.breadcrumb_title | default: 'Menu' -%}
 
 <section
   id="{{ section.id }}"
   data-section-id="{{ section.id }}"
   data-section-type="product-main"
-  class="section product-main"
+  class="product-main"
 >
+  {% comment %} -------- Breadcrumb bar -------- {% endcomment %}
+  <div class="product-breadcrumb">
+    <div class="section--container">
+      <p class="product-breadcrumb__title">{{ menu_label }}</p>
+      <nav class="product-breadcrumb__path" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">Home</a>
+        <span aria-hidden="true">|</span>
+        <a href="{{ section.settings.menu_url | default: routes.all_products_collection_url }}">{{ menu_label }}</a>
+        <span aria-hidden="true">|</span>
+        <span class="product-breadcrumb__current">{{ product.title }}</span>
+      </nav>
+    </div>
+  </div>
+
   <div class="section--container">
     <div class="product-main__card">
       {% comment %} -------- Left: media -------- {% endcomment %}
-      <div class="product-main__media">
-        <div
-          class="product-main__circle"
-          style="background-color: {{ section.settings.image_background_color | default: '#D90000' }};"
-        >
-          {% if product.featured_image %}
-            {{
-              product.featured_image
-              | image_url: width: 900
-              | image_tag:
-                widths: '300, 500, 700, 900',
-                sizes: '(max-width: 767px) 80vw, 460px',
-                loading: 'eager',
-                class: 'product-main__image',
-                alt: product.featured_image.alt | default: product.title
-            }}
-          {% else %}
-            <div class="product-main__image product-main__image--placeholder">
-              {{ 'product-1' | placeholder_svg_tag }}
-            </div>
-          {% endif %}
-        </div>
-
-        {% if product.images.size > 1 %}
-          <div class="product-main__thumbs" data-product-thumbs>
-            {% for image in product.images limit: 6 %}
-              <button
-                type="button"
-                class="product-main__thumb{% if forloop.first %} is-active{% endif %}"
-                data-thumb
-                data-full="{{ image | image_url: width: 900 }}"
-                aria-label="View image {{ forloop.index }}"
-              >
-                {{ image | image_url: width: 160 | image_tag: widths: '80, 160', loading: 'lazy', alt: image.alt | default: product.title }}
-              </button>
-            {% endfor %}
+      <div
+        class="product-main__media"
+        style="background-color: {{ section.settings.image_background_color | default: '#D90000' }};"
+      >
+        {% if product.featured_image %}
+          {{
+            product.featured_image
+            | image_url: width: 1000
+            | image_tag:
+              widths: '300, 500, 700, 1000',
+              sizes: '(max-width: 767px) 80vw, 500px',
+              loading: 'eager',
+              class: 'product-main__image',
+              alt: product.featured_image.alt | default: product.title
+          }}
+        {% else %}
+          <div class="product-main__image product-main__image--placeholder">
+            {{ 'product-1' | placeholder_svg_tag }}
           </div>
         {% endif %}
       </div>
@@ -71,6 +68,10 @@
 
         <h1 class="product-main__title">{{ product.title }}</h1>
 
+        {% if section.settings.show_description and product.description != blank %}
+          <div class="product-main__description rte">{{ product.description }}</div>
+        {% endif %}
+
         <div class="product-main__price" data-product-price>
           <span class="product-main__price-current" data-price-current>
             {{ current_variant.price | money }}
@@ -82,73 +83,52 @@
           {% endif %}
         </div>
 
-        {% if section.settings.show_description and product.description != blank %}
-          <div class="product-main__description rte">{{ product.description }}</div>
-        {% endif %}
-
         {% form 'product', product, class: 'product-main__form' %}
           <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
 
           {% unless product.has_only_default_variant %}
             <div class="product-main__options">
               {% for option in product.options_with_values %}
-                <div class="product-main__option" data-option-group>
-                  <span class="product-main__option-label">{{ option.name }}</span>
-                  <div class="product-main__option-values">
-                    {% for value in option.values %}
-                      {%- assign input_id = section.id | append: '-opt' | append: forloop.parentloop.index0 | append: '-' | append: forloop.index0 -%}
-                      <input
-                        type="radio"
-                        class="product-main__option-input"
-                        id="{{ input_id }}"
-                        name="option-{{ forloop.parentloop.index0 }}"
-                        value="{{ value | escape }}"
-                        data-option-input
-                        data-option-position="{{ forloop.parentloop.index0 }}"
-                        {% if option.selected_value == value %}checked{% endif %}
-                      >
-                      <label class="product-main__option-pill" for="{{ input_id }}">{{ value }}</label>
-                    {% endfor %}
+                {%- assign select_id = section.id | append: '-option-' | append: forloop.index0 -%}
+                <div class="product-main__option">
+                  <label class="product-main__option-label" for="{{ select_id }}">
+                    Select your {{ option.name | downcase }}:
+                  </label>
+                  <div class="product-main__select-wrap">
+                    <select
+                      class="product-main__select"
+                      id="{{ select_id }}"
+                      data-option-select
+                      data-option-position="{{ forloop.index0 }}"
+                    >
+                      {% for value in option.values %}
+                        <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>
+                          {{ value }}
+                        </option>
+                      {% endfor %}
+                    </select>
+                    <svg class="product-main__select-caret" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                   </div>
                 </div>
               {% endfor %}
             </div>
           {% endunless %}
 
-          <div class="product-main__actions">
-            <div class="product-main__qty">
-              <button type="button" class="product-main__qty-btn" data-qty-action="decrement" aria-label="Decrease quantity">
-                <span aria-hidden="true">&minus;</span>
-              </button>
-              <input
-                type="number"
-                class="product-main__qty-input"
-                name="quantity"
-                value="1"
-                min="1"
-                inputmode="numeric"
-                aria-label="Quantity"
-                data-qty-input
-              >
-              <button type="button" class="product-main__qty-btn" data-qty-action="increment" aria-label="Increase quantity">
-                <span aria-hidden="true">+</span>
-              </button>
-            </div>
-
-            <button
-              type="submit"
-              name="add"
-              class="product-main__add"
-              data-add-btn
-              {% unless current_variant.available %}disabled{% endunless %}
-            >
-              {% if current_variant.available %}
-                Add To Cart
-              {% else %}
-                Sold Out
-              {% endif %}
-            </button>
-          </div>
+          <button
+            type="submit"
+            name="add"
+            class="product-main__add"
+            data-add-btn
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            {% if current_variant.available %}
+              Order Now
+            {% else %}
+              Sold Out
+            {% endif %}
+          </button>
         {% endform %}
       </div>
     </div>
@@ -162,67 +142,69 @@
 <script src="{{ 'product-page.js' | asset_url }}" defer></script>
 
 {% style %}
-  #{{ section.id }} .section--container {
-    padding-top: 48px;
-    padding-bottom: 64px;
+  /* Breadcrumb */
+  #{{ section.id }} .product-breadcrumb {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    padding: 22px 0;
+    margin-bottom: 48px;
   }
+  #{{ section.id }} .product-breadcrumb__title {
+    margin: 0 0 6px;
+    font-size: var(--text-3);
+    font-weight: var(--font-primary-weight-bold);
+    line-height: 1;
+    color: var(--color-white);
+  }
+  #{{ section.id }} .product-breadcrumb__path {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--text--1);
+    font-weight: var(--font-primary-weight-medium);
+  }
+  #{{ section.id }} .product-breadcrumb__path a {
+    color: var(--color-white);
+    text-decoration: none;
+    opacity: 0.92;
+  }
+  #{{ section.id }} .product-breadcrumb__path a:hover {
+    text-decoration: underline;
+  }
+  #{{ section.id }} .product-breadcrumb__path span {
+    opacity: 0.75;
+  }
+  #{{ section.id }} .product-breadcrumb__current {
+    font-weight: var(--font-primary-weight-bold);
+  }
+
+  /* Card */
   #{{ section.id }} .product-main__card {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
-    gap: 48px;
-    background-color: var(--color-white);
-    border-radius: 48px;
-    box-shadow: 0 21px 40px rgba(0, 0, 0, 0.09);
-    padding: 56px 64px;
+    gap: 56px;
+    padding-bottom: 64px;
   }
 
   /* Media */
-  #{{ section.id }} .product-main__circle {
+  #{{ section.id }} .product-main__media {
     position: relative;
     width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
     aspect-ratio: 1 / 1;
-    border-radius: 50%;
+    border-radius: 48px;
+    box-shadow: 0 21px 36px rgba(0, 0, 0, 0.28);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
   }
   #{{ section.id }} .product-main__image {
-    width: 88%;
-    height: 88%;
+    width: 80%;
+    height: 80%;
     object-fit: contain;
     display: block;
-  }
-  #{{ section.id }} .product-main__thumbs {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 24px;
-    flex-wrap: wrap;
-  }
-  #{{ section.id }} .product-main__thumb {
-    width: 64px;
-    height: 64px;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 2px solid #e3e3e3;
-    background: var(--color-white);
-    padding: 0;
-    cursor: pointer;
-    transition: border-color 0.18s ease;
-  }
-  #{{ section.id }} .product-main__thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  #{{ section.id }} .product-main__thumb.is-active,
-  #{{ section.id }} .product-main__thumb:hover {
-    border-color: var(--color-red);
   }
 
   /* Info */
@@ -242,10 +224,22 @@
   }
   #{{ section.id }} .product-main__title {
     margin: 0;
-    font-size: var(--text-5);
+    font-size: var(--text-4);
     font-weight: var(--font-primary-weight-bold);
     line-height: 1.05;
     color: var(--color-black);
+  }
+  #{{ section.id }} .product-main__description {
+    font-size: var(--text-1);
+    line-height: 1.45;
+    color: var(--color-black);
+    max-width: 660px;
+  }
+  #{{ section.id }} .product-main__description p {
+    margin: 0 0 0.6em;
+  }
+  #{{ section.id }} .product-main__description p:last-child {
+    margin-bottom: 0;
   }
   #{{ section.id }} .product-main__price {
     display: flex;
@@ -253,153 +247,82 @@
     gap: 12px;
   }
   #{{ section.id }} .product-main__price-current {
-    font-size: var(--text-3);
+    font-size: var(--text-2);
     font-weight: var(--font-primary-weight-bold);
-    color: var(--color-black);
+    color: var(--color-red);
   }
   #{{ section.id }} .product-main__price-compare {
-    font-size: var(--text-1);
+    font-size: var(--text-0);
     font-weight: var(--font-primary-weight-medium);
     color: rgba(0, 0, 0, 0.45);
   }
-  #{{ section.id }} .product-main__description {
-    font-size: var(--text-0);
-    line-height: 1.6;
-    color: rgba(0, 0, 0, 0.72);
-    max-width: 640px;
-  }
-  #{{ section.id }} .product-main__description p {
-    margin: 0 0 0.8em;
-  }
-  #{{ section.id }} .product-main__description p:last-child {
-    margin-bottom: 0;
-  }
 
-  /* Options */
+  /* Options as dropdowns */
   #{{ section.id }} .product-main__options {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    margin: 4px 0;
+    gap: 18px;
+    margin: 6px 0;
   }
   #{{ section.id }} .product-main__option-label {
     display: block;
-    margin-bottom: 8px;
-    font-size: var(--text--1);
-    font-weight: var(--font-primary-weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    margin-bottom: 10px;
+    font-size: var(--text-1);
+    font-weight: var(--font-primary-weight-medium);
     color: var(--color-black);
   }
-  #{{ section.id }} .product-main__option-values {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  #{{ section.id }} .product-main__select-wrap {
+    position: relative;
+    max-width: 660px;
   }
-  #{{ section.id }} .product-main__option-input {
+  #{{ section.id }} .product-main__select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 20px 56px 20px 28px;
+    font-family: inherit;
+    font-size: var(--text-1);
+    font-weight: var(--font-primary-weight-medium);
+    color: var(--color-black);
+    background-color: #f3f0f0;
+    border: 1px solid #b3b3b3;
+    border-radius: 200px;
+    cursor: pointer;
+  }
+  #{{ section.id }} .product-main__select:focus {
+    outline: none;
+    border-color: var(--color-red);
+  }
+  #{{ section.id }} .product-main__select-caret {
     position: absolute;
-    opacity: 0;
+    top: 50%;
+    right: 26px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--color-black);
     pointer-events: none;
   }
-  #{{ section.id }} .product-main__option-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    border-radius: 200px;
-    border: 1.5px solid #e3e3e3;
-    background: var(--color-white);
-    color: var(--color-black);
-    font-size: var(--text--1);
-    font-weight: var(--font-primary-weight-medium);
-    cursor: pointer;
-    transition: all 0.18s ease;
-  }
-  #{{ section.id }} .product-main__option-pill:hover {
-    border-color: var(--color-black);
-  }
-  #{{ section.id }} .product-main__option-input:checked + .product-main__option-pill {
-    background: var(--color-red);
-    border-color: var(--color-red);
-    color: var(--color-white);
-  }
-  #{{ section.id }} .product-main__option-input:disabled + .product-main__option-pill {
-    opacity: 0.4;
-    cursor: not-allowed;
-    text-decoration: line-through;
-  }
-  #{{ section.id }} .product-main__option-input:focus-visible + .product-main__option-pill {
-    outline: 2px solid var(--color-black);
-    outline-offset: 2px;
-  }
 
-  /* Actions */
-  #{{ section.id }} .product-main__actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 8px;
-  }
-  #{{ section.id }} .product-main__qty {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    border: 1px solid #e3e3e3;
-    border-radius: 200px;
-    background: var(--color-white);
-    box-shadow: 0 12px 18px rgba(0, 0, 0, 0.06);
-  }
-  #{{ section.id }} .product-main__qty-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: none;
-    background: var(--color-red);
-    color: var(--color-white);
-    font-size: 22px;
-    line-height: 1;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.18s ease;
-  }
-  #{{ section.id }} .product-main__qty-btn:hover {
-    background: var(--color-black);
-  }
-  #{{ section.id }} .product-main__qty-input {
-    width: 40px;
-    text-align: center;
-    border: none;
-    background: transparent;
-    font-size: var(--text-1);
-    font-weight: var(--font-primary-weight-bold);
-    color: var(--color-black);
-    -moz-appearance: textfield;
-  }
-  #{{ section.id }} .product-main__qty-input::-webkit-outer-spin-button,
-  #{{ section.id }} .product-main__qty-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  /* Order Now */
   #{{ section.id }} .product-main__add {
-    flex: 1 1 auto;
-    min-width: 200px;
-    padding: 18px 40px;
+    align-self: flex-start;
+    min-width: 192px;
+    margin-top: 8px;
+    padding: 22px 44px;
     border: none;
     border-radius: 53px;
-    background: var(--color-black);
+    background: var(--color-red);
     color: var(--color-white);
-    font-size: var(--text-0);
+    font-size: var(--text-1);
     font-weight: var(--font-primary-weight-medium);
     cursor: pointer;
-    box-shadow: 0 18px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 22px 26px rgba(0, 0, 0, 0.12);
     transition: background 0.18s ease, opacity 0.18s ease;
   }
   #{{ section.id }} .product-main__add:hover:not(:disabled) {
-    background: var(--color-red);
+    background: var(--color-black);
   }
   #{{ section.id }} .product-main__add:disabled {
     opacity: 0.5;
@@ -408,34 +331,27 @@
 
   @media (max-width: 1023px) {
     #{{ section.id }} .product-main__card {
-      gap: 36px;
-      padding: 44px 40px;
-      border-radius: 36px;
+      gap: 40px;
     }
-    #{{ section.id }} .product-main__title {
-      font-size: var(--text-4);
+    #{{ section.id }} .product-breadcrumb {
+      margin-bottom: 36px;
     }
   }
   @media (max-width: 767px) {
-    #{{ section.id }} .section--container {
-      padding-top: 28px;
-      padding-bottom: 48px;
-    }
     #{{ section.id }} .product-main__card {
       grid-template-columns: 1fr;
       gap: 28px;
-      padding: 28px 22px;
-      border-radius: 28px;
+      padding-bottom: 48px;
     }
-    #{{ section.id }} .product-main__circle {
-      max-width: 320px;
-    }
-    #{{ section.id }} .product-main__actions {
-      gap: 12px;
+    #{{ section.id }} .product-main__media {
+      max-width: 360px;
+      margin: 0 auto;
+      border-radius: 32px;
     }
     #{{ section.id }} .product-main__add {
+      align-self: stretch;
       width: 100%;
-      flex: 1 1 100%;
+      text-align: center;
     }
   }
 {% endstyle %}
@@ -444,6 +360,17 @@
 {
   "name": "Product",
   "settings": [
+    {
+      "type": "text",
+      "id": "breadcrumb_title",
+      "label": "Breadcrumb / banner title",
+      "default": "Menu"
+    },
+    {
+      "type": "url",
+      "id": "menu_url",
+      "label": "Breadcrumb \"Menu\" link"
+    },
     {
       "type": "checkbox",
       "id": "show_rating",
@@ -459,7 +386,7 @@
     {
       "type": "color",
       "id": "image_background_color",
-      "label": "Image circle background",
+      "label": "Image panel background",
       "default": "#D90000"
     }
   ],

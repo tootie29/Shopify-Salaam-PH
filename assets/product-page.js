@@ -31,22 +31,15 @@
     const priceCurrent = section.querySelector("[data-price-current]");
     const priceCompare = section.querySelector("[data-price-compare]");
     const addBtn = section.querySelector("[data-add-btn]");
-    const optionInputs = Array.from(section.querySelectorAll("[data-option-input]"));
+    const selects = Array.from(section.querySelectorAll("[data-option-select]"));
     const mainImage = section.querySelector("img.product-main__image");
 
-    const labels = {
-      add: "Add To Cart",
-      soldOut: "Sold Out",
-      unavailable: "Unavailable",
-    };
+    const labels = { add: "Order Now", soldOut: "Sold Out", unavailable: "Unavailable" };
 
     function selectedOptions() {
-      // Collect the checked value for each option position, in order.
       const byPosition = [];
-      optionInputs.forEach(function (input) {
-        if (input.checked) {
-          byPosition[parseInt(input.dataset.optionPosition, 10)] = input.value;
-        }
+      selects.forEach(function (select) {
+        byPosition[parseInt(select.dataset.optionPosition, 10)] = select.value;
       });
       return byPosition;
     }
@@ -96,46 +89,18 @@
         }
       }
 
-      // Swap the main image if this variant has its own featured image.
       if (mainImage && variant.featured_image && variant.featured_image.src) {
         mainImage.src = variant.featured_image.src;
+        mainImage.srcset = "";
       }
     }
 
-    optionInputs.forEach(function (input) {
-      input.addEventListener("change", function () {
+    selects.forEach(function (select) {
+      select.addEventListener("change", function () {
         updateForVariant(findVariant());
       });
     });
 
-    // Quantity stepper
-    const qtyInput = section.querySelector("[data-qty-input]");
-    section.querySelectorAll("[data-qty-action]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        if (!qtyInput) return;
-        let val = parseInt(qtyInput.value || "1", 10);
-        if (Number.isNaN(val)) val = 1;
-        val += btn.dataset.qtyAction === "increment" ? 1 : -1;
-        if (val < 1) val = 1;
-        qtyInput.value = val;
-      });
-    });
-
-    // Thumbnail gallery
-    const thumbs = Array.from(section.querySelectorAll("[data-thumb]"));
-    thumbs.forEach(function (thumb) {
-      thumb.addEventListener("click", function () {
-        if (mainImage && thumb.dataset.full) {
-          mainImage.src = thumb.dataset.full;
-          mainImage.srcset = "";
-        }
-        thumbs.forEach(function (t) {
-          t.classList.toggle("is-active", t === thumb);
-        });
-      });
-    });
-
-    // Sync initial state to the currently selected variant.
     updateForVariant(findVariant());
   }
 

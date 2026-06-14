@@ -1,0 +1,180 @@
+{% comment %}
+  Product FAQ accordion. Reads a product metafield (custom.faq) that holds a
+  list of "FAQ item" metaobjects (fields: question, answer). The whole section
+  renders nothing when the product has no FAQ entries assigned.
+{% endcomment %}
+
+{%- assign faqs = product.metafields.custom.faq.value -%}
+
+{% if faqs != blank and faqs.size > 0 %}
+  <section
+    id="{{ section.id }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="product-faq"
+    class="section product-faq"
+    {% if section.settings.background_color != blank %}
+      style="background-color: {{ section.settings.background_color }};"
+    {% endif %}
+  >
+    <div class="section--container">
+      {% if section.settings.heading != blank %}
+        <header class="product-faq__header">
+          <h2 class="product-faq__heading">{{ section.settings.heading }}</h2>
+        </header>
+      {% endif %}
+
+      <div class="product-faq__list" data-accordion>
+        {% for item in faqs %}
+          {%- assign trigger_id = section.id | append: '-faq-' | append: forloop.index -%}
+          <div class="product-faq__item" data-accordion-item>
+            <h3 class="product-faq__question">
+              <button
+                type="button"
+                class="product-faq__trigger"
+                id="{{ trigger_id }}"
+                data-accordion-trigger
+                aria-expanded="false"
+                aria-controls="{{ trigger_id }}-panel"
+              >
+                <span class="product-faq__q-text">{{ item.question }}</span>
+                <svg class="product-faq__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </h3>
+            <div
+              class="product-faq__panel"
+              id="{{ trigger_id }}-panel"
+              role="region"
+              aria-labelledby="{{ trigger_id }}"
+              data-accordion-panel
+            >
+              <div class="product-faq__answer rte">{{ item.answer }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <script src="{{ 'accordion.js' | asset_url }}" defer></script>
+
+  {% style %}
+    #{{ section.id }} .section--container {
+      padding-top: 8px;
+      padding-bottom: 64px;
+    }
+    #{{ section.id }} .product-faq__header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    #{{ section.id }} .product-faq__heading {
+      margin: 0;
+      font-size: var(--text-4);
+      font-weight: var(--font-primary-weight-bold);
+      line-height: 1.1;
+      color: var(--color-black);
+    }
+    #{{ section.id }} .product-faq__list {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    #{{ section.id }} .product-faq__item {
+      border: 1px solid #e3e3e3;
+      border-radius: 16px;
+      background: var(--color-white);
+      overflow: hidden;
+    }
+    #{{ section.id }} .product-faq__question {
+      margin: 0;
+    }
+    #{{ section.id }} .product-faq__trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 24px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-size: var(--text-1);
+      font-weight: var(--font-primary-weight-bold);
+      color: var(--color-black);
+      transition: color 0.18s ease;
+    }
+    #{{ section.id }} .product-faq__trigger:hover {
+      color: var(--color-red);
+    }
+    #{{ section.id }} .product-faq__icon {
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+      color: var(--color-red);
+      transition: transform 0.25s ease;
+    }
+    #{{ section.id }} .product-faq__trigger[aria-expanded='true'] .product-faq__icon {
+      transform: rotate(180deg);
+    }
+    #{{ section.id }} .product-faq__panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.28s ease;
+    }
+    #{{ section.id }} .product-faq__answer {
+      padding: 0 24px 22px;
+      font-size: var(--text-0);
+      line-height: 1.6;
+      color: rgba(0, 0, 0, 0.75);
+    }
+    #{{ section.id }} .product-faq__answer p {
+      margin: 0 0 0.8em;
+    }
+    #{{ section.id }} .product-faq__answer p:last-child {
+      margin-bottom: 0;
+    }
+    #{{ section.id }} .product-faq__answer a {
+      color: var(--color-red);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 767px) {
+      #{{ section.id }} .section--container {
+        padding-bottom: 48px;
+      }
+      #{{ section.id }} .product-faq__trigger {
+        padding: 16px 18px;
+      }
+      #{{ section.id }} .product-faq__answer {
+        padding: 0 18px 18px;
+      }
+    }
+  {% endstyle %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
