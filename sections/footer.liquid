@@ -1,5 +1,4 @@
 {%- liquid
-  assign menu_columns = section.blocks | where: 'type', 'menu_column'
   assign social_links = section.blocks | where: 'type', 'social_link'
 -%}
 
@@ -9,21 +8,43 @@
 >
   <div class="site-footer__inner">
     <div class="site-footer__columns">
-      {% for block in menu_columns %}
-        <div class="site-footer__col" {{ block.shopify_attributes }}>
-          {% if block.settings.heading != blank %}
-            <h3 class="site-footer__col-title">{{ block.settings.heading }}</h3>
-          {% endif %}
-          {% if block.settings.menu != blank %}
-            <ul class="site-footer__col-list">
-              {% for link in block.settings.menu.links %}
-                <li>
-                  <a class="site-footer__col-link" href="{{ link.url }}">{{ link.title }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        </div>
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'menu_column' %}
+            <div class="site-footer__col" {{ block.shopify_attributes }}>
+              {% if block.settings.heading != blank %}
+                <h3 class="site-footer__col-title">{{ block.settings.heading }}</h3>
+              {% endif %}
+              {% if block.settings.menu != blank %}
+                <ul class="site-footer__col-list">
+                  {% for link in block.settings.menu.links %}
+                    <li>
+                      <a class="site-footer__col-link" href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          {% when 'info_column' %}
+            <div class="site-footer__col site-footer__col--info" {{ block.shopify_attributes }}>
+              {% if block.settings.logo != blank %}
+                <a class="site-footer__info-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+                  {{
+                    block.settings.logo
+                    | image_url: width: 480
+                    | image_tag:
+                      widths: '120, 180, 240, 320, 480',
+                      sizes: '200px',
+                      loading: 'lazy',
+                      alt: shop.name
+                  }}
+                </a>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <div class="site-footer__info-text">{{ block.settings.text }}</div>
+              {% endif %}
+            </div>
+        {% endcase %}
       {% endfor %}
 
       {% if social_links.size > 0 or section.settings.social_heading != blank %}
@@ -149,6 +170,43 @@
     fill: currentColor;
   }
 
+  .site-footer__col--info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .site-footer__info-logo {
+    display: inline-block;
+    max-width: 200px;
+  }
+
+  .site-footer__info-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .site-footer__info-text {
+    font-size: var(--text--1);
+    line-height: 1.55;
+    color: var(--footer-text, #000);
+  }
+
+  .site-footer__info-text p {
+    margin: 0 0 0.6em;
+  }
+
+  .site-footer__info-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .site-footer__info-text a {
+    color: var(--footer-link-hover, #D90000);
+    text-decoration: underline;
+  }
+
   .site-footer__legal {
     margin-top: 40px;
     padding-top: 24px;
@@ -228,6 +286,22 @@
     }
   ],
   "blocks": [
+    {
+      "type": "info_column",
+      "name": "Logo & text column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
     {
       "type": "menu_column",
       "name": "Menu column",
