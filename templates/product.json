@@ -11,7 +11,13 @@
   "sections": {
     "main": {
       "type": "product",
-      "settings": {}
+      "settings": {
+        "breadcrumb_title": "Menu",
+        "menu_url": "",
+        "show_rating": true,
+        "show_description": true,
+        "image_background_color": "#d90000"
+      }
     },
     "faq": {
       "type": "product-faq",
@@ -25,17 +31,27 @@
       "blocks": {
         "grabfood": {
           "type": "partner_button",
-          "settings": { "label": "GrabFood" }
+          "settings": {
+            "label": "GrabFood",
+            "url": ""
+          }
         },
         "foodpanda": {
           "type": "partner_button",
-          "settings": { "label": "Foodpanda" }
+          "settings": {
+            "label": "Foodpanda",
+            "url": ""
+          }
         }
       },
-      "block_order": ["grabfood", "foodpanda"],
+      "block_order": [
+        "grabfood",
+        "foodpanda"
+      ],
       "settings": {
-        "heading": "Order Salaam Pizza for delivery.",
-        "body": "<p>Craving halal pizza? Get it delivered hot to your door through your favourite delivery app.</p>",
+        "heading": "This is just a placeholder headline, we will replace it once your website copy is finalized.",
+        "body": "<p>This is just placeholder text. Don’t be alarmed, this is just here to fill up space since your finalized copy isn’t ready yet. Once we have your content finalized, we’ll replace this placeholder text with your real content.</p>",
+        "side_image": "shopify://shop_images/Group_252.png",
         "background_color": "#000000",
         "text_color": "#ffffff",
         "corner_radius": 48
