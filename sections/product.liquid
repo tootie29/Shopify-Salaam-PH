@@ -39,10 +39,10 @@
         {% if product.featured_image %}
           {{
             product.featured_image
-            | image_url: width: 1000
+            | image_url: width: 1600
             | image_tag:
-              widths: '300, 500, 700, 1000',
-              sizes: '(max-width: 767px) 80vw, 500px',
+              widths: '500, 800, 1100, 1400, 1600',
+              sizes: '(max-width: 767px) 80vw, 600px',
               loading: 'eager',
               class: 'product-main__image',
               alt: product.featured_image.alt | default: product.title
