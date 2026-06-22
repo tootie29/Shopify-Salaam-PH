@@ -1,6 +1,7 @@
 {% comment %}
-  Article template main section: renders the full blog post with branded
-  typography, an optional featured image, and the comments section.
+  Article template main section: mirrors the default page layout — a branded
+  breadcrumb banner, then the post with its featured image displayed above the
+  content, followed by the comments section.
 
   https://shopify.dev/docs/storefronts/themes/architecture/templates/article
 {% endcomment %}
@@ -9,73 +10,81 @@
   id="{{ section.id }}"
   data-section-id="{{ section.id }}"
   data-section-type="article"
-  class="section article"
-  {% if section.settings.background_color != blank %}
-    style="background-color: {{ section.settings.background_color }};"
-  {% endif %}
+  class="article-main"
 >
+  {% comment %} -------- Title / breadcrumb bar -------- {% endcomment %}
+  <div class="article-banner">
+    <div class="section--container">
+      <p class="article-banner__title">{{ article.title }}</p>
+      <nav class="article-banner__path" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">Home</a>
+        <span aria-hidden="true">|</span>
+        <a href="{{ blog.url }}">{{ blog.title }}</a>
+        <span aria-hidden="true">|</span>
+        <span class="article-banner__current">{{ article.title }}</span>
+      </nav>
+    </div>
+  </div>
+
+  {% comment %} -------- Post -------- {% endcomment %}
   <div class="section--container">
-    <article class="article__inner">
-      <header class="article__header">
-        <a class="article__back" href="{{ blog.url }}">
-          <span aria-hidden="true">&larr;</span>
-          {{ section.settings.back_link_text | default: 'Back to blog' }}
-        </a>
-
-        {% if section.settings.show_meta %}
-          <div class="article__meta">
-            <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-              {{ article.published_at | date: '%b %d, %Y' }}
-            </time>
-            {% if article.author != blank %}
-              <span class="article__dot" aria-hidden="true">&bull;</span>
-              <span>{{ article.author }}</span>
-            {% endif %}
-          </div>
-        {% endif %}
-
-        <h1 class="article__title">{{ article.title }}</h1>
-      </header>
+    <article class="article-main__inner">
+      {% if section.settings.show_meta %}
+        <div class="article-main__meta">
+          <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+            {{ article.published_at | date: '%b %d, %Y' }}
+          </time>
+          {% if article.author != blank %}
+            <span class="article-main__dot" aria-hidden="true">&bull;</span>
+            <span>{{ article.author }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
 
       {% if section.settings.show_featured_image and article.image %}
-        <div class="article__media">
+        <div class="article-main__media">
           {{
             article.image
             | image_url: width: 1600
             | image_tag:
               widths: '600, 900, 1200, 1600',
-              sizes: '(max-width: 1023px) 100vw, 960px',
+              sizes: '(max-width: 1023px) 100vw, 820px',
               loading: 'eager',
-              class: 'article__image',
+              class: 'article-main__image',
               alt: article.title
           }}
         </div>
       {% endif %}
 
-      <div class="article__content rte">
+      <div class="article-main__content rte">
         {{ article.content }}
       </div>
 
+      <a class="article-main__back" href="{{ blog.url }}">
+        <span aria-hidden="true">&larr;</span>
+        {{ section.settings.back_link_text | default: 'Back to blog' }}
+      </a>
+
       {% if blog.comments_enabled? %}
-        <section class="article__comments" id="comments">
-          <h2 class="article__comments-title">{{ 'blog.article_comments' | t }}</h2>
+        <section class="article-main__comments" id="comments">
+          <h2 class="article-main__comments-title">{{ 'blog.article_comments' | t }}</h2>
 
           {% paginate article.comments by 10 %}
             {% if article.comments_count > 0 %}
-              <ul class="article__comment-list">
+              <ul class="article-main__comment-list">
                 {% for comment in article.comments %}
-                  <li class="article__comment">
-                    <p class="article__comment-author">{{ comment.author }}</p>
-                    <p class="article__comment-date">
+                  <li class="article-main__comment">
+                    <p class="article-main__comment-author">{{ comment.author }}</p>
+                    <p class="article-main__comment-date">
                       {{- comment.created_at | date: '%b %d, %Y' -}}
                     </p>
-                    <div class="article__comment-body">{{ comment.content }}</div>
+                    <div class="article-main__comment-body">{{ comment.content }}</div>
                   </li>
                 {% endfor %}
               </ul>
 
               {%- if paginate.pages > 1 -%}
-                <div class="article__comment-pagination">
+                <div class="article-main__comment-pagination">
                   {{ paginate | default_pagination: anchor: 'comments' }}
                 </div>
               {%- endif -%}
@@ -83,26 +92,26 @@
           {% endpaginate %}
 
           {% form 'new_comment', article %}
-            <h2 class="article__form-title">{{ 'blog.comment_form_title' | t }}</h2>
+            <h2 class="article-main__form-title">{{ 'blog.comment_form_title' | t }}</h2>
 
             {{ form.errors | default_errors }}
 
-            <div class="article__field">
+            <div class="article-main__field">
               <label for="author">{{ 'blog.comment_form_name' | t }}</label>
               <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
             </div>
 
-            <div class="article__field">
+            <div class="article-main__field">
               <label for="email">{{ 'blog.comment_form_email' | t }}</label>
               <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
             </div>
 
-            <div class="article__field">
+            <div class="article-main__field">
               <label for="body">{{ 'blog.comment_form_body' | t }}</label>
               <textarea name="comment[body]" id="body" rows="5" required>{{ form.body }}</textarea>
             </div>
 
-            <button type="submit" class="btn article__submit">{{ 'blog.comment_form_submit' | t }}</button>
+            <button type="submit" class="btn article-main__submit">{{ 'blog.comment_form_submit' | t }}</button>
           {% endform %}
         </section>
       {% endif %}
@@ -111,56 +120,76 @@
 </section>
 
 {% style %}
+  /* Full-bleed section; inner containers stay at page width */
+  #{{ section.id }} {
+    width: 100%;
+  }
   #{{ section.id }} .section--container {
-    padding-top: 48px;
-    padding-bottom: 64px;
-  }
-  #{{ section.id }} .article__inner {
-    max-width: 960px;
+    width: 100%;
+    max-width: 1440px;
     margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
   }
-  #{{ section.id }} .article__header {
-    max-width: 760px;
-    margin: 0 auto 28px;
-    text-align: center;
+
+  /* Banner */
+  #{{ section.id }} .article-banner {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    padding: 22px 0;
+    margin-bottom: 40px;
   }
-  #{{ section.id }} .article__back {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: var(--text--1);
+  #{{ section.id }} .article-banner__title {
+    margin: 0 0 6px;
+    font-size: var(--text-3);
     font-weight: var(--font-primary-weight-bold);
-    color: var(--color-red);
-    text-decoration: none;
-    margin-bottom: 18px;
+    line-height: 1.1;
+    color: var(--color-white);
   }
-  #{{ section.id }} .article__back:hover {
+  #{{ section.id }} .article-banner__path {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--text--1);
+    font-weight: var(--font-primary-weight-medium);
+  }
+  #{{ section.id }} .article-banner__path a {
+    color: var(--color-white);
+    text-decoration: none;
+    opacity: 0.92;
+  }
+  #{{ section.id }} .article-banner__path a:hover {
     text-decoration: underline;
   }
-  #{{ section.id }} .article__meta {
+  #{{ section.id }} .article-banner__path span {
+    opacity: 0.75;
+  }
+  #{{ section.id }} .article-banner__current {
+    font-weight: var(--font-primary-weight-bold);
+  }
+
+  /* Post */
+  #{{ section.id }} .article-main__inner {
+    max-width: 820px;
+    margin: 0 auto 56px;
+  }
+  #{{ section.id }} .article-main__meta {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 8px;
     font-size: var(--text--1);
     font-weight: var(--font-primary-weight-medium);
     color: rgba(0, 0, 0, 0.55);
-    margin-bottom: 12px;
+    margin-bottom: 20px;
   }
-  #{{ section.id }} .article__title {
-    margin: 0;
-    font-size: var(--text-5);
-    font-weight: var(--font-primary-weight-extra-bold);
-    line-height: 1.1;
-    color: var(--color-black);
-  }
-  #{{ section.id }} .article__media {
+  #{{ section.id }} .article-main__media {
     margin: 0 0 40px;
     border-radius: 16px;
     overflow: hidden;
     background-color: #f1f1f1;
   }
-  #{{ section.id }} .article__image {
+  #{{ section.id }} .article-main__image {
     width: 100%;
     height: auto;
     display: block;
@@ -168,62 +197,60 @@
   }
 
   /* Article body typography */
-  #{{ section.id }} .article__content {
-    max-width: 760px;
-    margin: 0 auto;
+  #{{ section.id }} .article-main__content {
     font-size: var(--text-0);
     line-height: 1.7;
-    color: var(--color-black);
+    color: rgba(0, 0, 0, 0.82);
   }
-  #{{ section.id }} .article__content > *:first-child {
+  #{{ section.id }} .article-main__content > *:first-child {
     margin-top: 0;
   }
-  #{{ section.id }} .article__content p {
+  #{{ section.id }} .article-main__content p {
     margin: 0 0 1.2em;
   }
-  #{{ section.id }} .article__content h2 {
+  #{{ section.id }} .article-main__content h2 {
     font-size: var(--text-3);
     font-weight: var(--font-primary-weight-extra-bold);
     line-height: 1.2;
     margin: 1.6em 0 0.5em;
     color: var(--color-black);
   }
-  #{{ section.id }} .article__content h3 {
+  #{{ section.id }} .article-main__content h3 {
     font-size: var(--text-2);
     font-weight: var(--font-primary-weight-bold);
     line-height: 1.25;
     margin: 1.4em 0 0.5em;
     color: var(--color-black);
   }
-  #{{ section.id }} .article__content h4 {
+  #{{ section.id }} .article-main__content h4 {
     font-size: var(--text-1);
     font-weight: var(--font-primary-weight-bold);
     margin: 1.2em 0 0.5em;
     color: var(--color-black);
   }
-  #{{ section.id }} .article__content a {
+  #{{ section.id }} .article-main__content a {
     color: var(--color-red);
     text-decoration: underline;
     text-underline-offset: 2px;
   }
-  #{{ section.id }} .article__content a:hover {
+  #{{ section.id }} .article-main__content a:hover {
     color: var(--color-black);
   }
-  #{{ section.id }} .article__content ul,
-  #{{ section.id }} .article__content ol {
+  #{{ section.id }} .article-main__content ul,
+  #{{ section.id }} .article-main__content ol {
     margin: 0 0 1.2em;
     padding-left: 1.4em;
   }
-  #{{ section.id }} .article__content li {
+  #{{ section.id }} .article-main__content li {
     margin-bottom: 0.5em;
   }
-  #{{ section.id }} .article__content img {
+  #{{ section.id }} .article-main__content img {
     max-width: 100%;
     height: auto;
     border-radius: 16px;
     margin: 1em 0;
   }
-  #{{ section.id }} .article__content blockquote {
+  #{{ section.id }} .article-main__content blockquote {
     margin: 1.5em 0;
     padding: 4px 0 4px 24px;
     border-left: 4px solid var(--color-red);
@@ -231,25 +258,39 @@
     font-weight: var(--font-primary-weight-medium);
     color: var(--color-black);
   }
-  #{{ section.id }} .article__content strong {
+  #{{ section.id }} .article-main__content strong {
     font-weight: var(--font-primary-weight-bold);
   }
 
+  /* Back link */
+  #{{ section.id }} .article-main__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 40px;
+    font-size: var(--text--1);
+    font-weight: var(--font-primary-weight-bold);
+    color: var(--color-red);
+    text-decoration: none;
+  }
+  #{{ section.id }} .article-main__back:hover {
+    text-decoration: underline;
+  }
+
   /* Comments */
-  #{{ section.id }} .article__comments {
-    max-width: 760px;
-    margin: 56px auto 0;
+  #{{ section.id }} .article-main__comments {
+    margin: 56px 0 0;
     padding-top: 40px;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
   }
-  #{{ section.id }} .article__comments-title,
-  #{{ section.id }} .article__form-title {
+  #{{ section.id }} .article-main__comments-title,
+  #{{ section.id }} .article-main__form-title {
     font-size: var(--text-2);
     font-weight: var(--font-primary-weight-extra-bold);
     color: var(--color-black);
     margin: 0 0 20px;
   }
-  #{{ section.id }} .article__comment-list {
+  #{{ section.id }} .article-main__comment-list {
     list-style: none;
     margin: 0 0 40px;
     padding: 0;
@@ -257,39 +298,39 @@
     flex-direction: column;
     gap: 20px;
   }
-  #{{ section.id }} .article__comment {
+  #{{ section.id }} .article-main__comment {
     padding: 20px 22px;
     border-radius: 16px;
     background-color: #f6f6f6;
   }
-  #{{ section.id }} .article__comment-author {
+  #{{ section.id }} .article-main__comment-author {
     margin: 0;
     font-weight: var(--font-primary-weight-bold);
     color: var(--color-black);
   }
-  #{{ section.id }} .article__comment-date {
+  #{{ section.id }} .article-main__comment-date {
     margin: 2px 0 10px;
     font-size: var(--text--1);
     color: rgba(0, 0, 0, 0.55);
   }
-  #{{ section.id }} .article__comment-body {
+  #{{ section.id }} .article-main__comment-body {
     line-height: 1.6;
   }
 
   /* Comment form */
-  #{{ section.id }} .article__field {
+  #{{ section.id }} .article-main__field {
     margin-bottom: 18px;
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
-  #{{ section.id }} .article__field label {
+  #{{ section.id }} .article-main__field label {
     font-size: var(--text--1);
     font-weight: var(--font-primary-weight-bold);
     color: var(--color-black);
   }
-  #{{ section.id }} .article__field input,
-  #{{ section.id }} .article__field textarea {
+  #{{ section.id }} .article-main__field input,
+  #{{ section.id }} .article-main__field textarea {
     width: 100%;
     padding: 12px 16px;
     font-size: var(--text-0);
@@ -299,25 +340,24 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: var(--style-border-radius-inputs, 8px);
   }
-  #{{ section.id }} .article__field input:focus,
-  #{{ section.id }} .article__field textarea:focus {
+  #{{ section.id }} .article-main__field input:focus,
+  #{{ section.id }} .article-main__field textarea:focus {
     outline: none;
     border-color: var(--color-red);
   }
-  #{{ section.id }} .article__field textarea {
+  #{{ section.id }} .article-main__field textarea {
     resize: vertical;
   }
-  #{{ section.id }} .article__submit {
+  #{{ section.id }} .article-main__submit {
     width: auto;
     min-width: 200px;
   }
 
   @media (max-width: 767px) {
-    #{{ section.id }} .section--container {
-      padding-top: 32px;
-      padding-bottom: 48px;
+    #{{ section.id }} .article-banner {
+      margin-bottom: 28px;
     }
-    #{{ section.id }} .article__media {
+    #{{ section.id }} .article-main__media {
       margin-bottom: 28px;
       border-radius: 12px;
     }
@@ -345,16 +385,6 @@
       "id": "show_meta",
       "label": "Show date and author",
       "default": true
-    },
-    {
-      "type": "header",
-      "content": "Colors"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background",
-      "default": "#FFFFFF"
     }
   ]
 }
