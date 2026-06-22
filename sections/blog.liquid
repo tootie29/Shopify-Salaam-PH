@@ -56,10 +56,6 @@
                 <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
                   {{ article.published_at | date: '%b %d, %Y' }}
                 </time>
-                {% if article.author != blank %}
-                  <span class="blog-card__dot" aria-hidden="true">•</span>
-                  <span>{{ article.author }}</span>
-                {% endif %}
               </div>
 
               <h3 class="blog-card__title">
