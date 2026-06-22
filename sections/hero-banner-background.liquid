@@ -2,6 +2,9 @@
   id="{{ section.id }}"
   class="hero-banner-background"
   data-section-id="{{ section.id }}"
+  {% if section.settings.background_image == blank %}
+    style="background-color: {{ section.settings.background_color | default: '#000000' }};"
+  {% endif %}
 >
   {% if section.settings.background_image != blank %}
     <div class="hero-banner-background__image" aria-hidden="true">
@@ -15,9 +18,9 @@
           class: 'hero-banner-background__img'
       }}
     </div>
-  {% endif %}
 
-  <div class="hero-banner-background__overlay"></div>
+    <div class="hero-banner-background__overlay"></div>
+  {% endif %}
 
   <div class="hero-banner-background__container">
     <div class="hero-banner-background__content">
@@ -87,6 +90,12 @@
       "type": "image_picker",
       "id": "background_image",
       "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color (used when no image)",
+      "default": "#000000"
     }
   ],
   "presets": [
