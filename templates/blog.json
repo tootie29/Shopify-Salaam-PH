@@ -1,34 +1,15 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "hero": {
-      "type": "hero-banner-background",
-      "settings": {
-        "title": "Salaam Pizza Stories",
-        "description": "<p>News, recipes, and updates from our Katipunan kitchen.</p>"
-      }
-    },
     "main": {
       "type": "blog",
       "settings": {
-        "heading": "Latest posts",
         "posts_per_page": 9,
         "load_more_text": "Load more",
-        "read_more_text": "Read more",
-        "background_color": "#ffffff"
+        "read_more_text": "Read more"
       }
     }
   },
   "order": [
-    "hero",
     "main"
   ]
 }
