@@ -73,7 +73,7 @@
       "type": "map-section",
       "settings": {
         "title": "Find us on the map",
-        "map_embed_code": "",
+        "map_embed_code": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4591.384271716667!2d121.06617413274209!3d14.605992200490448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b7aa9826d6e3%3A0x9c1ae70fe7edd411!2sSalaam%20Halal%20Pizza!5e0!3m2!1sen!2sph!4v1783325382384!5m2!1sen!2sph\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
         "map_query": "Katipunan, Quezon City",
         "map_height": 420,
         "map_height_mobile": 320,
