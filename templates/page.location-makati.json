@@ -133,25 +133,25 @@
         "landmark_ateneo": {
           "type": "landmark",
           "settings": {
-            "distance": "5 min walk",
-            "heading": "Ateneo de Manila University",
-            "body": "<p>5 min walkAteneo de Manila UniversityDirect delivery to the Gate 2.5 student lounge and faculty pavilions which is a 5-minute walk from our kitchen door.</p>"
+            "distance": " Lunch zone",
+            "heading": "Ayala Triangle Gardens",
+            "body": "<p>Weekday lunch orders for the office crowd, with quick delivery to Salcedo Village and Legazpi Village.</p>"
           }
         },
         "landmark_up": {
           "type": "landmark",
           "settings": {
-            "distance": "8 min drive",
-            "heading": "UP Diliman",
-            "body": "<p>8 min driveUP DilimanSame-day delivery to the AS Building, Engineering complex, and Sunken Garden area, an 8-minute drive via Katipunan Avenue.</p>"
+            "distance": "Dinner zone",
+            "heading": "Greenbelt and Glorietta",
+            "body": "<p>Evening and weekend orders delivered to Bel-Air, San Lorenzo, and Urdaneta Village.</p>"
           }
         },
         "landmark_miriam": {
           "type": "landmark",
           "settings": {
-            "distance": "3 min walk",
-            "heading": "Miriam College",
-            "body": "<p>3 min walkMiriam CollegeHot orders to Caritas Hall and the Loyola Heights gate; our closest campus at just 3 minutes on foot.</p>"
+            "distance": " Late zone",
+            "heading": "Power Plant Mall and Rockwell",
+            "body": "<p>Our last delivery run of the night, covering Rockwell, Magallanes, and Forbes Park.</p>"
           }
         }
       },
@@ -161,8 +161,8 @@
         "landmark_miriam"
       ],
       "settings": {
-        "title": "Which Universities Are Near Salaam Pizza Katipunan?",
-        "description": "<p>Salaam's Katipunan branch sits at the centre of Loyola Heights, inside walking distance of three of Metro Manila's busiest university campuses:</p>",
+        "title": "Where Does Salaam Pizza Deliver in Makati?",
+        "description": "<p>Salaam Pizza's Makati delivery zone covers the central business district and its surrounding villages. These are the landmarks we deliver near most often, grouped by time of day:</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
         "card_background_color": "#ffffff",
