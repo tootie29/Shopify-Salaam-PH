@@ -120,7 +120,7 @@
           "settings": {
             "distance": "5 min walk",
             "heading": "Ateneo de Manila University",
-            "body": "<p>Direct delivery to the Gate 2.5 student lounge and faculty pavilions.</p>"
+            "body": "<p>5 min walkAteneo de Manila UniversityDirect delivery to the Gate 2.5 student lounge and faculty pavilions which is a 5-minute walk from our kitchen door.</p>"
           }
         },
         "landmark_up": {
@@ -128,7 +128,7 @@
           "settings": {
             "distance": "8 min drive",
             "heading": "UP Diliman",
-            "body": "<p>Same-day delivery to AS, Engineering, and the Sunken Garden area.</p>"
+            "body": "<p>8 min driveUP DilimanSame-day delivery to the AS Building, Engineering complex, and Sunken Garden area, an 8-minute drive via Katipunan Avenue.</p>"
           }
         },
         "landmark_miriam": {
@@ -136,7 +136,7 @@
           "settings": {
             "distance": "3 min walk",
             "heading": "Miriam College",
-            "body": "<p>Hot orders to the Caritas Hall and the Loyola Heights gate.</p>"
+            "body": "<p>3 min walkMiriam CollegeHot orders to Caritas Hall and the Loyola Heights gate; our closest campus at just 3 minutes on foot.</p>"
           }
         }
       },
@@ -146,8 +146,8 @@
         "landmark_miriam"
       ],
       "settings": {
-        "title": "What's nearby",
-        "description": "<p>We sit at the centre of Loyola Heights, surrounded by three of Metro Manila's most active university campuses.</p>",
+        "title": "Which Universities Are Near Salaam Pizza Katipunan?",
+        "description": "<p>Salaam's Katipunan branch sits at the centre of Loyola Heights, inside walking distance of three of Metro Manila's busiest university campuses:</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
         "card_background_color": "#ffffff",
