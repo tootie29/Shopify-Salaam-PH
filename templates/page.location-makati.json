@@ -30,8 +30,8 @@
         "fact_status": {
           "type": "fact",
           "settings": {
-            "label": "Status",
-            "value": "Physical Branch"
+            "label": "MakatI",
+            "value": "Delivery Area"
           }
         },
         "fact_hours": {
