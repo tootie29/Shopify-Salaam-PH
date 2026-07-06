@@ -12,10 +12,10 @@
     "location_hero": {
       "type": "location-hero-section",
       "settings": {
-        "sub_title": "KATIPUNAN, QUEZON CITY",
-        "title": "Halal Pizza in Katipunan, Quezon City: 5 Minutes from Ateneo",
-        "short_description": "<p>Salaam Pizza's original kitchen is in Loyola Heights, Quezon City — a 5-minute walk from Ateneo de Manila, an 8-minute drive from UP Diliman, and a 3-minute walk from Miriam College. Every pizza is halal-certified, oven-baked to order, and made with dough rested overnight for 24 hours. Toppings are premium; prices are built for students, not tourists.</p>",
-        "button_text": "Get Directions",
+        "sub_title": "MAKATI DELIVERY ZONE",
+        "title": "Halal Pizza Delivery in Makati for Salaam Pizza, Baked in Katipunan",
+        "short_description": "<p>Salaam Pizza does not yet have a physical branch inside Makati. Every order for a Makati address is baked fresh at our Katipunan kitchen in Loyola Heights and dispatched directly to you, typically within 45–60 minutes. Same halal-certified recipe, same menu, no branch markup, wherever you are in the Makati CBD.</p>",
+        "button_text": "Order Now",
         "button_url": "#",
         "image": "shopify://shop_images/Untitled_design_3.png",
         "background_color": "#d90000",
