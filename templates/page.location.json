@@ -176,21 +176,21 @@
           "type": "reason",
           "settings": {
             "heading": "Walking distance from Ateneo",
-            "body": "<p>Two-minute walk from Gate 2.5. Lunchtime crowd, dinner study sessions.</p>"
+            "body": "<p>Two minutes from Ateneo Gate 2.5Our closest pickup point to campus. Popular for the lunchtime rush and late-night dinner study sessions.</p>"
           }
         },
         "reason_price": {
           "type": "reason",
           "settings": {
             "heading": "Student-friendly prices",
-            "body": "<p>Premium toppings without the luxury price tag. Same recipe as our main branch.</p>"
+            "body": "<p>Student-friendly pricing, premium ingredientsSame halal-certified recipe as every Salaam branch, no discount on quality, no markup for the university crowd.</p>"
           }
         },
         "reason_fast": {
           "type": "reason",
           "settings": {
             "heading": "Hot in under 45 minutes",
-            "body": "<p>Direct delivery across Loyola Heights, UP Diliman, and Miriam.</p>"
+            "body": "<p>Delivered hot in 45 minutes or lessOur guaranteed delivery window across Loyola Heights, UP Diliman, and Miriam College, tracked from oven to door.</p>"
           }
         }
       },
@@ -200,8 +200,8 @@
         "reason_fast"
       ],
       "settings": {
-        "title": "Why Salaam in Katipunan",
-        "description": "<p>Three reasons students, faculty, and families keep ordering from our Loyola Heights kitchen.</p>",
+        "title": "Why Choose Salaam Pizza in Katipunan?",
+        "description": "<p>Three reasons students, faculty, and Loyola Heights families order from Salaam every week:</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
         "card_background_color": "#ffffff",
