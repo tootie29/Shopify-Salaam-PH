@@ -190,22 +190,22 @@
         "reason_walk": {
           "type": "reason",
           "settings": {
-            "heading": "Walking distance from Ateneo",
-            "body": "<p>Two minutes from Ateneo Gate 2.5Our closest pickup point to campus. Popular for the lunchtime rush and late-night dinner study sessions.</p>"
+            "heading": "",
+            "body": "<p>Same recipe, same price. No branch markupIdentical menu and pricing to our Katipunan branch. No surcharge for the trip to Makati.</p>"
           }
         },
         "reason_price": {
           "type": "reason",
           "settings": {
-            "heading": "Student-friendly prices",
-            "body": "<p>Student-friendly pricing, premium ingredientsSame halal-certified recipe as every Salaam branch, no discount on quality, no markup for the university crowd.</p>"
+            "heading": "",
+            "body": "<p>Halal-certified from dough to toppingStrict halal sourcing and preparation at every stage, with no shortcuts for delivery-only orders.</p>"
           }
         },
         "reason_fast": {
           "type": "reason",
           "settings": {
-            "heading": "Hot in under 45 minutes",
-            "body": "<p>Delivered hot in 45 minutes or lessOur guaranteed delivery window across Loyola Heights, UP Diliman, and Miriam College, tracked from oven to door.</p>"
+            "heading": "",
+            "body": "<p>Live tracking from oven to doorDriver location, ETA window, and a confirmed delivery time, all visible before your order even leaves the Katipunan kitchen.</p>"
           }
         }
       },
@@ -215,8 +215,8 @@
         "reason_fast"
       ],
       "settings": {
-        "title": "Why Choose Salaam Pizza in Katipunan?",
-        "description": "<p>Three reasons students, faculty, and Loyola Heights families order from Salaam every week:</p>",
+        "title": "Why Order Halal Pizza from Salaam Instead of a Makati-Based Chain?",
+        "description": "<p>Halal pizza dispatched fresh from Katipunan, using the same recipe our Loyola Heights regulars order two to three times a week:</p>",
         "background_color": "#ffffff",
         "text_color": "#000000",
         "card_background_color": "#ffffff",
