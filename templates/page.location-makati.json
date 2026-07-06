@@ -112,6 +112,21 @@
         "card_border_color": "#d5d5d5"
       }
     },
+    "delivery_callout_section_n3Qdx9": {
+      "type": "delivery-callout-section",
+      "name": "Delivery Callout",
+      "settings": {
+        "tag_text": "Transparent delivery",
+        "title": "Does Salaam Pizza Have a Branch in Makati?",
+        "description": "<p>No. Salaam Pizza does not currently operate a physical branch inside Makati. Every order placed for a Makati delivery address is baked fresh at our Katipunan kitchen, 123 Katipunan Avenue, Loyola Heights, Quezon City, then dispatched by our own delivery team. Average delivery time is 45 to 60 minutes, depending on traffic and destination barangay.</p>",
+        "corner_radius": 40,
+        "background_color": "#F6F6F6",
+        "card_background_color": "#D90000",
+        "tag_background_color": "#FFFFFF",
+        "tag_text_color": "#000000",
+        "text_color": "#FFFFFF"
+      }
+    },
     "landmarks": {
       "type": "landmarks-section",
       "blocks": {
@@ -231,6 +246,7 @@
     "quick_facts",
     "map",
     "address",
+    "delivery_callout_section_n3Qdx9",
     "landmarks",
     "coverage",
     "why",
