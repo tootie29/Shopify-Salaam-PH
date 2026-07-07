@@ -239,6 +239,51 @@
       "type": "page",
       "disabled": true,
       "settings": {}
+    },
+    "faq_section_JabH3C": {
+      "type": "faq-section",
+      "blocks": {
+        "faq_89Xfcp": {
+          "type": "faq",
+          "settings": {
+            "question": "Does Salaam Pizza deliver to Makati?",
+            "answer": "<p>Yes. Salaam Pizza delivers to the Makati central business district and surrounding villages, including Salcedo, Legazpi, Bel-Air, San Lorenzo, Urdaneta, Rockwell, Magallanes, and Forbes Park.</p>"
+          }
+        },
+        "faq_anXJ4F": {
+          "type": "faq",
+          "settings": {
+            "question": "Is there a Salaam Pizza branch in Makati?",
+            "answer": "<p>Not yet. Orders for Makati addresses are baked fresh at Salaam Pizza's Katipunan kitchen in Loyola Heights, Quezon City, then delivered directly to you.</p>"
+          }
+        },
+        "faq_VKtYiC": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does Salaam Pizza take to deliver to Makati?",
+            "answer": "<p>Delivery to Makati typically takes 45 to 60 minutes from order confirmation, depending on traffic and the destination barangay.</p>"
+          }
+        },
+        "faq_FCjzgw": {
+          "type": "faq",
+          "settings": {
+            "question": "Does delivery to Makati cost more than ordering from the Katipunan branch?",
+            "answer": "<p>No. Salaam Pizza charges the same menu prices in Makati as in Katipunan, with no branch markup.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_89Xfcp",
+        "faq_anXJ4F",
+        "faq_VKtYiC",
+        "faq_FCjzgw"
+      ],
+      "name": "FAQ Section",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "description": "",
+        "background_color": "#FFFFFF"
+      }
     }
   },
   "order": [
@@ -251,6 +296,7 @@
     "coverage",
     "why",
     "cta",
-    "main"
+    "main",
+    "faq_section_JabH3C"
   ]
 }
