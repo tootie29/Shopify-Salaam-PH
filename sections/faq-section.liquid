@@ -1,0 +1,254 @@
+{% comment %}
+  FAQ Section: a merchant-editable accordion. Section title + rich-text intro,
+  then one "FAQ item" block per question/answer. Uses assets/accordion.js
+  (data-accordion / data-accordion-trigger / data-accordion-panel hooks).
+{% endcomment %}
+
+<section
+  id="{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="faq-section"
+  class="section faq-section"
+  {% if section.settings.background_color != blank %}
+    style="background-color: {{ section.settings.background_color }};"
+  {% endif %}
+>
+  <div class="section--container">
+    {% if section.settings.title != blank or section.settings.description != blank %}
+      <header class="faq-section__header">
+        {% if section.settings.title != blank %}
+          <h2 class="faq-section__heading">{{ section.settings.title }}</h2>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <div class="faq-section__intro rte">{{ section.settings.description }}</div>
+        {% endif %}
+      </header>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="faq-section__list" data-accordion>
+        {% for block in section.blocks %}
+          {%- assign trigger_id = section.id | append: '-faq-' | append: forloop.index -%}
+          <div class="faq-section__item" data-accordion-item {{ block.shopify_attributes }}>
+            <h3 class="faq-section__question">
+              <button
+                type="button"
+                class="faq-section__trigger"
+                id="{{ trigger_id }}"
+                data-accordion-trigger
+                aria-expanded="false"
+                aria-controls="{{ trigger_id }}-panel"
+              >
+                <span class="faq-section__q-text">{{ block.settings.question }}</span>
+                <svg class="faq-section__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </h3>
+            <div
+              class="faq-section__panel"
+              id="{{ trigger_id }}-panel"
+              role="region"
+              aria-labelledby="{{ trigger_id }}"
+              data-accordion-panel
+            >
+              <div class="faq-section__answer rte">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script src="{{ 'accordion.js' | asset_url }}" defer></script>
+
+{% style %}
+  #{{ section.id }} .section--container {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  #{{ section.id }} .faq-section__header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 40px;
+  }
+  #{{ section.id }} .faq-section__heading {
+    margin: 0;
+    font-size: var(--text-4);
+    font-weight: var(--font-primary-weight-bold);
+    line-height: 1.1;
+    color: var(--color-black);
+  }
+  #{{ section.id }} .faq-section__intro {
+    margin-top: 14px;
+    font-size: var(--text-0);
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  #{{ section.id }} .faq-section__intro p {
+    margin: 0 0 0.6em;
+  }
+  #{{ section.id }} .faq-section__intro p:last-child {
+    margin-bottom: 0;
+  }
+  #{{ section.id }} .faq-section__list {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  #{{ section.id }} .faq-section__item {
+    border: 1px solid #e3e3e3;
+    border-radius: 16px;
+    background: var(--color-white);
+    overflow: hidden;
+  }
+  #{{ section.id }} .faq-section__question {
+    margin: 0;
+  }
+  #{{ section.id }} .faq-section__trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: var(--text-1);
+    font-weight: var(--font-primary-weight-bold);
+    color: var(--color-black);
+    transition: color 0.18s ease;
+  }
+  #{{ section.id }} .faq-section__trigger:hover {
+    color: var(--color-red);
+  }
+  #{{ section.id }} .faq-section__icon {
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    color: var(--color-red);
+    transition: transform 0.25s ease;
+  }
+  #{{ section.id }} .faq-section__trigger[aria-expanded='true'] .faq-section__icon {
+    transform: rotate(180deg);
+  }
+  #{{ section.id }} .faq-section__panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.28s ease;
+  }
+  #{{ section.id }} .faq-section__answer {
+    padding: 0 24px 22px;
+    font-size: var(--text-0);
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.75);
+  }
+  #{{ section.id }} .faq-section__answer p {
+    margin: 0 0 0.8em;
+  }
+  #{{ section.id }} .faq-section__answer p:last-child {
+    margin-bottom: 0;
+  }
+  #{{ section.id }} .faq-section__answer a {
+    color: var(--color-red);
+    text-decoration: underline;
+  }
+  #{{ section.id }} .faq-section__answer ul,
+  #{{ section.id }} .faq-section__answer ol {
+    margin: 0 0 0.8em;
+    padding-left: 1.3em;
+  }
+  #{{ section.id }} .faq-section__answer li {
+    margin-bottom: 0.35em;
+  }
+  #{{ section.id }} .faq-section__answer h3,
+  #{{ section.id }} .faq-section__answer h4 {
+    margin: 0 0 0.4em;
+    font-weight: var(--font-primary-weight-bold);
+    color: var(--color-black);
+  }
+
+  @media (max-width: 767px) {
+    #{{ section.id }} .section--container {
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+    #{{ section.id }} .faq-section__header {
+      margin-bottom: 28px;
+    }
+    #{{ section.id }} .faq-section__trigger {
+      padding: 16px 18px;
+    }
+    #{{ section.id }} .faq-section__answer {
+      padding: 0 18px 18px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Section description",
+      "info": "Short intro text shown below the title."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Your question here?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Your answer here.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 30,
+  "presets": [
+    {
+      "name": "FAQ Section",
+      "blocks": [
+        { "type": "faq" },
+        { "type": "faq" },
+        { "type": "faq" }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
