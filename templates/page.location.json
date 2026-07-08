@@ -232,7 +232,7 @@
           "type": "faq",
           "settings": {
             "question": "Where is Salaam Pizza's Katipunan branch located?",
-            "answer": "<p>Salaam Pizza's main kitchen is in Loyola Heights, Quezon City, a 5-minute walk from Ateneo de Manila University's Gate 2.5, an 8-minute drive from UP Diliman, and a 3-minute walk from Miriam College.</p>"
+            "answer": "<p>Salaam Pizza's main kitchen is in Loyola Heights, Quezon City which is a 5-minute walk from Ateneo de Manila University's Gate 2.5, an 8-minute drive from UP Diliman, and a 3-minute walk from Miriam College.</p>"
           }
         },
         "faq_fimPVD": {
@@ -246,20 +246,36 @@
           "type": "faq",
           "settings": {
             "question": "How long does delivery take from the Katipunan branch?",
-            "answer": "<p>Salaam Pizza delivers hot to Loyola Heights, UP Diliman, and Miriam College addresses in 45 minutes or less.</p>"
+            "answer": "<p>Salaam Pizza delivers hot to Loyola Heights, UP Diliman, and Miriam College addresses in 45 minutes or less</p>"
+          }
+        },
+        "faq_6zjfMa": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Salaam Pizza affordable for students?",
+            "answer": "<p>Yes. Salaam Pizza in Katipunan is priced for the university crowd, using the same halal-certified recipe and premium toppings as every other branch. No discount on quality, no markup for location.</p>"
+          }
+        },
+        "faq_qTh8ej": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the dough recipe at Salaam Pizza?",
+            "answer": "<p>Salaam Pizza's dough is rested overnight for 24 hours before baking, which is standard across all branches, including Katipunan.</p>"
           }
         }
       },
       "block_order": [
         "faq_9LPLPB",
         "faq_fimPVD",
-        "faq_nbPqXA"
+        "faq_nbPqXA",
+        "faq_6zjfMa",
+        "faq_qTh8ej"
       ],
       "name": "FAQ Section",
       "settings": {
         "title": "Frequently Asked Questions",
         "description": "",
-        "background_color": "#FFFFFF"
+        "background_color": "#ffffff"
       }
     }
   },
