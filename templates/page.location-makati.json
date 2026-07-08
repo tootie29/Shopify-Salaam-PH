@@ -270,19 +270,35 @@
             "question": "Does delivery to Makati cost more than ordering from the Katipunan branch?",
             "answer": "<p>No. Salaam Pizza charges the same menu prices in Makati as in Katipunan, with no branch markup.</p>"
           }
+        },
+        "faq_h9FgX6": {
+          "type": "faq",
+          "settings": {
+            "question": "What areas within Makati does Salaam Pizza cover for lunch, dinner, and late-night orders?",
+            "answer": "<p>Salaam Pizza's Makati delivery zone is organized by time of day: Ayala Triangle Gardens for weekday lunches (Salcedo and Legazpi Village), Greenbelt and Glorietta for evening and weekend orders (Bel-Air, San Lorenzo, Urdaneta), and Power Plant Mall and Rockwell for late orders (Rockwell, Magallanes, Forbes Park).</p>"
+          }
+        },
+        "faq_6jNNUK": {
+          "type": "faq",
+          "settings": {
+            "question": " Is the pizza delivered to Makati still halal-certified?",
+            "answer": "<p>Yes. All Makati deliveries are baked using the same halal-certified process, from dough to topping, as the Katipunan branch.</p>"
+          }
         }
       },
       "block_order": [
         "faq_89Xfcp",
         "faq_anXJ4F",
         "faq_VKtYiC",
-        "faq_FCjzgw"
+        "faq_FCjzgw",
+        "faq_h9FgX6",
+        "faq_6jNNUK"
       ],
       "name": "FAQ Section",
       "settings": {
         "title": "Frequently Asked Questions",
         "description": "",
-        "background_color": "#FFFFFF"
+        "background_color": "#ffffff"
       }
     }
   },
