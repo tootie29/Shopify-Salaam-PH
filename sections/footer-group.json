@@ -46,7 +46,7 @@
           "type": "menu_column",
           "settings": {
             "heading": "Delivery Area",
-            "menu": ""
+            "menu": "footer-deliv-area"
           }
         },
         "social_link_GNc3gW": {
