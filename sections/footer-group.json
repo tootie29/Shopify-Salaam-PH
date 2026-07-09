@@ -42,6 +42,13 @@
             "menu": "business"
           }
         },
+        "menu_column_adDHGw": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Delivery Area",
+            "menu": ""
+          }
+        },
         "social_link_GNc3gW": {
           "type": "social_link",
           "settings": {
@@ -72,6 +79,7 @@
         "menu_column_dACkGM",
         "menu_column_hWHGDm",
         "menu_column_ri7tVY",
+        "menu_column_adDHGw",
         "social_link_GNc3gW",
         "social_link_wc33LD",
         "social_link_kUkjCz"
