@@ -18,6 +18,8 @@
           "type": "info_column",
           "settings": {
             "logo": "shopify://shop_images/salaam-pizza_logo.avif",
+            "secondary_image": "shopify://shop_images/halal-council-logo.png",
+            "secondary_image_link": "",
             "text": ""
           }
         },
