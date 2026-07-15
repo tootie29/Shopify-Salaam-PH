@@ -29,6 +29,7 @@
     },
     "best_seller_section_3KbcpV": {
       "type": "best-seller-section",
+      "disabled": true,
       "name": "Best Seller Section",
       "settings": {
         "title": "Best Seller",
