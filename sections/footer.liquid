@@ -40,6 +40,26 @@
                   }}
                 </a>
               {% endif %}
+              {% if block.settings.secondary_image != blank %}
+                {%- capture footer_secondary_image -%}
+                  {{
+                    block.settings.secondary_image
+                    | image_url: width: 480
+                    | image_tag:
+                      widths: '120, 180, 240, 320, 480',
+                      sizes: '200px',
+                      loading: 'lazy',
+                      alt: shop.name
+                  }}
+                {%- endcapture -%}
+                {% if block.settings.secondary_image_link != blank %}
+                  <a class="site-footer__info-image" href="{{ block.settings.secondary_image_link }}">
+                    {{ footer_secondary_image }}
+                  </a>
+                {% else %}
+                  <div class="site-footer__info-image">{{ footer_secondary_image }}</div>
+                {% endif %}
+              {% endif %}
               {% if block.settings.text != blank %}
                 <div class="site-footer__info-text">{{ block.settings.text }}</div>
               {% endif %}
@@ -188,6 +208,18 @@
     object-fit: contain;
   }
 
+  .site-footer__info-image {
+    display: inline-block;
+    max-width: 200px;
+  }
+
+  .site-footer__info-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
   .site-footer__info-text {
     font-size: var(--text--1);
     line-height: 1.55;
@@ -294,6 +326,16 @@
           "type": "image_picker",
           "id": "logo",
           "label": "Logo"
+        },
+        {
+          "type": "image_picker",
+          "id": "secondary_image",
+          "label": "Image below logo"
+        },
+        {
+          "type": "url",
+          "id": "secondary_image_link",
+          "label": "Image below logo link"
         },
         {
           "type": "richtext",
